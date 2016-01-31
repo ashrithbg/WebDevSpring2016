@@ -7,6 +7,10 @@ body {
     padding-top: 50px;
 }
 
+p {
+    text-align:justify;
+}
+
 
 /*
  * Global add-ons
@@ -63,7 +67,7 @@ body {
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
     color: #fff;
-    background-color: #428bca;
+    background-color: #229ee5;
 }
 
 
