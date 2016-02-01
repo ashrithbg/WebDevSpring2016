@@ -53,14 +53,60 @@ p {
     }
 }
 
+.form-horizontal  .control-label{
+    text-align:left;
+}
+label{
+    text-align: left;
+}
+.glyphicon
+{
 
+    font-size: 30px;
+    color:#229ee5;
+}
+.glyphicon-plus{
+    color:#229ee5;
+}
+.glyphicon-remove{
+    color:red;
+}
+.glyphicon-ok{
+    color:green;
+}
+.glyphicon-pencil{
+    color:#888888;
+}
+.push{
+    top:30px;
+}
 
+.modal {
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
 /* Sidebar navigation */
 .nav-sidebar {
     margin-right: -21px; /* 20px padding + 1px border */
     margin-bottom: 20px;
     margin-left: -20px;
+
 }
+
 .nav-sidebar > li > a {
     padding-right: 20px;
     padding-left: 20px;

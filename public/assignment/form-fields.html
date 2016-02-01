@@ -1,11 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Title</title>
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap core CSS -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+
+
+    <!-- Custom styles for this template -->
+
+    <link href="css/style.css" rel="stylesheet">
+    <title>Admin</title>
+
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Form Maker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Register</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Username</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="/assignment/home.html">Home</a></li>
+                <li><a href="/assignment/profile.html">Profile</a></li>
+
+                <li><a href="/assignment/admin.html">Admin</a></li>
+                <li class="active"><a href="#">Forms<span class="sr-only">(current)</span></a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Forms</h1>
+            <ul class="nav nav-tabs nav-justified">
+                <li><a data-toggle="tab" href="/assignment/forms.html">Forms</a></li>
+                <li class="active"><a data-toggle="tab" href="#">Fields</a></li>
+            </ul>
+
+            <!--<form>-->
+                <!--<div class="form-group  col-xs-6 col-md-8 col-sm-6 col-lg-8">-->
+                    <!--<label for="firstName">First Name:</label>-->
+                    <!--<input type="text" class="form-control" id="firstName" placeholder="First Name"/>-->
+                    <!--<label for="lastName">Last Name:</label>-->
+                    <!--<input type="text" class="form-control" id="lastName" placeholder="Last Name"/>-->
+                    <!--<label for="dob">Date of Birth:</label><br>-->
+                    <!--<input type="date" class="form-control" id="dob">-->
+                    <!--<label for="gender">-->
+                        <!--Gender:-->
+                    <!--</label>-->
+                    <!--<div class="dropdown">-->
+                        <!--<button class="btn btn-default dropdown-toggle form-control" type="button" id="gender" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+                            <!--Male <span class="caret"></span>-->
+                        <!--</button>-->
+                        <!--<ul class="dropdown-menu" aria-labelledby="gender">-->
+
+                            <!--<li><a href="#">Female</a></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                <!--<div class="form-group col-md-4 col-sm-6 col-xs-6 col-lg-4">-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil" style='vertical-align:middle'></span>&ndash;&gt;-->
+                    <!--<span class="glyphicon glyphicon-pencil push"></span>-->
+                    <!--<span class="glyphicon glyphicon-plus push"></span>-->
+                    <!--<span class="glyphicon glyphicon-remove push"></span>-->
+                    <!--<span class="glyphicon glyphicon-list-alt push"></span>-->
+
+                <!--</div>-->
+                <!--<div class="form-group col-md-4 col-sm-6 col-xs-6 col-lg-4">-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil" style='vertical-align:middle'></span>&ndash;&gt;-->
+                    <!--<span class="glyphicon glyphicon-pencil push"></span>-->
+                    <!--<span class="glyphicon glyphicon-plus push"></span>-->
+                    <!--<span class="glyphicon glyphicon-remove push"></span>-->
+                    <!--<span class="glyphicon glyphicon-list-alt push"></span>-->
+
+                <!--</div>-->
+
+
+
+                <!--<div class="form-group col-md-4 col-sm-6 col-xs-6 col-lg-4">-->
+                    <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil" style='vertical-align:middle'></span>&ndash;&gt;-->
+                    <!--<span class="glyphicon glyphicon-pencil push"></span>-->
+                    <!--<span class="glyphicon glyphicon-plus push"></span>-->
+                    <!--<span class="glyphicon glyphicon-remove push"></span>-->
+                    <!--<span class="glyphicon glyphicon-list-alt push"></span>-->
+
+                <!--</div>-->
+                <!---->
+                <!--<div class="form-group col-xs-12">-->
+                    <!--<label for="license">License Agreement:</label>-->
+                <!--<div class="radio" id="license">-->
+
+                    <!--<label><input  type="radio" name="optradio" aria-checked="true" >Yes</label>-->
+                    <!--<label><input  type="radio" name="optradio">No</label>-->
+                <!--</div></div>-->
+                <!--<div class="form-group col-xs-12">-->
+                    <!--<label>Roles:</label>-->
+                    <!--<div class="checkbox">-->
+                    <!--<label for="admin">-->
+                       <!--<input type="checkbox" id="admin"/> Admin-->
+                    <!--</label>-->
+                    <!--<br>-->
+                    <!--<label for="student">-->
+                        <!--<input type="checkbox" id="student"/> Student-->
+                    <!--</label>-->
+                    <!--<br>-->
+                    <!--<label for="user">-->
+                        <!--<input type="checkbox" id="user"/> User-->
+                    <!--</label>-->
+                <!--</div>-->
+                    <!--</div>-->
+                <!--&lt;!&ndash;<button type="submit" class="btn btn-default">Submit</button>&ndash;&gt;-->
+            <!--</form>-->
+            <form>
+                <div class="row">
+                <div class="form-group col-xs-6 col-lg-6">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First Name"/>
+                    </div>
+                <div class="col-xs-6">
+                    <span class="glyphicon glyphicon-pencil push"></span>
+                    <span class="glyphicon glyphicon-plus push"></span>
+                    <span class="glyphicon glyphicon-remove push"></span>
+                    <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Last Name"/>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xs-6 col-lg-6">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" class="form-control" id="dob"/>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="gender">
+                        Gender:
+                        </label>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle form-control" type="button" id="gender" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Male <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="gender">
+                                <li>
+                                    <a href="#">Female</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label>Roles:</label>
+                        <div class="checkbox">
+                        <label for="admin">
+                        <input type="checkbox" id="admin"/> Admin
+                        </label>
+                        <br>
+                        <label for="student">
+                        <input type="checkbox" id="student"/> Student
+                        </label>
+                        <br>
+                        <label for="user">
+                        <input type="checkbox" id="user"/> User
+                        </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="license">License Agreement:</label>
+                        <div class="radio" id="license">
+
+                            <label><input  type="radio" name="optradio" aria-checked="true" >Yes</label>
+                            <label><input  type="radio" name="optradio">No</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+    <hr>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="newField">
+                            Add New Field:
+                        </label>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle form-control" type="button" id="newField" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Single Line Text <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="newField">
+                                <li>
+                                    <a href="#">Date</a>
+                                </li>
+                                <li>
+                                    <a href="#">Dropdown</a>
+                                </li>
+                                <li>
+                                    <a href="#">Checkboxes</a>
+                                </li>
+                                <li>
+                                    <a href="#">Radio buttons</a>
+                                </li>
+                                <li>
+                                    <a href="#">Paragraph</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-plus push"  data-toggle="modal" data-target="#myModal" ></span>
+
+                    </div>
+                    <!--Label:-->
+                    <!--Label-->
+                    <!--Placeholder:-->
+                    <!--Placeholder-->
+                    <!--Options-->
+                    <!--Type:-->
+                    <!--Tooltip:-->
+                    <!--Tooltip-->
+                    <!--Options:-->
+                    <!--Option 1-->
+                    <!--Option 2-->
+                    <!--Option 3-->
+                    <div class="modal fade container-fluid" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <span class="close glyphicon glyphicon-remove" data-dismiss="modal"></span>
+                                    <h4 class="modal-title">Field properties</h4>
+                                </div>
+                                <div class="modal-body container-fluid">
+                                    <form>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                            <label for="label">Label: </label>
+                                                    </div>
+                                                <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="label" placeholder="Label">
+                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                            <label for="placeholder">Placeholder: </label>
+                                                    </div>
+                                                <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="placeholder" placeholder="Placeholder">
+                                                </div>
+                                                </div>
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                            <label for="tooltip">Tooltip: </label>
+                                                </div>
+                                                <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="tooltip" placeholder="Tooltip">
+                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <label for="type">Type: </label>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle form-control" type="button" id="type" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            Options <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="type">
+                                                            <li>
+                                                                <a href="#">Option 1</a>
+                                                                <a href="#">Option 2</a>
+                                                                <a href="#">Option 3</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <label for="options">Options: </label>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <textarea class="form-control" id="options" >Option 1</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 </body>
 </html>
