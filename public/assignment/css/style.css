@@ -62,7 +62,7 @@ label{
 .glyphicon
 {
 
-    font-size: 30px;
+    font-size: 20px;
     color:#229ee5;
 }
 .glyphicon-plus{
@@ -106,6 +106,10 @@ label{
     margin-left: -20px;
 
 }
+.btn-primary{
+    background-color:#229ee5;
+}
+
 
 .nav-sidebar > li > a {
     padding-right: 20px;
@@ -132,9 +136,16 @@ label{
         padding-left: 40px;
     }
 }
+
 .main .page-header {
     margin-top: 0;
 }
+
+
+.modal-dialog {
+    width: 550px;
+}
+
 
 
 /*
