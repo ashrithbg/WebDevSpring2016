@@ -149,6 +149,7 @@ label{
     background-color: #3AC162;
 }
 
+.table-responsive td,.table-responsive th { white-space:nowrap; }
 
 
 /*
