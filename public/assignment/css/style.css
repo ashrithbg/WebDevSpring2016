@@ -60,6 +60,7 @@ p {
 
 .form-horizontal  .control-label{
     text-align:left;
+    white-space:nowrap;
 }
 label{
     text-align: left;
