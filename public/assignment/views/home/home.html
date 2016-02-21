@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
 
     <!--<link rel="icon" href="../../favicon.ico">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>Home</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -15,19 +17,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <!-- Optional theme -->
-
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">-->
 
     <!-- Latest compiled and minified JavaScript -->
 
 
     <!-- Custom styles for this template -->
 
-    <link href="css/style.css" rel="stylesheet">
-    <title>Login</title>
-
-
+    <link href="../../css/style.css" rel="stylesheet">
 </head>
+
 <body>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -41,13 +42,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="register.html">Register</a></li>
-                <li class="active"><a href="login.html">Login</a></li>
-                <li><a href="profile.html">Username</a></li>
-                <li><a href="login.html">Logout</a></li>
+                <li><a href="../users/register.view.html">Register</a></li>
+                <li><a href="../users/login.view.html">Login</a></li>
+                <li><a href="../users/profile.view.html">Username</a></li>
+                <li><a href="../users/login.view.html">Logout</a></li>
                 <li class="visible-xs"><a href="home.html">Home</a></li>
-                <li class="visible-xs"><a href="admin.html">Admin</a></li>
-                <li class="visible-xs"><a href="forms.html">Forms</a></li>
+                <li class="visible-xs"><a href="../admin/admin.view.html">Admin</a></li>
+                <li class="visible-xs"><a href="../forms/forms.view.html">Forms</a></li>
             </ul>
         </div>
     </div>
@@ -57,38 +58,26 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="admin.html">Admin</a></li>
-                <li><a href="forms.html">Forms</a></li>
+                <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+                <li><a href="../users/profile.view.html">Profile</a></li>
+                <li><a href="../admin/admin.view.html">Admin</a></li>
+                <li><a href="../forms/forms.view.html">Forms</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Login</h1>
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="inputUsername" class="col-sm-2 control-label">Username</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputUsername" placeholder="Username">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <a href="profile.html" class="btn btn-primary btn-lg">Login</a>
-                    </div>
-                </div>
-            </form>
+            <h1 class="page-header"> Welcome !</h1>
+            <p>
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+            </p>
         </div>
 
-    </div>
 </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
