@@ -3,7 +3,7 @@
 
     app.controller("MainController", MainController);
 
-    function MainController($scope) {
+    function MainController($scope,$location) {
         $scope.hello = "Hello World from AngularJS";
 
         console.log("In Main Controller");
