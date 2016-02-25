@@ -2,16 +2,17 @@
 {
     angular
         .module("FormBuilderApp")
-        .controller("ProfileController", ProfileController);
+        .controller("ProfileController", profileController);
 
-    function ProfileController($scope, $routeParams,$rootScope, UserService)
+    function profileController($scope, UserService)
     {
         $scope.update = update;
-        $scope.id = $routeParams.id;
-        $scope.user = UserService.findUserById($routeParams.id);
-
+        $scope.user = UserService.getCurrentUser()
         function update(){
-            $rootScope = UserService.updateUser($rootScope.user);
+            UserService.setCurrentUser($rootScope.user);
         }
     }
 })();
+
+
+

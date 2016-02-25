@@ -5,6 +5,7 @@
 
     function SidebarController($scope,$location) {
         $scope.hello = "Hello World from AngularJS";
+        $scope.$location= $location;
 
         console.log("In sidebar Controller");
 

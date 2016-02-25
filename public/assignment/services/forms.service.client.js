@@ -27,14 +27,29 @@
             return users;
         }
 
-        function deleteFormById(userId,callback){
+        function deleteFormById(formId,callback){
+            var form = findFormById(formId);
+            if(form!=null)
+                forms.splice(forms.indexOf(form),1);
+            else{
+                return null
+            }
 
         }
         function createFormForUser(userId,form,callback){
+            var newForm = {
+                title: form.name,
+                userId:userId
+            };
+            forms.push(form);
+            return form;
 
         }
         function updateFormById(formId,newForm,callback){
 
+        }
+        function findFormById(formId){
+            return forms[formId];
         }
 
 

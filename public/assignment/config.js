@@ -11,13 +11,9 @@
                 templateUrl:"views/admin/admin.view.html",
                 controller: "AdminController"
                 })
-                .when("/forms/forms",{
+                .when("/forms",{
                 templateUrl:"views/forms/forms.view.html",
                 controller: "FormController"
-                })
-                .when("/forms/fields",{
-                    templateUrl:"views/forms/fields.view.html",
-                    controller: "FieldsController"
                 })
                 .when("/login",{
                 templateUrl:"views/users/login.view.html",

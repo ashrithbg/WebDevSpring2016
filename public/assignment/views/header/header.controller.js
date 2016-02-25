@@ -1,14 +1,17 @@
-(function() {
-    var app = angular.module("FormBuilderApp", ["ngRoute"]);
+(function(){
+    angular
+        .module("LoginExample")
+        .controller("HeaderController", headerController);
 
-    app.controller("HeaderController", HeaderController);
-
-    function HeaderController($scope,$location) {
-        $scope.hello = "Hello World from AngularJS";
-
-        console.log("In header Controller");
+    function headerController($location, $rootScope, $scope, UserService) {
+        $scope.$location = $location;
+        $scope.logout = logout;
+        $scope.username = UserService.getCurrentUser()
 
 
+        function logout() {
+            UserService.setCurrentUser(null);
+            $location.url("/home");
+        }
     }
-
 })();

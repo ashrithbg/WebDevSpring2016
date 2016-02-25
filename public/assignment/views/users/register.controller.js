@@ -1,17 +1,38 @@
-(function()
-{
+(function(){
     angular
-        .module("FormBuilderApp")
-        .controller("RegisterController", RegisterController);
+        .module("LoginExample")
+        .controller("RegisterController", registerController);
 
-    function RegisterController($scope, $routeParams, UserService)
-    {
+    function registerController($location, $scope, UserService, $rootScope) {
+        $scope.error = null;
         $scope.register = register;
-        $scope.id = $routeParams.id;
-        $scope.user = UserService.findUserById($routeParams.id);
 
-        function register(){
-            $rootScope = UserService.createUser();
+        function register(user) {
+            $scope.error = null;
+            if (user == null) {
+                $scope.error = "Please fill in the required fields";
+                return;
+            }
+            if (!user.username) {
+                $scope.error = "Please provide a username";
+                return;
+            }
+            if (!user.password || !user.password2) {
+                $scope.error = "Please provide a password";
+                return;
+            }
+            if (user.password != user.password2) {
+                $scope.error = "Passwords must match";
+                return;
+            }
+            var user = UserService.findUserByUsername(user.username);
+            if (user != null) {
+                $scope.error = "User already exists";
+                return;
+            }
+            var newUser = UserService.createUser($scope.user);
+            UserService.setCurrentUser(newUser);
+            $location.url("/profile");
         }
     }
 })();

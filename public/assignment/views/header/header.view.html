@@ -11,13 +11,15 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="../users/register.view.html">Register</a></li>
-                <li><a href="../users/login.view.html">Login</a></li>
-                <li><a href="../users/profile.view.html">Username</a></li>
-                <li><a href="../users/login.view.html">Logout</a></li>
-                <li class="visible-xs"><a href="home.html">Home</a></li>
-                <li class="visible-xs"><a href="../admin/admin.view.html">Admin</a></li>
-                <li class="visible-xs"><a href="../forms/forms.view.html">Forms</a></li>
+                <li ng-show="currentUser" ng-class="{'active': $location.path() == '/register'}" ><a href="#/register">Register</a></li>
+                <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/login'}" ><a href="#/login" >Login</a></li>
+                <li ng-show="currentUser" ng-class="{'active': $location.path() == '/profile'}"><a href="#/profile" >{{ username }}</a></li>
+                <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/logout'}"><a href="#/logout" >Logout</a></li>
+                <li ng-show="currentUser.roles.indexOf('admin') >= 0" ng-class="{'active': $location.url()=='/admin'}">   <a href="#/admin">   Admin  </a></li>
+
+<!--<li class="visible-xs"><a href="home.html">Home</a></li>-->
+                <!--<li class="visible-xs"><a href="../admin/admin.view.html">Admin</a></li>-->
+                <!--<li class="visible-xs"><a href="../forms/forms.view.html">Forms</a></li>-->
             </ul>
         </div>
     </div>
