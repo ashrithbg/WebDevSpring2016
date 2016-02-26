@@ -24,7 +24,13 @@
 
         function findAllFormsForUser(userId,callback)
         {
-            return users;
+            var user_forms=[];
+            for(var form in forms) {
+                if(form.userId === userId){
+                    user_forms.push(form);
+                }
+            }
+            return user_forms;
         }
 
         function deleteFormById(formId,callback){
@@ -41,8 +47,8 @@
                 title: form.name,
                 userId:userId
             };
-            forms.push(form);
-            return form;
+            forms.push(newForm);
+            return newForm;
 
         }
         function updateFormById(formId,newForm,callback){

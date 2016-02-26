@@ -1,11 +1,12 @@
 (function() {
-    var app = angular.module("FormBuilderApp", ["ngRoute"]);
+    var app = angular.module("FormBuilderApp");
 
-    app.controller("SidebarController", SidebarController);
+    app.controller("SidebarController", sidebarController);
 
-    function SidebarController($scope,$location) {
-        $scope.hello = "Hello World from AngularJS";
+    function sidebarController($scope,$location) {
+
         $scope.$location= $location;
+
 
         console.log("In sidebar Controller");
 

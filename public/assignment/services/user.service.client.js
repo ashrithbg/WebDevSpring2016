@@ -18,7 +18,6 @@
             {        "_id":567, "firstName":"Edward",           "lastName":"Norton",
                 "username":"ed",     "password":"ed",      "roles": ["student"]                }
         ];
-
         var service = {
             findAllUsers : findAllUsers,
             findUserById : findUserById,
@@ -31,14 +30,13 @@
             getCurrentUser: getCurrentUser
 
         };
-
         return service;
 
         function findAllUsers(callback)
         {
             return users;
         }
-        function findUserByCredentials(username, password, callback) {
+        function findUserByCredentials(username, password) {
             for (var u in users) {
                 if (users[u].username === username &&
                         users[u].password === password) {
@@ -67,7 +65,7 @@
         }
 
         function updateUser (userId, user, callback) {
-            var user = model.findUserById (userId);
+            var user = findUserById (userId);
             if (user != null) {
                 user.firstName = currentUser.firstName;
                 user.lastName = currentUser.lastName;

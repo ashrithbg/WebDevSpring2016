@@ -7,9 +7,9 @@
     function profileController($scope, UserService)
     {
         $scope.update = update;
-        $scope.user = UserService.getCurrentUser()
+        $scope.profile = UserService.getCurrentUser();
         function update(){
-            UserService.setCurrentUser($rootScope.user);
+            UserService.setCurrentUser($scope.profile);
         }
     }
 })();

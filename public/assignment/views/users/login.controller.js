@@ -4,14 +4,21 @@
         .module("FormBuilderApp")
         .controller("LoginController", LoginController);
 
-    function LoginController($scope,$location, $routeParams,$rootScope, UserService)
+    function LoginController($scope,$location,$rootScope, UserService)
     {
         $scope.login = login;
-        $scope.id = $routeParams.id;
-        $scope.user = UserService.findUserById($routeParams.id);
+        $scope.$location = $location;
 
-        function login(){
-            $rootScope = UserService.findUserByCredentials($rootScope.user);
+
+        function login (user) {
+            var found_user = UserService.findUserByCredentials(user.username,user.password);
+            if (found_user) {
+                $rootScope.currentUser = found_user;
+               // $rootScope.$broadcast("profile_name");
+                console.log(found_user);
+                UserService.setCurrentUser(found_user);
+                $location.url("/profile");
+            }
         }
     }
 })();

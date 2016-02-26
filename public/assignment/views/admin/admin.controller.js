@@ -2,9 +2,13 @@
 {
     angular
         .module("FormBuilderApp")
-        .controller("AdminController", AdminController);
+        .controller("AdminController", adminController);
 
-    function AdminController($scope, $location, $routeParams,$rootScope, FormService){
+    function adminController($scope, $location, $routeParams,$rootScope, FormService){
+        $scope.admin = admin;
 
+        function admin(){
+            console.log("admin controller");
+        }
     }
 })();

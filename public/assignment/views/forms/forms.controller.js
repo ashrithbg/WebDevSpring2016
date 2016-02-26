@@ -2,9 +2,9 @@
 {
     angular
         .module("FormBuilderApp")
-        .controller("FormController", FormController);
+        .controller("FormController", formController);
 
-    function FormController($scope, $location, $routeParams,$rootScope, FormService)
+    function formController($scope, $location, $routeParams,$rootScope, FormService)
     {
         $scope.login = login;
         $scope.addForm = addForm;
