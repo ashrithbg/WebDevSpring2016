@@ -7,7 +7,6 @@
 
         $scope.$location= $location;
 
-
         console.log("In sidebar Controller");
 
 

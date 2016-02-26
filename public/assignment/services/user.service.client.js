@@ -58,7 +58,8 @@
         function createUser (user, callback) {
             var user = {
                 username: user.username,
-                password: user.password
+                password: user.password,
+                email: user.email
             };
             users.push(user);
             return user;

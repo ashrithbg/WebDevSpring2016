@@ -17,11 +17,11 @@
                 $scope.error = "Please provide a username";
                 return;
             }
-            if (!user.password || !user.password2) {
+            if (!user.password || !user.confirmPassword) {
                 $scope.error = "Please provide a password";
                 return;
             }
-            if (user.password != user.password2) {
+            if (user.password != user.confirmPassword) {
                 $scope.error = "Passwords must match";
                 return;
             }

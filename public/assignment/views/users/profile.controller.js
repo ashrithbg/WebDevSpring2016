@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("ProfileController", profileController);
 
-    function profileController($scope, UserService)
+    function profileController($scope,UserService)
     {
         $scope.update = update;
         $scope.profile = UserService.getCurrentUser();

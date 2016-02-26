@@ -4,14 +4,13 @@
         .module("FormBuilderApp")
         .controller("FormController", formController);
 
-    function formController($scope, $location, $routeParams,$rootScope, FormService)
-    {
+    function formController($scope,$location,$rootScope, FormService)
+    {    console.log("here"+$rootScope.currentUser);
         $scope.login = login;
         $scope.addForm = addForm;
         $scope.updateForm = updateForm;
         $scope.deleteForm = deleteForm;
         $scope.selectForm = selectForm;
-        $scope.id = $routeParams.id;
 
         var service ={
             login: login,
@@ -23,10 +22,15 @@
 
         return service;
 
-        $scope.user = UserService.findUserById($routeParams.id);
+        //$scope.user = UserService.findUserById($routeParams.id);
 
         function login(){
-            $rootScope = UserService.findUserByCredentials($rootScope.user);
+            console.log("here"+$rootScope.currentUser);
+            if(typeof $rootScope.currentUser === 'undefined'){
+
+                $location.url("/home");
+            }
+
         }
         function addForm(form){
             var newForm = FormService.createFormForUser($rootScope.user.id, form);
