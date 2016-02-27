@@ -1,13 +1,12 @@
-(function()
-{
+"use strict";
+(function(){
     angular
         .module("FormBuilderApp")
         .controller("ProfileController", profileController);
 
     function profileController($scope,UserService)
-    {
+    {   $scope.profile = UserService.getCurrentUser();
         $scope.update = update;
-        $scope.profile = UserService.getCurrentUser();
         function update(){
             UserService.setCurrentUser($scope.profile);
         }

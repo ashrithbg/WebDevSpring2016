@@ -34,16 +34,17 @@
 
         function findAllUsers(callback)
         {
-            return users;
+            callback(users);
         }
-        function findUserByCredentials(username, password) {
+        function findUserByCredentials(username, password,callback) {
             for (var u in users) {
                 if (users[u].username === username &&
                         users[u].password === password) {
-                    return users[u];
+                    callback(users[u]);
                 }
             }
-            return null;
+            callback(null);
+
         }
 
         function deleteUserById(userId,callback){
@@ -51,9 +52,7 @@
             var user = findUserById(userId);
             if(user!=null)
                 users.splice(users.indexOf(user),1);
-            else{
-                return null
-            }
+            callback(users);
         }
         function createUser (user, callback) {
             var user = {
@@ -62,24 +61,27 @@
                 email: user.email
             };
             users.push(user);
-            return user;
+            callback(user);
         }
 
         function updateUser (userId, user, callback) {
-            var user = findUserById (userId);
+            var found_user = findUserById (userId);
             if (user != null) {
-                user.firstName = currentUser.firstName;
-                user.lastName = currentUser.lastName;
-                user.password = currentUser.password;
-                return user;
+                found_user.username = user.username;
+                found_user.firstName = user.firstName;
+                found_user.lastName = user.lastName;
+                found_user.password = user.password;
+                found_user.email = user.email;
+                callback(found_user);
+
             } else {
-                return null;
+                callback(null);
             }
         }
         function findUserById(id) {
             return users[id];
         }
-        function findUserByUsername (username, callback) {
+        function findUserByUsername (username) {
             for (var u in users) {
                 if (users[u].username === username) {
                     return users[u];

@@ -1,5 +1,5 @@
-(function()
-{
+"use strict";
+(function(){
     angular
         .module("FormBuilderApp")
         .controller("LoginController",LoginController);
@@ -11,12 +11,17 @@
 
 
         function login (user) {
-            var found_user = UserService.findUserByCredentials(user.username,user.password);
-            if (found_user) {
-                console.log(found_user);
-                UserService.setCurrentUser(found_user);
-                $location.url("/profile");
-            }
+            UserService.findUserByCredentials(user.username,
+                user.password,
+                function(found_user){
+                    if (found_user) {
+                        console.log(found_user);
+                        UserService.setCurrentUser(found_user);
+                        $location.url("/profile");
+                    }
+                }
+            );
+
         }
     }
 })();

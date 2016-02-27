@@ -1,50 +1,86 @@
+"use strict";
 (function()
 {
     angular
         .module("FormBuilderApp")
         .controller("FormController", formController);
 
-    function formController($scope,$location,$rootScope, FormService)
-    {    console.log("here"+$rootScope.currentUser);
-        $scope.login = login;
+    function formController($scope,$location,$rootScope,FormService,UserService)
+    {
+        var currentUser = UserService.getCurrentUser();
+        if(typeof currentUser === 'undefined'){
+            $location.url("/home");
+        }
+        else{
+            FormService.findAllFormsForUser(
+                currentUser._id,
+                function(forms){
+                    $scope.forms =forms;
+                });
+        }
+        $scope.$location = $location;
         $scope.addForm = addForm;
         $scope.updateForm = updateForm;
         $scope.deleteForm = deleteForm;
         $scope.selectForm = selectForm;
+        var selectedIndex = -1;
 
-        var service ={
-            login: login,
-            addForm: addForm,
-            updateForm: updateForm,
-            deleteForm: deleteForm,
-            selectForm: selectForm
-        };
-
-        return service;
-
-        //$scope.user = UserService.findUserById($routeParams.id);
-
-        function login(){
-            console.log("here"+$rootScope.currentUser);
-            if(typeof $rootScope.currentUser === 'undefined'){
-
-                $location.url("/home");
-            }
-
-        }
         function addForm(form){
-            var newForm = FormService.createFormForUser($rootScope.user.id, form);
-            return newForm;
-        }
-        function updateForm(index){
-            var form = forms.indexOf()
+            if(!form || !form.title)
+                return;
+            FormService.createFormForUser(
+                currentUser._id,
+                form,
+                function(form){
+                    FormService.findAllFormsForUser(
+                        currentUser._id,
+                        function(forms){
+                            $scope.forms = forms;
+                            $scope.form = {};
+                        });
+                }
+            )
+
 
         }
-        function deleteForm(userId, callback){
+        function updateForm(form){
+            FormService.updateFormById(form._id,
+                form,
+                function(form){
+                    if (selectedIndex>=0){
+                        $scope.forms[selectedIndex]=form;
+                        $scope.form={};
+                        selectedIndex=-1;
+                    }
+
+                }
+            );
+        }
+        function deleteForm(index){
+            var forms = $scope.forms;
+            var formId = forms[index]._id;
+            FormService.deleteFormById(
+                formId,
+                function(forms){
+                    FormService.findAllFormsForUser(
+                        currentUser._id,
+                        function(deletedForms){
+                            $scope.forms = deletedForms;
+                        }
+                    )
+                });
+            console.log($scope.forms);
 
         }
 
-        function selectForm(){
+        function selectForm(index){
+            selectedIndex = index;
+            var selectedForm= {
+                _id: $scope.forms[index]._id,
+                title: $scope.forms[index].title,
+                userId: $scope.forms[index].userId
+            };
+            $scope.form = selectedForm;
 
         }
 

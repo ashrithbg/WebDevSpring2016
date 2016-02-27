@@ -1,9 +1,10 @@
+"use strict";
 (function(){
     angular
         .module("FormBuilderApp")
         .controller("RegisterController", registerController);
 
-    function registerController($location, $scope, UserService, $rootScope) {
+    function registerController($location, $scope, UserService) {
         $scope.error = null;
         $scope.register = register;
 
@@ -30,8 +31,10 @@
                 $scope.error = "User already exists";
                 return;
             }
-            var newUser = UserService.createUser($scope.user);
-            UserService.setCurrentUser(newUser);
+             UserService.createUser($scope.user,function(newUser){
+                UserService.setCurrentUser(newUser);
+            });
+
             $location.url("/profile");
         }
     }
