@@ -5,8 +5,11 @@
         .controller("ProfileController", profileController);
 
     function profileController($scope,UserService)
-    {   $scope.profile = UserService.getCurrentUser();
+    {
+        UserService.logged_in();
+        $scope.profile = UserService.getCurrentUser();
         $scope.update = update;
+
         function update(){
             UserService.setCurrentUser($scope.profile);
         }

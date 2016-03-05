@@ -1,22 +1,22 @@
 (function()
 {
     angular
-        .module("FormBuilderApp")
+        .module("ShortKutApp")
         .factory("UserService", UserService);
 
     function UserService($location,$rootScope)
     {
         var users = [
             {        "_id":123, "firstName":"Alice",            "lastName":"Wonderland",
-                "username":"alice",  "password":"alice",   "roles": ["student"]                },
+                "username":"alice",  "password":"alice",   "roles": ["Director"],"followers":10 },
             {        "_id":234, "firstName":"Bob",              "lastName":"Hope",
-                "username":"bob",    "password":"bob",     "roles": ["admin"]                },
+                "username":"bob",    "password":"bob",     "roles": ["Actor"],"followers":35},
             {        "_id":345, "firstName":"Charlie",          "lastName":"Brown",
-                "username":"charlie","password":"charlie", "roles": ["faculty"]                },
+                "username":"charlie","password":"charlie", "roles": ["Actor"], followers:20},
             {        "_id":456, "firstName":"Dan",              "lastName":"Craig",
-                "username":"dan",    "password":"dan",     "roles": ["faculty", "admin"]},
+                "username":"dan",    "password":"dan",     "roles": ["Producer"], followers:45},
             {        "_id":567, "firstName":"Edward",           "lastName":"Norton",
-                "username":"ed",     "password":"ed",      "roles": ["student"]                }
+                "username":"ed",     "password":"ed",      "roles": ["Cinematographer"],followers:13}
         ];
         var service = {
             findAllUsers : findAllUsers,
@@ -29,16 +29,23 @@
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             logged_in:logged_in,
-            getFollowersById:getFollowersById
+            getTrendingUsers: getTrendingUsers
 
         };
         return service;
+
         function logged_in(){
             if(typeof $rootScope.currentUser === 'undefined') {
                 $location.url("/home");
             }
         }
-
+        function getTrendingUsers(callback){
+            var trendingUsers = users;
+            trendingUsers.sort(function(a, b) {
+                return parseFloat(a.followers) - parseFloat(b.followers);
+            });
+            callback(trendingUsers);
+        }
         function findAllUsers(callback)
         {
             callback(users);
@@ -84,10 +91,6 @@
             } else {
                 callback(null);
             }
-        }
-
-        function getFollowersById(userId,callback){
-
         }
         function findUserById(id) {
             return users[id];

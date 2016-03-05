@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="SearchController">
     <div class="row">
         <div class="col-sm-12">
             <h1 class="page-header">ShortKut</h1>
@@ -7,8 +7,10 @@
                     <form role="form" class="search has-button">
 
                         <div class="form-group">
-                            <input type="search" placeholder="Search shorts..." class="form-control form-control-lg">
-                            <button class="btn btn-warning" type="button">Search</button>
+                            <input type="search" placeholder="Search shorts..." class="form-control form-control-lg" ng-model="query.value">
+                            <a href="#/search">
+                            <button class="btn btn-warning" type="button" ng-click="fetchShort(query.value)">Search</button>
+                            </a>
                         </div>
                         <!-- /form-group -->
                     </form>
@@ -21,4 +23,10 @@
 
         </div>
     </div>
+    <div class="row" >
+
+    </div>
+    <!--<div class="row" ng-show="currentProjectUrl" ng-model="currentProjectUrl" ng-keypress="reset()">-->
+        <!--<iframe ng-src="{{currentProjectUrl}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>-->
+    <!--</div>-->
 </div>

@@ -5,19 +5,16 @@
         .module("FormBuilderApp")
         .controller("FormController", formController);
 
-    function formController($scope,$location,$rootScope,FormService,UserService)
+    function formController($scope,$location,FormService,UserService)
     {
-        var currentUser = UserService.getCurrentUser();
-        if(typeof currentUser === 'undefined'){
-            $location.url("/home");
-        }
-        else{
-            FormService.findAllFormsForUser(
-                currentUser._id,
-                function(forms){
-                    $scope.forms =forms;
-                });
-        }
+
+        UserService.logged_in();
+        FormService.findAllFormsForUser(
+            currentUser._id,
+            function(forms){
+                $scope.forms =forms;
+            });
+
         $scope.$location = $location;
         $scope.addForm = addForm;
         $scope.updateForm = updateForm;

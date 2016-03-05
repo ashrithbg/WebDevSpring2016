@@ -1,3 +1,53 @@
-<div class="container-fluid" id="search-container" ng-controller="SearchController">
+<div class="container-fluid" ng-controller="SearchController">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="page-header">ShortKut</h1>
+            <div class="featurette">
+                <div class="featurette-inner text-center">
+                    <form role="form" class="search has-button">
 
+                        <div class="form-group">
+                            <input type="search" placeholder="Search shorts..." class="form-control form-control-lg" ng-model="query">
+                            <!--<a href="#/search/{{query}}">-->
+                                <!--<button class="btn btn-warning" type="button" ng-click="search(query)">Search</button>-->
+                            <!--</a>-->
+                            <a href="#/search/{{query}}" class="btn btn-warning btn-block">
+                                Search
+                            </a>
+                        </div>
+                        <!-- /form-group -->
+                    </form>
+                    <!-- /.max-width on this form -->
+
+                </div>
+                <!-- /.featurette-inner (display:table-cell) -->
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" ng-if="shorts">
+    <h3>Search Results</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Short</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="short in shorts">
+            <td>
+                <a href="#/details/{{short.id}}">
+                    {{short.name}}
+                </a>
+            </td>
+            <td>
+                <iframe ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

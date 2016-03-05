@@ -5,11 +5,19 @@
 
             $routeProvider.
                 when("/",{
-                    templateUrl:"views/home/home.view.html",
-                    controller: "HomeController"
+                    templateUrl:"views/search/search.view.html",
+                    controller: "SearchController"
                 })
                 . when("/search",{
                     templateUrl:"views/search/search.view.html",
+                    controller: "SearchController"
+                })
+                .when("/details/:id", {
+                    templateUrl: "views/details/short.details.html",
+                    controller: "ShortDetailsController as model"
+                })
+                .when("/search/:query", {
+                    templateUrl: "views/search/search.view.html",
                     controller: "SearchController"
                 })
                 .when("/admin",{

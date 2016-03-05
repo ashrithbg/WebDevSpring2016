@@ -4,13 +4,14 @@
         .module("FormBuilderApp")
         .controller("AdminController", adminController);
 
-    function adminController($scope, $location, $routeParams,$rootScope, FormService){
+    function adminController($scope,UserService){
+        UserService.logged_in();
         $scope.admin = admin;
 
-        if(typeof $rootScope.currentUser === 'undefined'){
-
-            $location.url("/home");
-        }
+        //if(typeof $rootScope.currentUser === 'undefined'){
+        //
+        //    $location.url("/home");
+        //}
 
         function admin(){
             console.log("In admin");

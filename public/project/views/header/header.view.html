@@ -8,15 +8,22 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">ShortKut</a>
+                    <a class="navbar-brand" href="#/">ShortKut</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Login</a></li>
-                        <li><a href="#">Register</a></li>
-                        <li><a href="#">About</a></li>
+                        <!--<li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>-->
+                        <!--<li><a href="#/login">Login</a></li>-->
+                        <!--<li><a href="#/register">Register</a></li>-->
+                        <!--<li><a href="#/about">About</a></li>-->
+
+                        <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/login'}" ><a href="#/login">Login</a></li>
+                        <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/register'}" ><a href="#/register" >Register</a></li>
+                        <li ng-show="currentUser" ng-class="{'active': $location.path() == '/profile'}"><a href="#/profile" >{{ currentUser.username }}</a></li>
+                        <li ng-show="currentUser" ng-class="{'active': $location.path() == '/about'}"><a href="#/about" >About</a></li>
+                        <li ng-show="currentUser" ng-click="logout()">
+                            <a href="#/" > Logout </a></li>
 
                     </ul>
                 </div>
