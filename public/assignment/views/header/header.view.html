@@ -18,9 +18,8 @@
                     <a href="#/" > Logout </a></li>
                 <li ng-show="currentUser.roles.indexOf('admin') >= 0" ng-class="{'active': $location.url()=='/admin'}">   <a href="#/admin">   Admin  </a></li>
 
-<!--<li class="visible-xs"><a href="home.html">Home</a></li>-->
-                <!--<li class="visible-xs"><a href="../admin/admin.view.html">Admin</a></li>-->
-                <!--<li class="visible-xs"><a href="../forms/forms.view.html">Forms</a></li>-->
+                <li class="visible-xs" ng-show="currentUser" ng-class="{'active': $location.path() == '/home'}"><a href="#/home">Home</a></li>
+                <li ng-show="currentUser" ng-class="{'active': $location.path() == '/forms'}" class="visible-xs"><a href="#/forms">Forms</a></li>
             </ul>
         </div>
     </div>
