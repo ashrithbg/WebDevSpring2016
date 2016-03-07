@@ -13,11 +13,17 @@
     <!--<link rel="stylesheet" href="css/dashboard.css">-->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/upload_style.css">
-    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.1/ng-file-upload.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.7/angular-strap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.7/angular-strap.tpl.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.0/holder.min.js"></script>
-    <script src="upload.js"></script>
+    <script src="//apis.google.com/js/client:plusone.js"></script>
+    <script src="ng-youtube-upload.js"></script>
+    <script src="cors_upload.js"></script>
     <script src="app.js"></script>
     <script src="config.js"></script>
     <script src="service/user.service.client.js"></script>
@@ -30,6 +36,7 @@
     <script src="views/users/profile.controller.js"></script>
     <script src="views/search/search.controller.js"></script>
     <script src="views/details/short.details.controller.js"></script>
+    <script src="views/shorts/upload.short.controller.js"></script>
 
 
 </head>
@@ -43,7 +50,7 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

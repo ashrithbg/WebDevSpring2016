@@ -1,4 +1,3 @@
-function(){
 
 function handleFileSelect(evt) {
     evt.stopPropagation();
@@ -85,7 +84,7 @@ function updateProgress(progress) {
     element.setAttribute('style', 'width:'+progress+'%');
     element.innerHTML = progress+'%';
 }
-})();
+
 
 
 

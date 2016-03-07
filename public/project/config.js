@@ -37,7 +37,10 @@
             }).when("/profile",{
                 templateUrl:"views/users/profile.view.html",
                 controller: "ProfileController"
-            }).otherwise({
+            }).when("/upload",{
+                    templateUrl:"views/shorts/upload.short.html",
+                    controller: "UploadController"
+                }).otherwise({
                 redirectTo: "/"
             });
 
