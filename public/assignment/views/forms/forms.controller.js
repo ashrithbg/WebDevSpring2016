@@ -16,11 +16,12 @@
             });
 
         $scope.$location = $location;
+        var selectedIndex = -1;
         $scope.addForm = addForm;
         $scope.updateForm = updateForm;
         $scope.deleteForm = deleteForm;
         $scope.selectForm = selectForm;
-        var selectedIndex = -1;
+
 
         function addForm(form){
             if(!form || !form.title)
@@ -36,7 +37,7 @@
                             $scope.form = {};
                         });
                 }
-            )
+            );
 
 
         }

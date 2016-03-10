@@ -6,19 +6,38 @@ angular.module('ng-youtube-upload', [
         'ngFileUpload',
         'mgcrea.ngStrap'
     ])
-    .run(['$window', '$rootScope', function ($window, $rootScope) {
+    .run(['$http','$window', '$rootScope', function ($http,$window, $rootScope) {
 
         if (!angular.element('link#youtubeVideoCSS').length) {
             angular.element('head').append('<style id="youtubeVideoCSS">#channel-image{width:2em;height:2em;vertical-align:middle}#channel-name{margin-left:.2em;margin-right:.2em}#disclaimer{font-size:.75em;color:#aeaeae;max-width:350px}body{font-family:"Open Sans",sans-serif;font-size:1.5em}.post-sign-in{display:none}.during-upload{display:none}.post-upload{display:none}label{display:block}progress{font-size:.75em;width:15em;margin-bottom:1em;padding:.5em;font-family:"Open Sans",sans-serif}textarea{height:7em}.btn-file{position:relative;overflow:hidden}.btn-file input[type=file]{position:absolute;top:0;right:0;min-width:100%;min-height:100%;font-size:100px;text-align:right;filter:alpha(opacity=0);opacity:0;outline:none;background:#fff;cursor:inherit;display:block}</style>');
         }
 
-        $window.signinCallback = function (authResult) {
-            if (authResult && authResult.access_token) {
-                $rootScope.$broadcast('event:google-plus-signin-success', authResult);
-            } else {
-                $rootScope.$broadcast('event:google-plus-signin-failure', authResult);
+        //$window.signinCallback =function(authResult){
+        $http({
+            method: 'POST',
+            url: 'https://accounts.google.com/o/oauth2/token',
+            params:{
+                access_type:"refresh_token",
+                client_id:"176797207413-8bmlj6ev8l3m4ur5dk45mr729rshpkg3.apps.googleusercontent.com",
+                client_secret:"KxYD4NPtROmhmdTaEDvV5EBB",
+                response_type:"code",
+                redirect_uri:"http://localhost:3000",
             }
-        };
+        }).then(function successCallback(response) {
+           console.log(response);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    //}
+
+
+        //$window.signinCallback = function (authResult) {
+        //    if (authResult && authResult.access_token) {
+        //        $rootScope.$broadcast('event:google-plus-signin-success', authResult);
+        //    } else {
+        //        $rootScope.$broadcast('event:google-plus-signin-failure', authResult);
+        //    }
+        //};
 
     }])
     .directive('youtubeUploader', ['$window', '$alert', function ($window, $alert) {
@@ -85,7 +104,6 @@ angular.module('ng-youtube-upload', [
                     state: '',
                     showprivacy: false,
                     videoName: "Upload a Video",
-                    videoDesc:"Default desc",
                     clientid: "YOUR CLIENT ID HERE"
                 };
 
@@ -292,16 +310,14 @@ angular.module('ng-youtube-upload', [
                             type: 'warning',
                             duration: 3
                         });
-                    }
-                    //else if ($scope.videoDesc == "") {
-                    //    $alert({
-                    //        content: "Please enter a description for your video.",
-                    //        placement: 'top-right',
-                    //        type: 'warning',
-                    //        duration: 3
-                    //    });
-                    //}
-                    else if ($scope.status == status.uploading) {
+                    } else if ($scope.videoDesc == "") {
+                        $alert({
+                            content: "Please enter a description for your video.",
+                            placement: 'top-right',
+                            type: 'warning',
+                            duration: 3
+                        });
+                    } else if ($scope.status == status.uploading) {
                         $alert({
                             content: "Please wait until your video has finished uploading before uploading another one.",
                             placement: 'top-right',

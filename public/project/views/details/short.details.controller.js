@@ -5,8 +5,7 @@
         .module("ShortKutApp")
         .controller("ShortDetailsController", ShortDetailsController);
 
-    function ShortDetailsController($scope, $http, $routeParams, VimeoService) {
-
+    function ShortDetailsController($scope, $http, $routeParams, ShortService) {
         var vm = this;
 
         var id = $routeParams.id;
@@ -18,12 +17,15 @@
         init();
 
         function fetchShort(id) {
-            VimeoService.findShortsById(id, renderDetails);
+            ShortService.findShortById(id, renderDetails);
         }
 
-        function renderDetails(shorts) {
-           // console.log("shorts"+$scope.shorts);
-            vm.details = shorts;
+        function renderDetails(response) {
+            //console.log("id is"+response.id);
+            //console.log("id is"+response.title);
+            //console.log("id is"+response.description);
+            if(response!=null)
+                vm.details = response;
         }
     }
 })();

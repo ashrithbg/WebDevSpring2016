@@ -1,0 +1,66 @@
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="ShortController">
+    <form>
+        <h1 class="page-header">Shorts</h1>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input id="title" type="text" class="form-control" placeholder="Title" ng-model="short.title">
+        </div>
+        <div class="form-group">
+            <label for="title">Description</label>
+            <textarea class="form-control" id="options" ng-model="short.description" placeholder="Description">Description</textarea>
+        </div>
+        <div class="form-group">
+            <label for="language">Language</label>
+            <input id="language" type="text" class="form-control" placeholder="Title" ng-model="short.language">
+        </div>
+        <div class="form-group">
+            <label for="url">URL</label>
+            <input id="url" type="text" class="form-control" placeholder="Short URL" ng-model="short.url">
+        </div>
+        <div class="form-group">
+            <a class="btn btn-primary btn-lg" ng-click="addShort(short)">Add</a>
+            <a class="btn btn-primary btn-lg" ng-click="updateShort(short)">Update</a>
+        </div>
+    </form>
+
+    <div class="tab-content table-responsive" ng-if="shorts">
+        <h3>Your Shorts</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Short</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="short in shorts">
+                <td>
+                    <a href="#/details/{{short.id}}">
+                        {{short.title}}
+                    </a>
+                </td>
+                <td>
+                    <iframe ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+                </td>
+                <td>
+                    <button
+                            ng-click="selectShort($index)"
+                            class="btn btn-default">
+                        Select
+                    </button>
+                    <button
+                            ng-click="deleteShort($index)"
+                            class="btn btn-danger">
+                        Delete
+                    </button>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+

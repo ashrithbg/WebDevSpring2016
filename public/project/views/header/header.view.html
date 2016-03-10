@@ -22,8 +22,9 @@
                         <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/register'}" ><a href="#/register" >Register</a></li>
                         <li ng-show="currentUser" ng-class="{'active': $location.path() == '/profile'}"><a href="#/profile" >{{ currentUser.username }}</a></li>
                         <li ng-show="currentUser" ng-class="{'active': $location.path() == '/about'}"><a href="#/about" >About</a></li>
-                        <li ng-show="currentUser" ng-click="logout()">
-                            <a href="#/" > Logout </a></li>
+                        <li ng-show="currentUser" ng-class="{'active': $location.path() == '/shorts'}"><a href="#/shorts" >Shorts</a></li>
+                        <li ng-show="currentUser" ng-class="{'active': $location.path() == '/posts'}"><a href="#/posts" >Posts</a></li>
+                        <li ng-show="currentUser" ng-click="logout()"><a href="#/" > Logout </a></li>
 
                     </ul>
                 </div>
