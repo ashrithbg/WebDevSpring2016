@@ -17,29 +17,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.1/ng-file-upload.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.7/angular-strap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.7/angular-strap.tpl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.0/holder.min.js"></script>
-    <script src="//apis.google.com/js/client:plusone.js"></script>
-    <!--<script src="ng-youtube-upload.js"></script>-->
-    <script src="cors_upload.js"></script>
     <script src="app.js"></script>
     <script src="config.js"></script>
     <script src="service/user.service.client.js"></script>
     <script src="service/shorts.service.client.js"></script>
     <script src="service/vimeo.service.client.js"></script>
+    <script src="views/search/search.controller.js"></script>
+    <script src="service/youtube.service.client.js"></script>
     <script src="views/home/home.controller.js"></script>
     <script src="views/header/header.controller.js"></script>
     <script src="views/main/main.controller.js"></script>
     <script src="views/users/login.controller.js"></script>
     <script src="views/users/register.controller.js"></script>
     <script src="views/users/profile.controller.js"></script>
-    <script src="views/search/search.controller.js"></script>
     <script src="views/details/short.details.controller.js"></script>
+    <script src="views/details/post.details.controller.js"></script>
     <script src="views/shorts/short.controller.js"></script>
     <script src="views/posts/posts.controller.js"></script>
     <script src="service/post.service.client.js"></script>
+    <script src="views/details/search.details.controller.js"></script>
 
 
 </head>
@@ -48,8 +44,6 @@
 </div>
 
 <div class="container-fluid">
-    <div ng-include="'views/carousel/carousel.view.html'">
-    </div>
     <div class="row">
         <div  ng-view>
         </div>

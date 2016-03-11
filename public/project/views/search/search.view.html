@@ -1,4 +1,4 @@
-<div class="container-fluid" ng-controller="SearchController">
+<div ng-controller="SearchController">
     <div class="row">
         <div class="col-sm-12">
             <h1 class="page-header">ShortKut</h1>
@@ -9,7 +9,7 @@
                         <div class="form-group">
                             <input type="search" placeholder="Search shorts..." class="form-control form-control-lg" ng-model="query">
                             <!--<a href="#/search/{{query}}">-->
-                                <!--<button class="btn btn-warning" type="button" ng-click="search(query)">Search</button>-->
+                            <!--<button class="btn btn-warning" type="button" ng-click="search(query)">Search</button>-->
                             <!--</a>-->
                             <a href="#/search/{{query}}" class="btn btn-warning btn-block">
                                 Search
@@ -40,8 +40,8 @@
         <tbody>
         <tr ng-repeat="short in shorts">
             <td>
-                <a href="#/details/{{short.id}}">
-                    {{short.name}}
+                <a href="#/details/search/{{short.id}}">
+                    {{short.title}}
                 </a>
             </td>
             <td>

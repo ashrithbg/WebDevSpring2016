@@ -16,7 +16,6 @@
                 findPostById:findPostById,
                 findAllPostsByUser:findAllPostsByUser,
                 createPostForUser:createPostForUser,
-                findPostById:findPostById,
                 deletePostById:deletePostById,
                 updatePostById:updatePostById
             };
@@ -76,15 +75,15 @@
 
             }
 
-            function findPostById(postId){
-                console.log("form id"+postId);
+            function findPostById(postId,callback){
+                console.log("post id"+postId);
                 for(var p in posts){
-                    if (posts[p].id === postId){
+                    if (posts[p].id == postId){
                         console.log(posts[p]);
-                        return posts[p];
+                        callback(posts[p]);
                     }
                 }
-                return null;
+                callback(null);
             }
 
 

@@ -12,9 +12,15 @@
                     templateUrl:"views/search/search.view.html",
                     controller: "SearchController"
                 })
-                .when("/details/:id", {
+                .when("/details/shorts/:id", {
                     templateUrl: "views/details/short.details.html",
                     controller: "ShortDetailsController as model"
+                }).when("/details/posts/:id", {
+                    templateUrl: "views/details/post.details.html",
+                    controller: "PostDetailsController as model"
+                }).when("/details/search/:id", {
+                    templateUrl: "views/details/search.details.html",
+                    controller: "SearchDetailsController as model"
                 })
                 .when("/search/:query", {
                     templateUrl: "views/search/search.view.html",

@@ -4,9 +4,8 @@
         .module("ShortKutApp")
         .controller("SearchController", SearchController);
 
-    function SearchController($scope, $routeParams, $location, VimeoService) {
+    function SearchController($scope, $sce,$routeParams,YoutubeService) {
         console.log("In search controller");
-
         var query = $routeParams.query;
         console.log(query);
         if(query) {
@@ -15,12 +14,13 @@
         $scope.search = search;
 
         function search(query) {
-            var url=VimeoService.findShortsByQuery(query, renderShorts);
+            var obj = YoutubeService.findShortsByQuery(query, renderShorts);
         }
 
-        function renderShorts(shorts) {
-            $scope.shorts=[];
-            $scope.shorts.push(shorts);
+
+        function renderShorts(results) {
+            var searchResults = [];
+           $scope.shorts=results;
         }
     }
 })();

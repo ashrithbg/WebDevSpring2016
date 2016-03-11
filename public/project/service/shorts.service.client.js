@@ -71,7 +71,7 @@
         function getShortsByUser(userId,callback){
             var userShorts=[];
             for(var s in shorts) {
-                if(shorts[p].userId === userId){
+                if(shorts[s].userId === userId){
                     console.log(shorts[s].title);
                     userShorts.push(shorts[s]);
                 }
