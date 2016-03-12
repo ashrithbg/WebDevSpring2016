@@ -4,7 +4,7 @@
             <h1 class="page-header">ShortKut</h1>
             <div class="featurette">
                 <div class="featurette-inner text-center">
-                    <form role="form" class="search has-button">
+                    <form role="form" class="search has-button ng-pristine ng-valid">
 
                         <div class="form-group">
                             <input type="search" placeholder="Search shorts..." class="form-control form-control-lg" ng-model="query">
@@ -39,12 +39,12 @@
         </thead>
         <tbody>
         <tr ng-repeat="short in shorts">
-            <td>
+            <td class="col-sm-12">
                 <a href="#/details/search/{{short.id}}">
                     {{short.title}}
                 </a>
             </td>
-            <td>
+            <td class="col-sm-12">
                 <iframe ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
             </td>
         </tr>
