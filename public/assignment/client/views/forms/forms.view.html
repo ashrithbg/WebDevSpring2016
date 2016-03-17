@@ -1,0 +1,39 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="FormController">
+    <h1 class="page-header">Forms</h1>
+    <ul class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#">Forms</a></li>
+        <li><a href="#/">Fields</a></li>
+    </ul>
+
+    <div class="tab-content table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <th>
+                <span class="caret"></span>Form Name
+            </th>
+            <th>
+                <span class="caret"></span>
+                Action
+            </th>
+            </thead>
+            <tbody>
+            <tr>
+
+                <td><input type="text" class="form-control" placeholder="name" ng-model="form.title"></td>
+                <td>
+                    <span ng-click="addForm(form)" class="glyphicon glyphicon-plus"></span>
+                    <span ng-click="updateForm(form)" class="glyphicon glyphicon-ok"></span>
+                </td>
+            </tr>
+            <tr ng-repeat="form in forms">
+                <td><a href="fields.view.html" >{{form.title}}</a></td>
+                <td>
+                    <span ng-click="deleteForm($index)" class="glyphicon glyphicon-remove"></span>
+                    <span ng-click="selectForm($index)" class="glyphicon glyphicon-pencil"></span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

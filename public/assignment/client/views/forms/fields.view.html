@@ -1,0 +1,212 @@
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Profile</h1>
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li><a href="#/profile">Forms</a></li>
+                <li class="active"><a href="#">Fields</a></li>
+            </ul>
+            <form>
+                <div class="row">
+                <div class="form-group col-xs-6 col-lg-6">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First Name"/>
+                    </div>
+                <div class="col-xs-6">
+                    <span class="glyphicon glyphicon-pencil push"></span>
+                    <span class="glyphicon glyphicon-plus push"></span>
+                    <span class="glyphicon glyphicon-remove push"></span>
+                    <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Last Name"/>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xs-6 col-lg-6">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" class="form-control" id="dob"/>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="gender">
+                        Gender:
+                        </label>
+                        <div id="gender">
+                            <select class="form-control">
+                                <option>Male</option>
+                                <option>Female</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label>Roles:</label>
+                        <div class="checkbox">
+                        <label for="admin">
+                        <input type="checkbox" id="admin" checked/> Admin
+                        </label>
+                        <br>
+                        <label for="student">
+                        <input type="checkbox" id="student"/> Student
+                        </label>
+                        <br>
+                        <label for="user">
+                        <input type="checkbox" id="user" checked/> User
+                        </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="license">License Agreement:</label>
+                        <div class="radio" id="license">
+
+                            <label><input  type="radio" name="optradio" aria-checked="true" checked>Yes</label><br>
+                            <label><input  type="radio" name="optradio">No</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push"></span>
+                        <span class="glyphicon glyphicon-plus push"></span>
+                        <span class="glyphicon glyphicon-remove push"></span>
+                        <span class="glyphicon glyphicon-list-alt push"></span>
+                    </div>
+                </div>
+    <hr>
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="newField">
+                            Add New Field:
+                        </label>
+                        <div id="newField">
+
+                                <select class="form-control">
+                                    <option>
+                                        Single Line Text
+                                    </option>
+                                    <option>
+                                       Date
+                                    </option>
+                                    <option>
+                                      Dropdown
+                                    </option>
+                                    <option>
+                                        Checkboxes
+                                    </option>
+                                    <option>
+                                        Radio buttons
+                                    </option>
+                                    <option>
+                                       Paragraph
+                                    </option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-plus push"  data-toggle="modal" data-target="#myModal" ></span>
+
+                    </div>
+
+                    <div class="modal fade container-fluid" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <span class="close glyphicon glyphicon-remove" data-dismiss="modal"></span>
+                                    <h4 class="modal-title">Field properties</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                            <label for="label">Label: </label>
+                                                    </div>
+                                                <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="label" placeholder="Label">
+                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                            <label for="placeholder">Placeholder: </label>
+                                                    </div>
+                                                <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="placeholder" placeholder="Placeholder">
+                                                </div>
+                                                </div>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                            <label for="tooltip">Tooltip: </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="tooltip" placeholder="Tooltip">
+                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <label for="type">Type: </label>
+                                                </div>
+                                                <div id="type" class="form-group col-sm-10">
+                                                    <select class="form-control">
+                                                        <option>Option 1</option>
+                                                        <option>Option 2</option>
+                                                        <option>Option 3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <label for="options">Options: </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" id="options" >Option 1</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
