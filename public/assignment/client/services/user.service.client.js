@@ -1,3 +1,71 @@
-/**
- * Created by ashrith on 3/16/16.
- */
+(function()
+{
+    angular
+        .module("FormBuilderApp")
+        .factory("UserService", UserService);
+
+    function UserService($location,$rootScope)
+    {
+        var service = {
+            findAllUsers : findAllUsers,
+            findUserById : findUserById,
+            findUserByCredentials:findUserByCredentials,
+            findUserByUsername : findUserByUsername,
+            createUser:createUser,
+            deleteUserById:deleteUserById,
+            updateUser:updateUser,
+            setCurrentUser: setCurrentUser,
+            getCurrentUser: getCurrentUser,
+            logged_in:logged_in
+
+        };
+        return service;
+
+        function logged_in(){
+            if(typeof $rootScope.currentUser === 'undefined') {
+                $location.url("/home");
+            }
+        }
+
+        function findAllUsers()
+        {
+            return $http.get('/api/assignment/user');
+        }
+        function findUserByCredentials(username, password) {
+
+            return $http.get('/api/assignment/user?username='+username+"&password="+password);
+
+        }
+
+        function deleteUserById(userId){
+            return $http.delete('/api/assignment/user/'+userId);
+
+        }
+        function createUser (user) {
+            return $http.post('api/assignment/user',user);
+
+        }
+
+        function updateUser (userId, user) {
+            return $http.put('/api/assignment/user/'+userId,user);
+        }
+
+
+
+        function findUserById(id) {
+            $http.get('/api/assignment/user/'+id);
+        }
+        function findUserByUsername (username) {
+            $http.get('/api/assignment/user?username='+username);
+
+        }
+        function setCurrentUser (user) {
+            $rootScope.currentUser = user;
+        }
+
+        function getCurrentUser () {
+            return $rootScope.currentUser;
+        }
+
+    }
+})();

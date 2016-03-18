@@ -14,14 +14,15 @@ module.exports=function(){
     {
         callback(users);
     }
-    function findUserByCredentials(username, password,callback) {
+    function findUserByCredentials(username, password) {
         for (var u in users) {
             if (users[u].username === username &&
                 users[u].password === password) {
-                callback(users[u]);
+                return(users[u]);
             }
         }
-        callback(null);
+        return null;
+
 
     }
 
@@ -30,19 +31,19 @@ module.exports=function(){
         var user = findUserById(userId);
         if(user!=null)
             users.splice(users.indexOf(user),1);
-        callback(users);
+        return users;
     }
-    function createUser (user, callback) {
+    function createUser (user) {
         var user = {
             username: user.username,
             password: user.password,
             email: user.email
         };
         users.push(user);
-        callback(user);
+        return user;
     }
 
-    function updateUser (userId, user, callback) {
+    function updateUser (userId, user) {
         var found_user = findUserById (userId);
         if (user != null) {
             found_user.username = user.username;
@@ -50,10 +51,10 @@ module.exports=function(){
             found_user.lastName = user.lastName;
             found_user.password = user.password;
             found_user.email = user.email;
-            callback(found_user);
+            return found_user;
 
         } else {
-            callback(null);
+            return null;
         }
     }
 
