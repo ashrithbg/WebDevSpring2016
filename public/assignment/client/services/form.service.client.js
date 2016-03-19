@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .factory("FormService", FormService);
 
-    function FormService()
+    function FormService($http)
     {
 
         var service = {
@@ -31,12 +31,12 @@
 
         }
         function createFormForUser(userId,form){
-           return $http.put("/api/assignment/user/"+userId+"/form",form);
+           return $http.post("/api/assignment/user/"+userId+"/form",form);
         }
         function updateFormById(formId,newForm){
             return $http.put("/api/assignment/form/"+formId,newForm);
 
-        }
+        }formId
 
         function findFormById(formId){
             return $http.get("/api/assignment/form/"+formId);

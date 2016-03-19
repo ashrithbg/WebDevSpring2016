@@ -1,12 +1,14 @@
 module.exports=function(app,userModel){
-
+    //app.post('/api/assignment/login',login);
     app.post('api/assignment/user',createUser);
+    app.get('/api/assignment/user',getUserByCredentials);
     app.get('/api/assignment/user',getAllUsers);
     app.get('/api/assignment/user/:id',getUserById);
     app.get('/api/assignment/user?username=username',getUserByUsername);
-    app.get('/api/assignment/user?username=alice&password=wonderland',getUserByCredentials);
+
     app.put('/api/assignment/user/:id',updateUser);
     app.delete('/api/assignment/user/:id',deleteUser);
+
 
     function createUser(req,res){
         var user = req.body;
@@ -30,7 +32,8 @@ module.exports=function(app,userModel){
     }
 
     function getUserByCredentials(req,res){
-        res.json(userModel.findUserByCredentials(req.params.username,req.params.password));
+        console.log(req.query);
+        res.json(userModel.findUserByCredentials(req.query.username,req.query.password));
 
     }
 
@@ -42,7 +45,27 @@ module.exports=function(app,userModel){
         res.json(userModel.deleteUser(req.params.id));s
 
     }
+    function login(req, res) {
+        var credentials = req.body;
+        var user = userModel.findUserByCredentials(credentials)
+            .then(
+                function (doc) {
+                    req.currentUser = doc;
+                    res.json(doc);
+                },
+                // send error if promise rejected
+                function ( err ) {
+                    res.status(400).send(err);
+                }
+            )
+    }
 
+
+
+    function logout(req, res) {
+        //req.session.destroy();
+        res.send(200);
+    }
 
 
 }

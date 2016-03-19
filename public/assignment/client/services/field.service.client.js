@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .factory("FieldService", FieldService);
 
-    function FieldService()
+    function FieldService($http)
     {
 
         var service = {
@@ -21,18 +21,19 @@
 
         function getFieldsForForm(formId)
         {
-            return $http.get("/api/assignment/form/"+formId+"/field");
+            return $http.get("/api/assignment/form/"+formId+"/fields");
 
         }
 
         function deleteFieldFromForm(formId,fieldId){
-            return $http.delete("/api/assignment/form/"+formId+"/field/"+"/fieldId");
+            return $http.delete("/api/assignment/form/"+formId+"/field/"+fieldId);
 
 
         }
         function createFieldForForm(formId,field){
-            return $http.put("/api/assignment/form/"+formId+"/field",field);
+            return $http.post("/api/assignment/form/"+formId+"/field",field);
         }
+
         function updateField(formId,fieldId,field){
             return $http.put("/api/assignment/form/"+formId+"/field/"+fieldId,field);
 

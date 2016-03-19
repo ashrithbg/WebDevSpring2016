@@ -1,5 +1,5 @@
-module.exports =function(app,formModel,userModel){
-    app.get("/api/assignment/form/:formId/field",getFieldsByForm);
+module.exports =function(app,formModel){
+    app.get("/api/assignment/form/:formId/fields",getFieldsByForm);
     app.get("/api/assignment/form/:formId/field/:fieldId",getFieldByForm);
     app.delete("/api/assignment/form/:formId/field/:fieldId",deleteField);
     app.post("/api/assignment/form/:formId/field",createField);
@@ -17,7 +17,7 @@ module.exports =function(app,formModel,userModel){
 
     }
     function deleteField(req,res){
-        res.json(formModel.deleteField(req.params.formId,req.params.fieldId));
+        res.json(formModel.deleteFieldById(req.params.formId,req.params.fieldId));
     }
 
     function createField(req,res){
@@ -25,7 +25,7 @@ module.exports =function(app,formModel,userModel){
     }
 
     function updateField(req,res){
-        res.json(formModel.updateField(req.body,req.params.formId,req.params.fieldId));
+        res.json(formModel.updateFieldById(req.params.formId,req.params.fieldId,req.body));
     }
 
 

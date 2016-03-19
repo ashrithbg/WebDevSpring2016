@@ -8,11 +8,17 @@
     function formController($scope,$location,FormService,UserService)
     {
 
-        UserService.logged_in();
-        FormService.findAllFormsForUser(
-            currentUser._id,
-            function(forms){
-                $scope.forms =forms;
+        UserService.loggedIn();
+        var currentUser = UserService.getCurrentUser();
+
+        FormService.
+            findAllFormsForUser(currentUser._id).
+                then(
+                    function(response){
+                        $scope.forms =response.data;
+                    },function(err){
+                        console.log("error");
+                        $scope.forms={};
             });
 
         $scope.$location = $location;
@@ -27,45 +33,48 @@
             if(!form || !form.title)
                 return;
             FormService.createFormForUser(
-                currentUser._id,
-                form,
-                function(form){
-                    FormService.findAllFormsForUser(
-                        currentUser._id,
-                        function(forms){
-                            $scope.forms = forms;
-                            $scope.form = {};
-                        });
-                }
+                currentUser._id,form)
+                .then(
+                    function(response){
+                        $scope.forms = response.data;
+                        $scope.form = {};
+                    },
+                    function(err){
+                        console.log("Error retrieving forms");
+                    }
             );
 
 
         }
         function updateForm(form){
             FormService.updateFormById(form._id,
-                form,
-                function(form){
-                    if (selectedIndex>=0){
-                        $scope.forms[selectedIndex]=form;
-                        $scope.form={};
-                        selectedIndex=-1;
-                    }
-
-                }
-            );
+                form).then(
+                    function(response){
+                        if (selectedIndex>=0){
+                            $scope.forms[selectedIndex]=response.data;
+                            $scope.form={};
+                            selectedIndex=-1;
+                        }
+                    },function(err){
+                        console.log("Error updating form");
+                    });
         }
         function deleteForm(index){
             var forms = $scope.forms;
             var formId = forms[index]._id;
             FormService.deleteFormById(
-                formId,
-                function(forms){
-                    FormService.findAllFormsForUser(
-                        currentUser._id,
-                        function(deletedForms){
-                            $scope.forms = deletedForms;
-                        }
-                    )
+                formId).then(
+                function(response){
+                    FormService.
+                    findAllFormsForUser(currentUser._id).
+                    then(
+                        function(response){
+                            $scope.forms =response.data;
+                        },function(err){
+                            $scope.forms={};
+                        });
+            },function(err){
+                    console.log("Error deleting form");
                 });
             console.log($scope.forms);
 
@@ -73,6 +82,8 @@
 
         function selectForm(index){
             selectedIndex = index;
+            console.log("selectedIndex ::"+selectedIndex);
+            console.log("id:"+$scope.forms[index]._id);
             var selectedForm= {
                 _id: $scope.forms[index]._id,
                 title: $scope.forms[index].title,

@@ -10,15 +10,16 @@ module.exports=function(){
         findUserByUsername:findUserByUsername
     };
     return api;
-    function findAllUsers(callback)
+    function findAllUsers()
     {
-        callback(users);
+        return users;
     }
     function findUserByCredentials(username, password) {
         for (var u in users) {
             if (users[u].username === username &&
                 users[u].password === password) {
-                return(users[u]);
+                console.log(users[u]);
+                return users[u];
             }
         }
         return null;

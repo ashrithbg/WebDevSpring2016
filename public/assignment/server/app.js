@@ -1,48 +1,10 @@
-module.exports=function(app){
-    var service = {
-        findAllUsers : findAllUsers,
-        findUserById : findUserById,
-        findUserByCredentials:findUserByCredentials,
-        findUserByUsername : findUserByUsername,
-        createUser:createUser,
-        deleteUserById:deleteUserById,
-        updateUser:updateUser,
-        setCurrentUser: setCurrentUser,
-        getCurrentUser: getCurrentUser,
-        logged_in:logged_in,
+module.exports = function(app) {
 
-    };
-    app.get('/api/user', findAllUsers);
-    app.get('/api/user/:id',findUserById);
-    app.get('/api/user/:username',findUserByUsername);
-    app.post('/api/user/create',createUser);
-    app.put('/api/user/update',updateUser);
-    app.delete('/api/user/:id',deleteUserById);
+    // pass db and mongoose reference to model
+    var userModel    = require("./models/user.model.js")();
+    var formModel   = require("./models/form.model.js")();
 
-    function findAllUsers(){
-
-    }
-
-    function findUserById(){
-
-    }
-    function findUserByUsername(){
-
-    }
-
-    function createUser(){
-
-    }
-    function updateUser() {
-
-    }
-
-    function deleteUserById(){
-
-    }
-
-
-
-
-
-};
+    var userService  = require("./services/user.service.server.js") (app, userModel);
+    var formService = require("./services/form.service.server.js")(app, formModel, userModel);
+    var fieldService = require("./services/field.service.server.js")(app,formModel);
+}

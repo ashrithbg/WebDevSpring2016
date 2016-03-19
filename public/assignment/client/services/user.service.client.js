@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService($location,$rootScope)
+    function UserService($http,$location,$rootScope)
     {
         var service = {
             findAllUsers : findAllUsers,
@@ -16,15 +16,19 @@
             updateUser:updateUser,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
-            logged_in:logged_in
+            login:login,
+            loggedIn:loggedIn
 
         };
         return service;
 
-        function logged_in(){
-            if(typeof $rootScope.currentUser === 'undefined') {
-                $location.url("/home");
+        function loggedIn(){
+            if($rootScope.currentUser == null){
+                $location.url("/");
             }
+        }
+        function login(credentials) {
+            return $http.post("/api/assignment/login", credentials);
         }
 
         function findAllUsers()

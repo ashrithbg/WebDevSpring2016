@@ -1,0 +1,148 @@
+<div class="container-fluid" ng-controller="FieldController">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Forms : {{ form.title }}</h1>
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li><a href="#">Forms</a></li>
+                <li class="active"><a href="#">Fields</a></li>
+            </ul>
+            <form>
+                <div class="row" ng-repeat="field in fields">
+                    <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'TEXT'">
+                        <label>{{field.label}}</label>
+                        <input type="text" class="form-control" ng-model="field.placeholder" placeholder="{{field.placeholder}}" />
+                    </div>
+                    <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'TEXTAREA'">
+                        <label>{{field.label}}</label>
+                        <textarea class="form-control" ng-model="field.placeholder" placeholder="{{field.placeholder}}"></textarea>
+                    </div>
+                    <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'OPTIONS'">
+                        <label ng-model="field.label">{{field.label}}</label>
+                        <select class="form-control" ng-model="field.options">
+                            <option ng-repeat="option in field.options">
+                                {{option.value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-6 col-lg-6" ng-if="field.type =='DATE'">
+                        <label ng-model="field.label">{{field.label}}</label>
+                        <input type="date" class="form-control" />
+                    </div>
+                    <div class="form-group col-xs-6 col-lg-6" ng-if="field.type =='CHECKBOXES'">
+                        <label ng-model="field.label">{{field.label}}</label>
+                        <div class="checkbox" ng-model="field.options">
+                            <label for="admin" ng-repeat="option in field.options">
+                                <input type="checkbox" id="admin" checked/> {{option.label}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6 col-lg-6" ng-show="field.type =='RADIOS'">
+                            <label ng-model="field.label">{{field.label}}</label>
+                            <div class="radio" id="license" ng-repeat="option in field.options">
+                                <label><input  type="radio" >{{option.label}}</label><br>
+                            </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-pencil push" data-toggle="modal" data-target="#myModal" ng-click="editField(field)"></span>
+                        <span class="glyphicon glyphicon-remove push" ng-click="removeField(field)"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-6 col-lg-6">
+                        <label for="newField">
+                            Add New Field:
+                        </label>
+                        <div id="newField">
+
+                            <select class="form-control">
+                                <option>
+                                    Single Line Text
+                                </option>
+                                <option>
+                                    Date
+                                </option>
+                                <option>
+                                    Dropdown
+                                </option>
+                                <option>
+                                    Checkboxes
+                                </option>
+                                <option>
+                                    Radio buttons
+                                </option>
+                                <option>
+                                    Paragraph
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <span class="glyphicon glyphicon-plus push" ng-click="addField(field)" ></span>
+
+                    </div>
+                    </div>
+                </form>
+                    <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">{{field.label}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'TEXT'">
+                                            <label ng-model="modal.field.label">Label</label>
+                                            <input type="text" class="form-control" value="{{field.label}}" />
+                                            <label ng-model="modal.field.label">Placeholder</label>
+                                            <input type="text" class="form-control" value="{{field.placeholder}}" />
+                                        </div>
+                                        <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'TEXTAREA'">
+                                            <label>Label</label>
+                                            <input type="text" class="form-control" value="{{field.label}}" />
+                                            <label>Placeholder</label>
+                                            <textarea class="form-control" value="{{field.placeholder}}"></textarea>
+                                        </div>
+                                        <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'OPTIONS'">
+                                            <label>Label</label>
+                                            <input type="text" class="form-control" value="{{field.label}}" />
+                                            <label>Options</label>
+                                            <select class="form-control">
+                                                <option ng-repeat="option in field.options">
+                                                    {{option.label}}:{{option.value}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-xs-6 col-lg-6" ng-if="field.type =='DATE'">
+                                            <label>Label</label>
+                                            <input type="text" class="form-control" value="{{field.label}}" />
+                                        </div>
+                                        <div class="form-group col-xs-6 col-lg-6" ng-if="field.type =='CHECKBOXES'">
+                                            <label>Label</label>
+                                            <input type="text" class="form-control" value="{{field.label}}" />
+                                            <label>Options</label>
+                                            <textarea class="form-control">{{option_lines}}</textarea>
+                                        </div>
+                                        <div class="form-group col-xs-6 col-lg-6" ng-show="field.type =='RADIOS'">
+                                            <label>Label</label>
+                                            <input type="text" class="form-control" value="{{field.label}}" />
+                                            <label>Options</label>
+                                            <textarea class="form-control">{{option_lines}}</textarea>
+                                        </div>
+                                        </div>
+                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" ng-click="editField(field)" data-dismiss="modal">Save changes</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</div>
+
+
+

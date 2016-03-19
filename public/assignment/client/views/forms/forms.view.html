@@ -2,7 +2,7 @@
     <h1 class="page-header">Forms</h1>
     <ul class="nav nav-tabs" data-tabs="tabs">
         <li class="active"><a href="#">Forms</a></li>
-        <li><a href="#/">Fields</a></li>
+        <li><a href="#/forms">Fields</a></li>
     </ul>
 
     <div class="tab-content table-responsive">
@@ -26,7 +26,7 @@
                 </td>
             </tr>
             <tr ng-repeat="form in forms">
-                <td><a href="fields.view.html" >{{form.title}}</a></td>
+                <td><a href="#/form/{{form._id}}/fields" >{{form.title}}</a></td>
                 <td>
                     <span ng-click="deleteForm($index)" class="glyphicon glyphicon-remove"></span>
                     <span ng-click="selectForm($index)" class="glyphicon glyphicon-pencil"></span>

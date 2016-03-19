@@ -8,7 +8,7 @@
         $scope.$location = $location;
         $scope.logout = logout;
 
-            function logout() {
+        function logout() {
             UserService.setCurrentUser(null);
 
             $location.url("/home");
