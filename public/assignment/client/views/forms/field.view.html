@@ -94,48 +94,57 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'TEXT'">
-                                            <label ng-model="modal.field.label">Label</label>
-                                            <input type="text" class="form-control" value="{{field.label}}" />
-                                            <label ng-model="modal.field.label">Placeholder</label>
-                                            <input type="text" class="form-control" value="{{field.placeholder}}" />
+                                            <label >Label
+                                            <input type="text" class="form-control" ng-model="modal.field.label" value="{{field.label}}" />
+                                            </label>
+                                            <label >Placeholder
+                                            <input type="text" class="form-control" ng-model="modal.field.label" value="{{field.placeholder}}" />
+                                            </label>
                                         </div>
                                         <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'TEXTAREA'">
                                             <label>Label</label>
-                                            <input type="text" class="form-control" value="{{field.label}}" />
-                                            <label>Placeholder</label>
-                                            <textarea class="form-control" value="{{field.placeholder}}"></textarea>
+                                            <input type="text" class="form-control" ng-model= "modal.field.label" value="{{field.label}}" />
+                                            <label>Placeholder
+                                            <textarea class="form-control" ng-model = "modal.field.placeholder" value="{{field.placeholder}}"></textarea>
+                                            </label>
                                         </div>
                                         <div class="form-group col-xs-6 col-lg-6" ng-if="field.type == 'OPTIONS'">
-                                            <label>Label</label>
-                                            <input type="text" class="form-control" value="{{field.label}}" />
-                                            <label>Options</label>
-                                            <select class="form-control">
+                                            <label>Label
+                                            <input type="text" class="form-control" ng-model="modal.field.label" value="{{field.label}}" />
+                                            </label>
+                                            <label>Options
+                                            <select class="form-control" ng-model="modal.field.options">
                                                 <option ng-repeat="option in field.options">
                                                     {{option.label}}:{{option.value}}
                                                 </option>
                                             </select>
+                                            </label>
                                         </div>
                                         <div class="form-group col-xs-6 col-lg-6" ng-if="field.type =='DATE'">
-                                            <label>Label</label>
-                                            <input type="text" class="form-control" value="{{field.label}}" />
+                                            <label>Label
+                                                <input type="text" class="form-control"  ng-model="modal.field.label" />
+                                            </label>
                                         </div>
                                         <div class="form-group col-xs-6 col-lg-6" ng-if="field.type =='CHECKBOXES'">
-                                            <label>Label</label>
-                                            <input type="text" class="form-control" value="{{field.label}}" />
-                                            <label>Options</label>
-                                            <textarea class="form-control">{{option_lines}}</textarea>
+                                            <label>Label
+                                            <input type="text" class="form-control"  ng-model="modal.field.label" />
+                                            </label>
+                                            <label>Options
+                                            <textarea class="form-control" ng-model="modal.field.options">{{option_lines}}</textarea>
+                                            </label>
                                         </div>
                                         <div class="form-group col-xs-6 col-lg-6" ng-show="field.type =='RADIOS'">
-                                            <label>Label</label>
-                                            <input type="text" class="form-control" value="{{field.label}}" />
-                                            <label>Options</label>
-                                            <textarea class="form-control">{{option_lines}}</textarea>
-                                        </div>
+                                            <label>Label
+                                            <input type="text" class="form-control" ng-model="modal.field.options" value="{{field.label}}" />
+                                            </label>
+                                            <label>Options
+                                            <textarea class="form-control" ng-model="modal.field.options">{{option_lines}}</textarea>
+                                            </label>
                                         </div>
                                     </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" ng-click="editField(field)" data-dismiss="modal">Save changes</button>
+                                    <button type="button" class="btn btn-primary" ng-click="editField(modal.field)" data-dismiss="modal">Save changes</button>
                                 </div>
                             </div>
                             </div>
