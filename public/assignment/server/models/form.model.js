@@ -68,13 +68,13 @@ module.exports=function(){
     }
 
     function findFormById(formId){
-
+        console.log("In find form by id"+formId);
         for(var f in forms){
-            if (forms[f]._id === formId){
+            if (forms[f]._id == formId){
+                console.log("Found form");
                 return forms[f];
             }
         }
-        return null;
     }
 
     function findAllFieldsByForm(formId){
@@ -100,8 +100,9 @@ module.exports=function(){
         }
     }
 
-    function createField(field,formId){
+    function createField(formId,field){
         //var form = findFormById(formId);
+        console.log(JSON.stringify(field));
         var newField ={
             _id:uuid.v1(),
             type:field.type,

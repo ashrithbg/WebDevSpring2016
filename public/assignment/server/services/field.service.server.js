@@ -21,7 +21,7 @@ module.exports =function(app,formModel){
     }
 
     function createField(req,res){
-            res.json(formModel.createField(req.body,req.params.formId));
+            res.json(formModel.createField(req.params.formId,req.body));
     }
 
     function updateField(req,res){
