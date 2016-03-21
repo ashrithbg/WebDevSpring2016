@@ -31,7 +31,7 @@
                 $scope.error = "User already exists";
                 return;
             }
-             UserService.createUser($scope.user,function(newUser){
+             UserService.createUser($scope.user).then(function(newUser){
                 UserService.setCurrentUser(newUser);
             });
 

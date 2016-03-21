@@ -35,7 +35,7 @@
                     <div class="form-group col-xs-6 col-lg-6" ng-if="field.type =='CHECKBOXES'">
                         <label >{{field.label}}</label>
                         <div class="checkbox">
-                            <label for="admin" ng-repeat="option in field.options">
+                            <label for="admin" ng-repeat="option in field.options track by $index">
                                 <input type="checkbox" id="admin" checked/> {{option.label}}
                             </label>
                         </div>
@@ -76,7 +76,7 @@
                                     Radio buttons
                                 </option>
                                 <option value="5">
-                                    Paragraph
+                                    Multiline Text
                                 </option>
                             </select>
                         </div>
@@ -116,11 +116,7 @@
                                             <input type="text" class="form-control" ng-model="modal.label" />
                                             </label>
                                             <label>Options
-                                            <select class="form-control" ng-model="modal.options">
-                                                <option ng-repeat="option in modal.options">
-                                                    {{option.label}}:{{option.value}}
-                                                </option>
-                                            </select>
+                                                <textarea class="form-control" ng-model="modal.options" ></textarea>
                                             </label>
                                         </div>
                                         <div class="form-group col-xs-6 col-lg-6" ng-if="modal.type =='DATE'">
@@ -133,15 +129,23 @@
                                             <input type="text" class="form-control"  ng-model="modal.label" />
                                             </label>
                                             <label>Options
-                                            <textarea class="form-control" ng-model="modal.options">{{option_lines}}</textarea>
+                                            <textarea class="form-control" ng-model="modal.options" ></textarea>
                                             </label>
                                         </div>
                                         <div class="form-group col-xs-6 col-lg-6" ng-show="modal.type =='RADIOS'">
                                             <label>Label
-                                            <input type="text" class="form-control" ng-model="modal.options" />
+                                            <input type="text" class="form-control" ng-model="modal.label" />
                                             </label>
                                             <label>Options
-                                            <textarea class="form-control" ng-model="modal.options">{{option_lines}}</textarea>
+                                            <textarea class="form-control" ng-model="modal.options"></textarea>
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-xs-6 col-lg-6" ng-show="modal.type =='DROPDOWN'">
+                                            <label>Label
+                                                <input type="text" class="form-control" ng-model="modal.label" />
+                                            </label>
+                                            <label>Options
+                                                <textarea class="form-control" ng-model="modal.options"></textarea>
                                             </label>
                                         </div>
                                     </div>

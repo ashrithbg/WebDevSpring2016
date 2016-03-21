@@ -72,8 +72,18 @@
 
         }
         function editField(field){
-            console.log("here"+field.type);
-            console.log("label"+field.label);
+            var options = [];
+            if(field.type== "CHECKBOXES"|| field.type== "RADIOS"|| field.type == "DROPDOWN"|| field.type == "OPTIONS"){
+                var optionList = field.options.split("\n");
+                for(var option in optionList){
+                    var optionArray = optionList[option].split(":");
+                    options.push({
+                        "label":optionArray[0],
+                        "value":optionArray[1]
+                    });
+                }
+                field.options = options;
+            }
             FieldService.updateField($routeParams.formId,field._id,field)
                 .then(function(response){
                     console.log(JSON.stringify(response.data));
@@ -85,24 +95,30 @@
         }
 
         function displayField(field){
-            $scope.modal = field;
-            var modalField = {
-                _id:field._id,
-                label:field.label,
-                type:field.type,
-                placeholder:field.placeholder,
-                options:field.options
+            var modal = field;
+
+            var modalField ={
+                _id:modal._id,
+                label:modal.label,
+                type:modal.type,
+                placeholder:modal.placeholder
             };
-            $scope.modal = modalField;
 
-            if(modalField.type== "CHECKBOXES"|| modalField.type== "RADIOS"|| modalField.type == "DROPDOWN"|| modalField.type == "OPTIONS"){
+            var options=[];
+            console.log("options"+modal.options);
+            var fieldOptions = modal.options;
+            if(field.type== "CHECKBOXES"|| field.type== "RADIOS"|| field.type == "DROPDOWN"|| field.type == "OPTIONS"){
 
-                $scope.option_lines = modalField.options
-                    .map(function (item) {
-                        return item.label+":"+item.value;
-                    })
-                    .join('\n');
+                for (var index in  fieldOptions){
+                    var option = fieldOptions[index].label + ":" + fieldOptions[index].value + "\n";
+                    options.push(option);
+                }
+                console.log(options);
+                modalField.options = options.join("");
+
             }
+            $scope.modal= modalField;
+
 
         }
         function removeField(field){
