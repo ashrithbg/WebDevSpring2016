@@ -49,7 +49,11 @@
                 }).when("/posts",{
                     templateUrl:"views/posts/posts.view.html",
                     controller: "PostController"
-                }).otherwise({
+                }).when("/feed",{
+                    templateUrl:"views/feed/feed.view.html",
+                    controller: "FeedController"
+                })
+                .otherwise({
                 redirectTo: "/"
             });
 
