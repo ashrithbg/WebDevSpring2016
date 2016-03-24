@@ -19,7 +19,9 @@
             var followerPosts=[];
             for(var f in followers) {
                 PostService.findAllPostsByUser(followers[f]._id, function(posts){
-                    followerPosts.push(posts);
+                    for(var p in posts){
+                        followerPosts.push(posts[p]);
+                    }
                 });
             }
             return followerPosts;
@@ -33,7 +35,9 @@
             var followerShorts=[];
             for(var f in followers) {
                ShortService.findShortsForUser(followers[f]._id, function(shorts){
-                   followerShorts.push(shorts);
+                   for(var s in shorts){
+                       followerShorts.push(shorts[s]);
+                   }
                });
             }
             return followerShorts;

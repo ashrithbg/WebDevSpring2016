@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <h3>Your feed</h3>
-    <div class="row">
+    <div class="row col-sm-12">
         <p> Posts</p>
         <div ng-repeat="post in feed.posts">
             <p>{{post.title}}</p>
             <p>{{post.description}}</p>
         </div>
     </div>
-    <div class="row">
+    <div class="col-sm-12">
         <p> Shorts</p>
         <div ng-repeat="short in feed.shorts">
             <a href="#/details/search/{{short.id}}">
