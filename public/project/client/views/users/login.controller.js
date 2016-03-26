@@ -12,16 +12,16 @@
 
         function login (user) {
             UserService.findUserByCredentials(user.username,
-                user.password,
-                function(found_user){
-                    if (found_user) {
-                        console.log(found_user);
-                        //UserService.setCurrentUser(found_user);
-                        $rootScope.currentUser = found_user;
-                        $location.url("/profile");
-                    }
+                user.password).then(function(response){
+                if (response) {
+                    console.log(response);
+                    //UserService.setCurrentUser(found_user);
+                    $rootScope.currentUser = response.data;
+                    $location.url("/profile");
                 }
-            );
+            },function(err){
+                console.log("Error logging in"+err);
+            });
 
         }
     }

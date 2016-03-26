@@ -6,13 +6,15 @@
 
     function postController($scope,$location,UserService,PostService) {
 
-        UserService.logged_in();
+        UserService.loggedIn();
         var currentUser= UserService.getCurrentUser();
         PostService.findAllPostsByUser(
-            currentUser._id,
-            function(posts){
-                console.log(posts);
-                $scope.posts =posts;
+            currentUser._id).then(
+            function(response){
+
+                $scope.posts =response.data;
+            },function(err){
+                console.log("Error retrieving posts"+err);
             });
 
         $scope.$location = $location;
@@ -27,30 +29,37 @@
                 return;
             PostService.createPostForUser(
                 currentUser._id,
-                post,
-                function(post){
+                post).then(
+                function(response){
                     PostService.findAllPostsByUser(
-                        currentUser._id,
-                        function(posts){
-                            $scope.posts = posts;
+                        currentUser._id).then(
+                        function(response){
+                            $scope.posts = response.data;
                             $scope.post = {};
+                        },function(err){
+                            console.log("Error while retrieving the posts"+err);
                         });
+                },
+                function(err){
+                    console.log("Error while creating the post"+err);
                 }
-            )
+            );
 
 
         }
         function updatePost(post){
             PostService.updatePostById(post.id,
-                post,
-                function(post){
+                post).then(
+                function(response){
 
                     if ($scope.selectedIndex>=0){
-                        $scope.posts[$scope.selectedIndex]=post;
+                        $scope.posts[$scope.selectedIndex]=response.data;
                         $scope.post={};
                         //$scope.selectedIndex=-1;
                     }
 
+                },function(err){
+                    console.log("Error updating post"+err);
                 }
             );
         }
@@ -59,15 +68,16 @@
             var postId = posts[index].id;
             console.log("post id to delete"+postId);
             PostService.deletePostById(
-                postId,
-                function(posts){
+                postId).then(
+                function(response){
                     PostService.findAllPostsByUser(
-                        currentUser._id,
-                        function(userPosts){
-                            console.log(userPosts);
-                            $scope.posts = userPosts;
-                        }
-                    )
+                        currentUser._id).then(
+                        function(response){
+
+                            $scope.posts =response.data;
+                        },function(err){
+                            console.log("Error retrieving posts"+err);
+                        });
                 });
 
         }

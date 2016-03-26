@@ -4,14 +4,16 @@
 
     app.controller("ShortController",shortController);
 
-    function shortController($scope,$location,ShortService,UserService) {
+    function shortController($sce,$scope,$location,ShortService,UserService) {
 
-        UserService.logged_in();
+        UserService.loggedIn();
         var currentUser= UserService.getCurrentUser();
         ShortService.findShortsForUser(
-            currentUser._id,
-            function(shorts){
-                $scope.shorts =shorts;
+            currentUser._id).then(
+            function(response){
+                $scope.shorts =response.data;
+            },function(err){
+                console.log("Error retrieving shorts"+err);
             });
         console.log("shorts"+$scope.shorts);
         $scope.$location = $location;
@@ -28,48 +30,48 @@
         function addShort(newShort){
             if(!newShort || !newShort.title)
                 return;
+            newShort.url = $sce.trustAsResourceUrl(newShort.url);
             ShortService.addShortForUser(
                 currentUser._id,
-                newShort,
-                function(short){
+                newShort).then(
+                function(response){
                     ShortService.findShortsForUser(
-                        currentUser._id,
-                        function(shorts){
-                            $scope.shorts = shorts;
+                        currentUser._id).then(
+                        function(response){
+                            $scope.shorts = response.data;
                             $scope.short = {};
-                        });
+                        },function(err){
+                            console.log("Error while retrieving shorts"+err);
+                    });
+                },
+                function(err){
+                    console.log("Error could not add short"+err);
                 }
             );
             //ShortService.addShortForUser(newShort);
         }
-        //function deleteShort(){
-        //    console.log("in upload short");
-        //    //ShortService.(newShort);
-        //}
-        //function updateShort(short){
-        //    console.log("in upload short");
-        //    ShortService.updateShortById(short.id,short,function(){
-        //
-        //    });
-        //}
 
         function updateShort(short){
             console.log("short to be updated"+short.title);
             console.log("short to be updated"+short.id);
+            short.url = $sce.trustAsResourceUrl(short.url);
             ShortService.updateShortById(short.id,
-                short,
-                function(updatedShort){
+                short).then(
+                function(response){
                     var selectedIndex = $scope.selectedIndex;
                     console.log($scope.selectedIndex);
                     if (selectedIndex>=0){
                         console.log(selectedIndex);
-                        console.log(updatedShort.id);
-                        console.log(updatedShort.title);
-                        $scope.shorts[selectedIndex]=updatedShort;
+                        console.log(response.data.id);
+                        console.log(response.data.title);
+                        $scope.shorts[selectedIndex]=response.data;
                         $scope.short={};
 
                     }
 
+                },
+                function(err){
+                    console.log("Error while updating shorts"+err);
                 }
             );
         }
@@ -77,21 +79,24 @@
             var shorts = $scope.shorts;
             var shortId = shorts[index].id;
             ShortService.deleteShortById(
-                shortId,
+                shortId).then(
                 function(shorts){
                     ShortService.findShortsForUser(
-                        currentUser._id,
-                        function(deletedShorts){
-                            $scope.shorts = deletedShorts;
-                        }
-                    )
+                        currentUser._id).then(
+                        function(response){
+                            $scope.shorts = response.data;
+                        },function(err){
+                                console.log("Error while retrieving shorts"+err);
+                            });
+                },function(err){
+                    console.log("Error while deleting shorts"+err);
                 });
-            //console.log($scope.forms);
+
 
         }
         //var selectedIndex = null;
         function selectShort(index){
-            //selectedIndex = index;
+
             console.log(index);
             var selectedShort= {
                 id: $scope.shorts[index].id,

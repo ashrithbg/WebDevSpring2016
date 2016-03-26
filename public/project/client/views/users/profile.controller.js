@@ -5,14 +5,18 @@
         .controller("ProfileController", profileController);
 
     function profileController($scope,UserService,ShortService,PostService)
-    {   UserService.logged_in();
+    {   UserService.loggedIn();
         console.log("In profile controller");
         $scope.profile = UserService.getCurrentUser();
-        ShortService.getShortsByUser($scope.profile.id,function(shorts){
-            $scope.shorts = shorts;
+        ShortService.getShortsByUser($scope.profile._id).then(function(response){
+            $scope.shorts = response.data;
+        },function(err){
+            console.log("Error getting shorts for user"+err);
         });
-        PostService.findAllPostsByUser($scope.profile.id,function(posts){
-            $scope.posts = posts;
+        PostService.findAllPostsByUser($scope.profile._id).then(function(response){
+            $scope.posts = response.data;
+        }, function(err){
+            console.log("Error getting posts for user"+err);
         });
         $scope.update = update;
 

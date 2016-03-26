@@ -28,7 +28,4 @@ module.exports =function(app,formModel){
         res.json(formModel.updateFormById(req.params.formId,req.body));
     }
 
-
-
-
 }

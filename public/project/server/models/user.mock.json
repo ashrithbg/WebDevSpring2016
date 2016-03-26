@@ -1,0 +1,12 @@
+[
+  {        "_id":123, "firstName":"Alice",            "lastName":"Wonderland",
+    "username":"alice",  "password":"alice",   "roles": ["Director"],"followers":[{"_id":234},{"_id":345},{"_id":456}],"following":[{"_id":345},{"_id":456}] },
+  {        "_id":234, "firstName":"Bob",              "lastName":"Hope",
+    "username":"bob",    "password":"bob",     "roles": ["Actor"],"followers":[{"_id":123},{"_id":345},{"_id":456}],"following":[{"_id":567},{"_id":123}]},
+  {        "_id":345, "firstName":"Charlie",          "lastName":"Brown",
+    "username":"charlie","password":"charlie", "roles": ["Actor"], "followers":[],"following":[]},
+  {        "_id":456, "firstName":"Dan",              "lastName":"Craig",
+    "username":"dan",    "password":"dan",     "roles": ["Producer"], "followers":[{"_id":123},{"_id":234},{"_id":345}],"following":[]},
+  {        "_id":567, "firstName":"Edward",           "lastName":"Norton",
+    "username":"ed",     "password":"ed",      "roles": ["Cinematographer"],"followers":[],"following":[]}
+]
