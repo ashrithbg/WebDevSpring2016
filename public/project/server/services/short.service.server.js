@@ -1,7 +1,7 @@
 module.exports=function(app, userModel, shortModel){
 
     app.get("/api/project/user/:userId/shorts",getShorts);
-    app.get("/api/project/short/:id",getShort);
+    app.get("/api/project/short/:shortId",getShort);
    // app.get("/api/project/short",);
     app.post("/api/project/user/:userId/short",addShort);
     app.delete("/api/project/short/:shortId",deleteShort);
@@ -10,7 +10,7 @@ module.exports=function(app, userModel, shortModel){
 
     function getShorts(req, res){
         var user = req.params.userId;
-        res.json(shortModel.getShortsByUser(user));
+        res.json(shortModel.findShortsForUser(user));
 
     }
 

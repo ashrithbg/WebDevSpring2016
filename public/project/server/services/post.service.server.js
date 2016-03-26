@@ -1,7 +1,7 @@
 module.exports=function(app, userModel, postModel){
 
     app.get("/api/project/user/:userId/posts",getPosts);
-    app.get("/api/project/post/:id",getPost);
+    app.get("/api/project/post/:postId",getPost);
     // app.get("/api/project/short",);
     app.post("/api/project/user/:userId/post",addPost);
     app.delete("/api/project/post/:postId",deletePost);

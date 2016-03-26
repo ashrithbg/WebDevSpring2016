@@ -3,7 +3,7 @@ module.exports=function() {
 
     var api = {
         //getAllMovies: getAllMovies,
-        getShortsByUser: getShortsByUser,
+
         addShortForUser: addShortForUser,
         deleteShortById: deleteShortById,
         updateShortById: updateShortById,
@@ -29,12 +29,7 @@ module.exports=function() {
     }
 
     function deleteShortById(shortId) {
-        var shortToDelete = null;
-        findShortById(shortId,
-            function (short) {
-                shortToDelete = short;
-
-            });
+        var shortToDelete = findShortById(shortId);
         console.log(shortToDelete.id);
         if (shortToDelete != null) {
             shorts.splice(shorts.indexOf(shortToDelete), 1);
@@ -45,7 +40,7 @@ module.exports=function() {
     function updateShortById(shortId, newShort) {
         console.log("id is" + newShort.id + "  title is" + newShort.title);
         for (var s in shorts) {
-            if (shorts[s].id === shortId) {
+            if (shorts[s].id == shortId) {
                 console.log("id is " + shorts[s].id);
                 var updatedShort = {
                     id: shortId,
@@ -56,23 +51,23 @@ module.exports=function() {
                     description: newShort.description
                 };
                 shorts[s] = updatedShort;
-                return updatedShort;
+                return short[s];
             }
         }
     }
 
-    function getShortsByUser(userId) {
-        var userShorts = [];
-        for (var s in shorts) {
-            if (shorts[s].userId === userId) {
-                console.log(shorts[s].title);
-                userShorts.push(shorts[s]);
-            }
-        }
-        return userShorts;
-    }
+    //function getShortsByUser(userId) {
+    //    var userShorts = [];
+    //    for (var s in shorts) {
+    //        if (shorts[s].userId === userId) {
+    //            console.log(shorts[s].title);
+    //            userShorts.push(shorts[s]);
+    //        }
+    //    }
+    //    return userShorts;
+    //}
 
-    function findShortById(shortId, callback) {
+    function findShortById(shortId) {
         console.log("form id" + shortId);
         for (var s in shorts) {
             console.log("id " + shorts[s].id);
@@ -89,9 +84,10 @@ module.exports=function() {
 
     function findShortsForUser(userId) {
         var userShorts = [];
+        console.log("In find shorts for user server");
         for (var s in shorts) {
-            if (shorts[s].userId === userId) {
-                console.log(shorts[s].title);
+            if (shorts[s].userId == userId) {
+                console.log("title is"+shorts[s].title);
                 userShorts.push(shorts[s]);
             }
         }

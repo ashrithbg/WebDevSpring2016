@@ -4,7 +4,7 @@
 
     app.controller("ShortController",shortController);
 
-    function shortController($sce,$scope,$location,ShortService,UserService) {
+    function shortController($scope,$location,ShortService,UserService) {
 
         UserService.loggedIn();
         var currentUser= UserService.getCurrentUser();
@@ -30,7 +30,6 @@
         function addShort(newShort){
             if(!newShort || !newShort.title)
                 return;
-            newShort.url = $sce.trustAsResourceUrl(newShort.url);
             ShortService.addShortForUser(
                 currentUser._id,
                 newShort).then(
@@ -54,17 +53,18 @@
         function updateShort(short){
             console.log("short to be updated"+short.title);
             console.log("short to be updated"+short.id);
-            short.url = $sce.trustAsResourceUrl(short.url);
+
             ShortService.updateShortById(short.id,
                 short).then(
                 function(response){
                     var selectedIndex = $scope.selectedIndex;
                     console.log($scope.selectedIndex);
+                    console.log("response"+JSON.stringify(response));
                     if (selectedIndex>=0){
-                        console.log(selectedIndex);
-                        console.log(response.data.id);
-                        console.log(response.data.title);
-                        $scope.shorts[selectedIndex]=response.data;
+                        //console.log(selectedIndex);
+                        //console.log(response.config.data.id);
+                        //console.log(response.data.title);
+                        $scope.shorts[selectedIndex]=response.config.data;
                         $scope.short={};
 
                     }

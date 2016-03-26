@@ -14,13 +14,16 @@
         $scope.search = search;
 
         function search(query) {
-            var obj = YoutubeService.findShortsByQuery(query, renderShorts);
+            var obj = YoutubeService.findShortsByQuery(query).then(renderShorts, renderError);
         }
 
 
-        function renderShorts(results) {
+        function renderShorts(response) {
             var searchResults = [];
-           $scope.shorts=results;
+            $scope.shorts=response.data;
+        }
+        function renderError(err){
+            console.log("Error while retrieving search results"+JSON.stringify(err));
         }
     }
 })();

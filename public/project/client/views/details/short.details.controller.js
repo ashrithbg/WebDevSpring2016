@@ -17,15 +17,19 @@
         init();
 
         function fetchShort(id) {
-            ShortService.findShortById(id, renderDetails);
+            ShortService.findShortById(id).then(renderDetails,renderError);
         }
 
         function renderDetails(response) {
             //console.log("id is"+response.id);
             //console.log("id is"+response.title);
             //console.log("id is"+response.description);
+            console.log("short detail response"+JSON.stringify(response));
             if(response!=null)
-                vm.details = response;
+                vm.details = response.data;
+        }
+        function renderError(err){
+            console.log("Error while getting details of the short"+JSON.stringify(err));
         }
     }
 })();

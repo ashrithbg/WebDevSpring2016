@@ -7,4 +7,5 @@ module.exports = function(app) {
     var userService  = require("./services/user.service.server.js") (app, userModel);
     var postService = require("./services/post.service.server.js")(app, userModel, postModel);
     var shortService = require("./services/short.service.server.js")(app, userModel, shortModel);
-}
+    var youtubeService = require("./services/youtube.service.server.js")(app);
+};

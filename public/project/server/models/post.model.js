@@ -52,7 +52,7 @@ module.exports=function(){
     function updatePostById(postId,newPost){
 
         for(var p in posts){
-            if (posts[p].id === postId){
+            if (posts[p].id == postId){
                 console.log("postId"+postId);
                 var updatedPost = {
                     id:newPost.id,

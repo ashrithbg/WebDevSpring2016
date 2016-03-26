@@ -53,6 +53,7 @@
                 function(response){
 
                     if ($scope.selectedIndex>=0){
+                        console.log("updated post"+JSON.stringify(response.data))
                         $scope.posts[$scope.selectedIndex]=response.data;
                         $scope.post={};
                         //$scope.selectedIndex=-1;

@@ -17,12 +17,15 @@
         init();
 
         function fetchShort(id) {
-            YoutubeService.findShortById(id, renderDetails);
+            YoutubeService.findShortById(id).then(renderDetails,renderError);
         }
 
         function renderDetails(response) {
             if(response!=null)
-                vm.details = response[0];
+                vm.details = response.data[0];
+        }
+        function renderError(err){
+            console.log("Error while retrieving search details"+err);
         }
     }
 })();

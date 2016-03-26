@@ -17,12 +17,15 @@
         init();
 
         function fetchPost(id) {
-            PostService.findPostById(id, renderDetails);
+            PostService.findPostById(id).then(renderDetails,renderError);
         }
 
         function renderDetails(response) {
             if(response!=null)
-                vm.details = response;
+                vm.details = response.data;
+        }
+        function renderError(err){
+            console.log("Error while retrieving post details"+JSON.stringify(err));
         }
     }
 })();

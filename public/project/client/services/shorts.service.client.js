@@ -35,17 +35,20 @@
             return $http.delete("/api/project/short/"+shortId);
         }
         function updateShortById (shortId,newShort) {
-            return $http.put("/api/project/short/"+shortId, newShort);
+            var response= $http.put("/api/project/short/"+shortId, newShort);
+            console.log("In update short service client"+JSON.stringify(response));
+            return response;
         }
         function getShortsByUser(userId){
             return $http.get("/api/project/user/"+userId+"/shorts");
         }
         function findShortById(shortId){
+            console.log("in find short by id, short id is"+shortId);
            return $http.get("/api/project/short/"+shortId);
-            //callback(null);
         }
 
         function findShortsForUser(userId) {
+            console.log("In find shorts client side");
             return $http.get("/api/project/user/"+userId+"/shorts");
         }
     }
