@@ -1,100 +1,222 @@
 
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="ProfileController">
-    <div class="container">
-    <h1 class="page-header">{{ currentUser.username }}</h1>
+<!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="ProfileController">-->
+
+    <!--<h1 class="page-header">{{ currentUser.username }}</h1>-->
+    <!--<ul class="nav nav-tabs" data-tabs="tabs">-->
+        <!--<li ><a  href="#/profile">Profile</a></li>-->
+        <!--<li ><a  href="#/posts">Your Posts</a></li>-->
+        <!--<li ><a  href="#/shorts">Your Shorts</a></li>-->
+    <!--</ul>-->
+    <!--<div class="tab-content">-->
+        <!--<div id="profile" class="tab-pane fade">-->
+
+        <!--<div class="row">-->
+            <!--<div class="form-group col-xs-6 col-lg-6">-->
+                <!--<label for="profileName">Profile Name</label>-->
+                <!--<input type="text" class="form-control" id="profileName" placeholder="Profile Name"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+            <!--<div class="form-group col-xs-6 col-lg-6">-->
+                <!--<label for="description">Description</label>-->
+                <!--<textarea  class="form-control" id="description" placeholder="Tell us what you do, did, will do">-->
+                    <!--</textarea>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group row">-->
+            <!--<div class="col-xs-6 col-lg-6">-->
+                <!--<label for="dob">Date of Birth:</label>-->
+                <!--<input type="date" class="form-control" id="dob"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+            <!--<div class="form-group col-xs-6 col-lg-6">-->
+                <!--<label for="role">-->
+                   <!--Who are you?-->
+                <!--</label>-->
+                <!--<div id="role">-->
+                    <!--<select class="form-control">-->
+                        <!--<option>Director</option>-->
+                        <!--<option>Actor</option>-->
+                        <!--<option>Producer</option>-->
+                        <!--<option>Cinematographer</option>-->
+                        <!--<option>Music Director</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+   <!--</div>-->
+<!--</div>-->
+
+
+
+
+<!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="ProfileController">-->
+    <!--<div class="container">-->
+        <!--<h1 class="page-header">{{ currentUser.username }}</h1>-->
+        <!--<ul class="nav nav-tabs" data-tabs="tabs">-->
+            <!--<li ng-class="{'active': $location.path() == '/profile'}" ><a data-toggle="tab" href="#profile">Profile</a></li>-->
+            <!--<li ng-class="{'active': $location.path() == '/posts'}" ><a data-toggle="tab" href="#yourposts">Your Posts</a></li>-->
+            <!--<li ng-class="{'active': $location.path() == '/shorts'}" ><a data-toggle="tab" href="#yourshorts">Your Shorts</a></li>-->
+        <!--</ul>-->
+        <!--<div class="tab-content">-->
+            <!--<div id="profile" class="tab-pane fade">-->
+                <!--<form >-->
+                    <!--<div class="row">-->
+                        <!--<div class="form-group col-xs-6 col-lg-6">-->
+                            <!--<label for="profileName">Profile Name</label>-->
+                            <!--<input type="text" class="form-control" id="profileName" placeholder="Profile Name"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="form-group col-xs-6 col-lg-6">-->
+                            <!--<label for="description">Description</label>-->
+                <!--<textarea  class="form-control" id="description" placeholder="Tell us what you do, did, will do">-->
+                    <!--</textarea>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group row">-->
+                        <!--<div class="col-xs-6 col-lg-6">-->
+                            <!--<label for="dob">Date of Birth:</label>-->
+                            <!--<input type="date" class="form-control" id="dob"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="form-group col-xs-6 col-lg-6">-->
+                            <!--<label for="role">-->
+                                <!--Who are you?-->
+                            <!--</label>-->
+                            <!--<div id="role">-->
+                                <!--<select class="form-control">-->
+                                    <!--<option>Director</option>-->
+                                    <!--<option>Actor</option>-->
+                                    <!--<option>Producer</option>-->
+                                    <!--<option>Cinematographer</option>-->
+                                    <!--<option>Music Director</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div id="yourposts" class="tab-pane fade" ng-if="posts">-->
+                <!--<h3>Your Posts</h3>-->
+                <!--<div ng-repeat="post in posts">-->
+                    <!--<h4>-->
+                        <!--<a href="#/details/posts/{{post.id}}">-->
+                            <!--{{post.title}}-->
+                        <!--</a>-->
+                        <!--<a ng-click="deletePost($index)" ><span class="glyphicon glyphicon-remove"></span></a>-->
+                        <!--<a ng-click="selectPost($index)"><span class="glyphicon glyphicon-pencil"></span></a>-->
+                    <!--</h4>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div id="yourshorts" class="tab-pane fade table-responsive" ng-if="shorts">-->
+                <!--<h3>Your Shorts</h3>-->
+                <!--<table class="table table-striped">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th>Title</th>-->
+                        <!--<th>Short</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr ng-repeat="short in shorts">-->
+                        <!--<td>-->
+                            <!--<a href="#/details/{{short.id}}">-->
+                                <!--{{short.title}}-->
+                            <!--</a>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<iframe ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<button-->
+                                    <!--ng-click="selectShort($index)"-->
+                                    <!--class="btn btn-default">-->
+                                <!--Select-->
+                            <!--</button>-->
+                            <!--<button-->
+                                    <!--ng-click="deleteShort($index)"-->
+                                    <!--class="btn btn-danger">-->
+                                <!--Delete-->
+                            <!--</button>-->
+
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+<div class="container col-md-offset-3 col-lg-6 col-sm-12" ng-controller="ProfileController">
+    <h1 class="page-header">{{currentUser.username}}</h1>
     <ul class="nav nav-tabs" data-tabs="tabs">
-        <li ng-class="{'active': $location.path() == '/profile'}" ><a data-toggle="tab" href="#profile">Profile</a></li>
-        <li ng-class="{'active': $location.path() == '/posts'}" ><a data-toggle="tab" href="#yourposts">Your Posts</a></li>
-        <li ng-class="{'active': $location.path() == '/shorts'}" ><a data-toggle="tab" href="#yourshorts">Your Shorts</a></li>
+        <li class="active"><a href="#/profile">Profile</a></li>
+        <li><a href="#/posts">Your posts</a></li>
+        <li><a href="#/shorts">Your shorts</a></li>
+        <li><a href="#/">Following</a></li>
+        <li><a href="#/">Followers</a></li>
     </ul>
+
     <div class="tab-content">
-        <div id="profile" class="tab-pane fade">
-            <form >
         <div class="row">
-            <div class="form-group col-xs-6 col-lg-6">
-                <label for="profileName">Profile Name</label>
-                <input type="text" class="form-control" id="profileName" placeholder="Profile Name"/>
+        <div class="form-group col-xs-12 col-lg-8">
+        <label for="username">User Name</label>
+        <input type="text" class="form-control" id="username" placeholder="User Name" ng-model="profile.username"/>
+        </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-lg-8">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="profile.firstName"/>
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-xs-6 col-lg-6">
-                <label for="description">Description</label>
-                <textarea  class="form-control" id="description" placeholder="Tell us what you do, did, will do">
-                    </textarea>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-xs-6 col-lg-6">
-                <label for="dob">Date of Birth:</label>
-                <input type="date" class="form-control" id="dob"/>
+            <div class="form-group col-xs-12 col-lg-8">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="profile.lastName"/>
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-xs-6 col-lg-6">
+        <div class="form-group col-xs-12 col-lg-8">
+        <label for="description">Description</label>
+        <textarea  class="form-control" id="description" placeholder="Tell us what you do, did, will do" ng-model="profile.description">
+        </textarea>
+        </div>
+        </div>
+        <!--<div class="row">-->
+            <!--<div class="form-group col-xs-12 col-lg-8">-->
+                <!--<label for="dob">Date of Birth:</label>-->
+                <!--<input type="date" class="form-control" id="dob" ng-model="profile.dob"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="row">
+            <div class="form-group col-xs-12 col-lg-8">
                 <label for="role">
-                   Who are you?
+                    Who are you?
                 </label>
                 <div id="role">
-                    <select class="form-control">
-                        <option>Director</option>
-                        <option>Actor</option>
-                        <option>Producer</option>
-                        <option>Cinematographer</option>
-                        <option>Music Director</option>
+                    <select class="form-control" ng-model="profile.roles">
+                        <option ng-selected="profile.roles == 'Director'" >Director</option>
+                        <option ng-selected="profile.roles == 'Actor'" >Actor</option>
+                        <option ng-selected="profile.roles == 'Producer'" >Producer</option>
+                        <option ng-selected="profile.roles == 'Cinematographer'">Cinematographer</option>
+                        <option ng-selected="profile.roles == 'Music Director'">Music Director</option>
                     </select>
                 </div>
             </div>
-        </div>
-        </form>
-        </div>
-        <div id="yourposts" class="tab-pane fade" ng-if="posts">
-            <h3>Your Posts</h3>
-            <div ng-repeat="post in posts">
-                <h4>
-                    <a href="#/details/posts/{{post.id}}">
-                        {{post.title}}
-                    </a>
-                    <a ng-click="deletePost($index)" ><span class="glyphicon glyphicon-remove"></span></a>
-                    <a ng-click="selectPost($index)"><span class="glyphicon glyphicon-pencil"></span></a>
-                </h4>
+            <div class="form-group  col-xs-12 col-lg-8">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <!--<button type="submit" class="btn btn-default" href="home.view.html">Register</button>-->
+                    <a href="#/profile" class="btn btn-primary btn-lg" ng-click="update()">Update</a>
+                </div>
             </div>
         </div>
-        <div id="yourshorts" class="tab-pane fade table-responsive" ng-if="shorts">
-            <h3>Your Shorts</h3>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Short</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="short in shorts">
-                    <td>
-                        <a href="#/details/{{short.id}}">
-                            {{short.title}}
-                        </a>
-                    </td>
-                    <td>
-                        <iframe ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
-                    </td>
-                    <td>
-                        <button
-                                ng-click="selectShort($index)"
-                                class="btn btn-default">
-                            Select
-                        </button>
-                        <button
-                                ng-click="deleteShort($index)"
-                                class="btn btn-danger">
-                            Delete
-                        </button>
 
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-</div>
-        </div>
+    </div>
 </div>

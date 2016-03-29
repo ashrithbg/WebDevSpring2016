@@ -1,7 +1,15 @@
 
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="ShortController">
+<div class="container col-md-offset-3 col-lg-6 col-sm-12" ng-controller="ShortController">
+    <h1 class="page-header">{{currentUser.username}}</h1>
+    <ul class="nav nav-tabs" data-tabs="tabs">
+        <li> <a href="#/profile">Profile</a></li>
+        <li ><a href="#/posts">Your posts</a></li>
+        <li class="active"><a href="#/shorts">Your shorts</a></li>
+        <li><a href="#/">Following</a></li>
+        <li><a href="#/">Followers</a></li>
+    </ul>
+    <div class="tab-content">
     <form>
-        <h1 class="page-header">Shorts</h1>
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" type="text" class="form-control" placeholder="Title" ng-model="short.title">
@@ -60,6 +68,7 @@
             </tbody>
         </table>
     </div>
+        </div>
 
 </div>
 

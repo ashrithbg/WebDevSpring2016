@@ -7,7 +7,7 @@
     function profileController($scope,UserService,ShortService,PostService)
     {   UserService.loggedIn();
         console.log("In profile controller");
-        $scope.profile = UserService.getCurrentUser();
+        $scope.profile= UserService.getCurrentUser();
         ShortService.getShortsByUser($scope.profile._id).then(function(response){
             $scope.shorts = response.data;
         },function(err){

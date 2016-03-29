@@ -18,13 +18,21 @@
                         <!--<li><a href="#/login">Login</a></li>-->
                         <!--<li><a href="#/register">Register</a></li>-->
                         <!--<li><a href="#/about">About</a></li>-->
+                        <!--<li class="dropdown">-->
+                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+                                <!--{{currentUser.username}} <span class="caret"></span>-->
+                            <!--</a>-->
+                            <!--<ul class="dropdown-menu">-->
+                                <!--<li><a href="#/profile">Profile</a></li>-->
+                                <!--<li><a href="#/feed">Your feed</a></li>-->
+                                <!--<li><a href="#/">Logout</a></li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
 
                         <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/login'}" ><a href="#/login">Login</a></li>
                         <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/register'}" ><a href="#/register" >Register</a></li>
                         <li ng-show="currentUser" ng-class="{'active': $location.path() == '/profile'}"><a href="#/profile" >{{ currentUser.username }}</a></li>
-                        <li ng-show="currentUser" ng-class="{'active': $location.path() == '/about'}"><a href="#/about" >About</a></li>
-                        <li ng-show="currentUser" ng-class="{'active': $location.path() == '/shorts'}"><a href="#/shorts" >Shorts</a></li>
-                        <li ng-show="currentUser" ng-class="{'active': $location.path() == '/posts'}"><a href="#/posts" >Posts</a></li>
+                        <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/about'}"><a href="#/about" >About</a></li>
                         <li ng-show="currentUser" ng-click="logout()"><a href="#/" > Logout </a></li>
 
                     </ul>
