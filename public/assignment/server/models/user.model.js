@@ -1,5 +1,10 @@
-var users = require("./user.mock.json");
-module.exports=function(){
+//var users = require("./user.mock.json");
+module.exports=function(db,mongoose){
+
+
+
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+    var UserModel = mongoose.model('User',UserSchema);
     var api={
         findUserByCredentials: findUserByCredentials,
         createUser: createUser,
