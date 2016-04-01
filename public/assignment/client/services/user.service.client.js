@@ -57,10 +57,11 @@
 
 
         function findUserById(id) {
-            $http.get('/api/assignment/user/'+id);
+            return $http.get('/api/assignment/user/'+id);
         }
         function findUserByUsername (username) {
-            $http.get('/api/assignment/user?username='+username);
+            console.log("username = "+username);
+            return $http.get('/api/assignment/user?username='+username);
 
         }
         function setCurrentUser (user) {
@@ -68,7 +69,7 @@
         }
 
         function getCurrentUser () {
-            return $rootScope.currentUser;
+            return $http.get("/api/assignment/user/loggedin");
         }
 
     }

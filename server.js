@@ -3,10 +3,8 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
 var mongoose = require("mongoose");
-
-var q = require("q");
-
-
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 var connectionString = 'mongodb://127.0.0.1:27017/formMakerDb';
 
@@ -27,8 +25,11 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(session({ secret: process.env.PASSPORT_SECRET, resave: true,
+    saveUninitialized: true}));
+app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
+
 
 app.get('/hello', function(req, res){
     res.send('hello world');
