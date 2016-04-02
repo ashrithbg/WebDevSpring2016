@@ -1,7 +1,4 @@
-
-
-
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" ng-controller="ProfileController">
+ <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
             <h1 class="page-header">Profile</h1>
             <form class="form-horizontal">
                 <div class="form-group">
@@ -29,16 +26,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+                    <label for="inputEmails" class="col-sm-3 control-label">Emails</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="youremail@domain.com" ng-model="profile.email">
+                        <input type="email" class="form-control" id="inputEmails" placeholder="youremail@domain.com" ng-model="profile.emails">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="inputPhones" class="col-sm-3 control-label">Phones</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputPhones" placeholder="(123)456789" ng-model="profile.phones">
                     </div>
 
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                         <!--<button type="submit" class="btn btn-default" href="home.view.html">Register</button>-->
-                        <a href="#/profile" class="btn btn-primary btn-lg" ng-click="update()">Update</a>
+                        <a href="javascript:void(0);" class="btn btn-primary btn-lg" ng-click="update()">Update</a>
                     </div>
                 </div>
             </form>

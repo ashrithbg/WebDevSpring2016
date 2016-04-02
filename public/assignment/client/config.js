@@ -16,7 +16,11 @@
             })
             .when("/forms",{
                 templateUrl:"views/forms/forms.view.html",
-                controller: "FormController"
+                controller: "FormController",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+
             })
             .when("/login",{
                 templateUrl:"views/users/login.view.html",
@@ -25,8 +29,7 @@
             })
             .when("/register",{
                 templateUrl:"views/users/register.view.html",
-                controller: "RegisterController",
-                controllerAs:"model"
+                controller: "RegisterController"
             })
             .when("/profile",{
                 templateUrl:"views/users/profile.view.html",
@@ -35,13 +38,12 @@
                     checkLoggedIn: checkLoggedIn
                 }
              })
-            //.when("/fields",{
-            //    templateUrl:"views/forms/field.view.html",
-            //    controller: "FieldController"
-            //})
             .when("/form/:formId/fields",{
                 templateUrl:"views/forms/field.view.html",
-                controller: "FieldController"
+                controller: "FieldController",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .otherwise({
                 redirectTo: "/"
@@ -52,14 +54,17 @@
         UserService
             .getCurrentUser()
             .then(function(response) {
+                console.log(JSON.stringify("response"+response.data));
                 var currentUser = response.data;
                 if(currentUser) {
                     UserService.setCurrentUser(currentUser);
                     deferred.resolve();
                 } else {
                     deferred.reject();
-                    $location.url("/home");
+                    $location.url("/");
                 }
+            }, function(err){
+                console.log("Error getting profile of the user"+JSON.stringify(err));
             });
 
         return deferred.promise;

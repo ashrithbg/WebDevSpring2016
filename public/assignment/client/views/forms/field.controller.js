@@ -7,11 +7,17 @@
     function FieldController($scope,$routeParams,FieldService,FormService,UserService) {
 
         UserService.loggedIn();
-        $scope.fields = getFields();
+        //$scope.fields = getFields();
         FormService.findFormById($routeParams.formId).
             then(function(response){
-                $scope.form=response.data
-                },function(err){
+                console.log("form response"+JSON.stringify(response.data));
+                $scope.form=response.data;
+                FieldService.getFieldsForForm($routeParams.formId).then(function(response){
+                    $scope.fields = response.data;
+                    },function(err){
+                    console.log("Error retrieving fields")
+                });
+            },function(err){
                     console.log("Could not retrieve form");
             });
         $scope.addField = addField;
@@ -61,6 +67,7 @@
                 {"_id": null, "label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"}
 
             ];
+            console.log("Index"+JSON.stringify(fieldTypes[index]));
             FieldService.
                 createFieldForForm($routeParams.formId,fieldTypes[index]).
             then(

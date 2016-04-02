@@ -8,7 +8,7 @@ module.exports=function(app,userModel){
     app.get('/api/assignment/user',getAllUsers);
     app.get('/api/assignment/user/:id',getUserById);
 
-    app.post("/api/assignment/user/login", getUserByCredentials);
+    app.post("/api/assignment/user/login", login);
 
     app.put('/api/assignment/user/:id',updateUser);
     app.delete('/api/assignment/user/:id',deleteUser);
@@ -77,8 +77,9 @@ module.exports=function(app,userModel){
 
     function updateUser(req,res){
         //res.json(userModel.updateUser(req.body));
-        userModel.updateUser(req.body).then(
+        userModel.updateUser(req.params.id,req.body).then(
             function(doc) {
+                req.session.currentUser = doc;
                 res.json(doc);
             }, function(err){
                 res.status(400).send(err);
@@ -100,10 +101,13 @@ module.exports=function(app,userModel){
     }
     function login(req, res) {
         var credentials = req.body;
-        var user = userModel.findUserByCredentials(credentials)
+        userModel.findUserByCredentials(credentials)
             .then(
                 function (doc) {
+                    console.log("document",doc);
                     req.session.currentUser = doc;
+                    console.log("login"+JSON.stringify(req.session.currentUser));
+                    console.log("In login function",req.session.currentUser);
                     res.json(doc);
                 },
                 // send error if promise rejected
@@ -120,10 +124,8 @@ module.exports=function(app,userModel){
         res.send(200);
     }
     function loggedin(req, res) {
+        console.log("In logged in"+req.session.currentUser);
         res.json(req.session.currentUser);
     }
-
-
-
 
 };

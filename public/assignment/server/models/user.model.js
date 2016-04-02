@@ -32,23 +32,15 @@ module.exports=function(db,mongoose){
         });
         return deferred.promise;
     }
-    function findUserByCredentials(username, password) {
-        //for (var u in users) {
-        //    if (users[u].username === username &&
-        //        users[u].password === password) {
-        //        console.log(users[u]);
-        //        return users[u];
-        //    }
-        //}
-        //return null;
+    function findUserByCredentials(credentials) {
 
+        console.log("credentials"+JSON.stringify(credentials));
         var deferred = q.defer();
-        UserModel.findOne({username:username,password:password},function(err,user){
+        UserModel.findOne({'username':credentials.username,'password':credentials.password},function(err,user){
             if(err){
                 deferred.reject(err);
             }
             else{
-
                 deferred.resolve(user);
             }
 
@@ -84,7 +76,7 @@ module.exports=function(db,mongoose){
         //return user;
 
         var deferred = q.defer();
-
+        console.log(JSON.stringify(user));
         // insert new user with mongoose user model's create()
         UserModel.create(user, function (err, doc) {
 
@@ -115,6 +107,8 @@ module.exports=function(db,mongoose){
         //} else {
         //    return null;
         //}
+        console.log("userId"+userId);
+        console.log("user obj",JSON.stringify(user));
         var deferred = q.defer();
         UserModel.findById({"_id":userId},function(err,found_user){
             if(err){
@@ -125,7 +119,8 @@ module.exports=function(db,mongoose){
                     found_user.firstName = user.firstName;
                     found_user.lastName = user.lastName;
                     found_user.password = user.password;
-                    found_user.email = user.email;
+                    found_user.emails = user.emails;
+                    found_user.phones = user.phones;
                     found_user.save(function(err,updated_user){
                         if(err){
                             deferred.reject(err);
@@ -182,4 +177,4 @@ module.exports=function(db,mongoose){
 
 
 
-}
+};

@@ -31,6 +31,7 @@
 
         }
         function createFieldForForm(formId,field){
+            console.log("field in createFieldForForm"+JSON.stringify(field));
             return $http.post("/api/assignment/form/"+formId+"/field",field);
         }
 

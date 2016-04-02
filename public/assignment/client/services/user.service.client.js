@@ -37,7 +37,7 @@
         }
         function findUserByCredentials(username, password) {
 
-            return $http.get('/api/assignment/user?username='+username+"&password="+password);
+            return $http.post('/api/assignment/user/login',{'username':username,'password':password});
 
         }
 
@@ -65,6 +65,7 @@
 
         }
         function setCurrentUser (user) {
+            console.log("current user"+JSON.stringify(user));
             $rootScope.currentUser = user;
         }
 

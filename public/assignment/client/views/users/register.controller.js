@@ -10,6 +10,7 @@
 
         function register(user) {
             $scope.error = null;
+            console.log("user.emails",user.emails);
             if (user == null) {
                 $scope.error = "Please fill in the required fields";
                 return;
@@ -33,15 +34,14 @@
                         return;
                     }
                     else{
-                        UserService.createUser($scope.user).then(function(newUser){
+                        console.log("emails"+user.emails);
+                        UserService.createUser(user).then(function(newUser){
                             console.log("created user");
                             UserService.setCurrentUser(newUser);
+                            $location.url("/profile");
                         },function(err){
                             console.log("Error creating user");
                         });
-
-                        $location.url("/profile");
-
                     }
                 }, function(err){
                     console.log("Error authenticatiing user");

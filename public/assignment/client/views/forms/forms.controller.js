@@ -7,19 +7,23 @@
 
     function formController($scope,$location,FormService,UserService)
     {
-
-        UserService.loggedIn();
-        var currentUser = UserService.getCurrentUser();
-
-        FormService.
-            findAllFormsForUser(currentUser._id).
-                then(
-                    function(response){
+        var currentUser=null;
+        UserService.getCurrentUser().then(function(response){
+            console.log("current user in form controller "+ JSON.stringify(response.data));
+            currentUser=response.data;
+            FormService.findAllFormsForUser(currentUser._id).then(
+                function(response){
                         $scope.forms =response.data;
                     },function(err){
                         console.log("error");
                         $scope.forms={};
-            });
+                    });
+            },
+            function(err){
+                console.log("Error while getting the current user"+JSON.stringify(err));
+            }
+        );
+
 
         $scope.$location = $location;
         var selectedIndex = -1;
@@ -36,6 +40,7 @@
                 currentUser._id,form)
                 .then(
                     function(response){
+                        console.log("form response"+JSON.stringify(response.data));
                         $scope.forms = response.data;
                         $scope.form = {};
                     },

@@ -25,11 +25,9 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: process.env.PASSPORT_SECRET, resave: true,
-    saveUninitialized: true}));
-app.use(cookieParser());
+app.use(express.cookieParser());
+app.use(express.session({ secret: "This is a secret"}));
 app.use(express.static(__dirname + '/public'));
-
 
 app.get('/hello', function(req, res){
     res.send('hello world');
