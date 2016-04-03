@@ -20,7 +20,7 @@
         function update(){
             console.log("update"+$scope.profile.username);
             console.log("profile",JSON.stringify($scope.profile));
-            UserService.updateUser($rootScope.currentUser._id,$rootScope.currentUser).then(
+            UserService.updateUser($rootScope.currentUser._id,$scope.profile).then(
                 function(response){
 
                     UserService.setCurrentUser(response.data);

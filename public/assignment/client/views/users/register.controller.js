@@ -6,11 +6,12 @@
 
     function registerController($location, $scope, UserService) {
         $scope.error = null;
+        $scope.emails = [];
         $scope.register = register;
 
         function register(user) {
             $scope.error = null;
-            console.log("user.emails",user.emails);
+            console.log("user.emails",JSON.stringify(user));
             if (user == null) {
                 $scope.error = "Please fill in the required fields";
                 return;
@@ -27,6 +28,8 @@
                 $scope.error = "Passwords must match";
                 return;
             }
+            $scope.emails.push(user.emails);
+
             UserService.findUserByUsername(user.username).then(
                 function(found_user){
                     if (found_user.data != null) {
@@ -51,3 +54,5 @@
         }
     }
 })();
+
+

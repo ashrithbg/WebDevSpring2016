@@ -1,6 +1,6 @@
 
 
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="RegisterController">
             <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
             <h1 class="page-header">Register</h1>
             <form class="form-horizontal">
@@ -23,9 +23,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmails" class="col-sm-2 control-label">Emails</label>
+                    <label for="inputEmail" class="col-sm-2 control-label">Emails</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmails" placeholder="youremail@domain.com" ng-model="user.emails">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="youremail@domain.com" ng-model="user.emails" multiple>
                     </div>
                 </div>
                 <div class="form-group">
@@ -35,4 +35,6 @@
                 </div>
             </form>
         </div>
+
+
 
