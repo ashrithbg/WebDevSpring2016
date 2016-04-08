@@ -1,32 +1,97 @@
-<div class="container-fluid" ng-controller="SearchController">
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 class="page-header">ShortKut</h1>
-            <div class="featurette">
-                <div class="featurette-inner text-center">
-                    <form role="form" class="search has-button">
+<!--<div class="container-fluid" ng-controller="SearchController">-->
+    <!--<div class="row">-->
+        <!--<div class="col-sm-12">-->
+            <!--<h1 class="page-header">ShortKut</h1>-->
+            <!--<div class="featurette">-->
+                <!--<div class="featurette-inner text-center">-->
+                    <!--<form role="form" class="search has-button">-->
 
-                        <div class="form-group">
-                            <input type="search" placeholder="Search shorts..." class="form-control form-control-lg" ng-model="query.value">
-                            <a href="#/search">
-                            <button class="btn btn-warning" type="button" ng-click="fetchShort(query.value)">Search</button>
-                            </a>
-                        </div>
-                        <!-- /form-group -->
-                    </form>
-                    <!-- /.max-width on this form -->
+                        <!--<div class="form-group">-->
+                            <!--<input type="search" placeholder="Search shorts..." class="form-control form-control-lg" ng-model="query.value">-->
+                            <!--<a href="#/search">-->
+                            <!--<button class="btn btn-warning" type="button" ng-click="fetchShort(query.value)">Search</button>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; /form-group &ndash;&gt;-->
+                    <!--</form>-->
+                    <!--&lt;!&ndash; /.max-width on this form &ndash;&gt;-->
 
-                </div>
-                <!-- /.featurette-inner (display:table-cell) -->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.featurette-inner (display:table-cell) &ndash;&gt;-->
 
-            </div>
+            <!--</div>-->
 
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row" >-->
+
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="row" ng-show="currentProjectUrl" ng-model="currentProjectUrl" ng-keypress="reset()">&ndash;&gt;-->
+        <!--&lt;!&ndash;<iframe ng-src="{{currentProjectUrl}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+
+
+
+
+<!-- Full Width Image Header -->
+<header class="header-image">
+    <div class="headline">
+        <div class="container">
+            <h1>ShortKut</h1>
+            <h2>Start short but not small!</h2>
         </div>
     </div>
-    <div class="row" >
+</header>
+
+<!-- Page Content -->
+<div class="container">
+
+    <video autoplay loop muted id="bgvid">
+        <source src="css/videos/Sunset-Lapse.mp4" type="video/mp4">
+    </video>
+
+    <hr class="featurette-divider">
+
+    <!-- First Featurette -->
+    <div class="featurette" id="about">
+        <img width=500 height=500 class="featurette-image img-circle img-responsive pull-right" src="http://www.scriptmag.com/wp-content/uploads/short-films.png">
+        <h2 class="featurette-heading">Share your short films
+            <span class="text-muted">with the community </span>
+        </h2>
+        <p class="lead"></p>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- Second Featurette -->
+    <div class="featurette" id="services">
+        <img width=500 height=500 class="featurette-image img-circle img-responsive pull-left" src="http://cdn.playbuzz.com/cdn/3f596413-2002-4387-82b6-7fc2fe0be3d8/d2d826fd-c6bb-4c3b-922f-f2a62237f48b.jpg">
+        <h2 class="featurette-heading">Are you looking for an acting gig?
+            <span class="text-muted">Follow actors, producers, directors and enthusiasts</span>
+        </h2>
 
     </div>
-    <!--<div class="row" ng-show="currentProjectUrl" ng-model="currentProjectUrl" ng-keypress="reset()">-->
-        <!--<iframe ng-src="{{currentProjectUrl}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>-->
-    <!--</div>-->
+
+    <hr class="featurette-divider">
+
+    <!-- Third Featurette -->
+    <div class="featurette" id="contact">
+        <img width=500 height=500 class="featurette-image img-circle img-responsive pull-right" src="http://www.projectcasting.com/wp-content/uploads/2014/07/shutterstock_187685681.jpg">
+        <h2 class="featurette-heading">Oh! You want to make a short film?
+            <span class="text-muted">Sure! Post a gig</span>
+        </h2>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Ashrith Bangi</p>
+            </div>
+        </div>
+    </footer>
+
 </div>

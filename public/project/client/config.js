@@ -5,8 +5,8 @@
 
             $routeProvider.
                 when("/",{
-                    templateUrl:"views/search/search.view.html",
-                    controller: "SearchController"
+                    templateUrl:"views/home/home.view.html",
+                    controller: "HomeController"
                 })
                 . when("/search",{
                     templateUrl:"views/search/search.view.html",
