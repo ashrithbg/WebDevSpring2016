@@ -7,16 +7,18 @@
     function postController($scope,$location,UserService,PostService) {
 
         UserService.loggedIn();
-        var currentUser= UserService.getCurrentUser();
-        PostService.findAllPostsByUser(
-            currentUser._id).then(
-            function(response){
-
-                $scope.posts =response.data;
-            },function(err){
-                console.log("Error retrieving posts"+err);
-            });
-
+        var currentUser= UserService.getCurrentUser().then(function(response) {
+            console.log("current user in form controller " + JSON.stringify(response.data));
+            currentUser = response.data;
+            PostService.findAllPostsByUser(
+                currentUser._id).then(
+                function (response) {
+                    console.log("posts",JSON.stringify(response.data));
+                    $scope.posts = response.data;
+                }, function (err) {
+                    console.log("Error retrieving posts" + err);
+                });
+        });
         $scope.$location = $location;
         $scope.createPost = createPost;
         $scope.updatePost = updatePost;
@@ -27,6 +29,7 @@
         function createPost(post){
             if(!post || !post.title)
                 return;
+            console.log("In posts"+JSON.stringify(post));
             PostService.createPostForUser(
                 currentUser._id,
                 post).then(
@@ -48,7 +51,10 @@
 
         }
         function updatePost(post){
-            PostService.updatePostById(post.id,
+
+            console.log("post object"+JSON.stringify(post));
+            console.log("post id"+post._id);
+            PostService.updatePostById(post._id,
                 post).then(
                 function(response){
 
@@ -66,7 +72,7 @@
         }
         function deletePost(index){
             var posts = $scope.posts;
-            var postId = posts[index].id;
+            var postId = posts[index]._id;
             console.log("post id to delete"+postId);
             PostService.deletePostById(
                 postId).then(
@@ -86,7 +92,7 @@
             //selectedIndex = index;
             console.log(index);
             var selectedPost= {
-                id: $scope.posts[index].id,
+                _id: $scope.posts[index]._id,
                 title: $scope.posts[index].title,
                 userId: $scope.posts[index].userId,
                 description: $scope.posts[index].description

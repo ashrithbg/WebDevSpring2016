@@ -10,30 +10,58 @@ module.exports=function(app, userModel, postModel){
 
     function getPosts(req, res){
         var user = req.params.userId;
-        res.json(postModel.findAllPostsByUser(user));
+        postModel.findAllPostsByUser(user).then(
+            function(posts){
+                res.json(posts);
+            },function(err){
+            res.status(400).send(err);
+        });
 
     }
 
     function getPost(req, res){
-        res.json(postModel.findPostById(req.params.postId));
+        postModel.findPostById(req.params.postId).then(
+            function(post){
+                res.json(post);
+            },function(err) {
+                res.status(400).send(err);
+            });
 
     }
 
     function addPost(req, res){
 
         var post = req.body;
-        res.json(postModel.createPostForUser(req.params.userId, post));
+        postModel.createPostForUser(req.params.userId, post).then(
+            function(posts){
+                res.json(posts);
+            },function(err){
+                res.status(400).send(err);
+            });
 
     }
     function deletePost(req, res){
-        res.json(postModel.deletePostById(req.params.postId));
+        postModel.deletePostById(req.params.postId).then(
+            function(posts){
+                res.json(posts);
+            },
+            function(err){
+                res.status(400).send(err);
+            });
 
     }
 
     function updatePost(req, res){
-        res.json(postModel.updatePostById(req.params.postId, req.body));
+        postModel.updatePostById(req.params.postId, req.body).then(
+            function(posts){
+                res.json(posts);
+            },
+            function(err){
+                res.status(400).send(err);
+            }
+        );
 
     }
 
 
-}
+};

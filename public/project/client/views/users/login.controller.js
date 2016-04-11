@@ -4,25 +4,33 @@
         .module("ShortKutApp")
         .controller("LoginController",LoginController);
 
-    function LoginController($scope,$location, $rootScope,UserService)
+    function LoginController($location, UserService)
     {
-        $scope.login = login;
-        $scope.$location = $location;
+        var vm = this;
 
+        vm.login = login;
 
-        function login (user) {
+        function init() {
+        }
+        init();
+
+        function login(user) {
+            if(!user) {
+                return;
+            }
             UserService.findUserByCredentials(user.username,
-                user.password).then(function(response){
-                if (response) {
-                    console.log(response);
-                    //UserService.setCurrentUser(found_user);
-                    $rootScope.currentUser = response.data;
-                    $location.url("/profile");
+                user.password).then(
+                function(response){
+                    if (response) {
+                        console.log(response);
+                        UserService.setCurrentUser(response.data);
+                        $location.url("/profile");
+                    }
+                },function(err){
+                    UserService.setCurrentUser(null);
+                    $location.url("/home");
                 }
-            },function(err){
-                console.log("Error logging in"+err);
-            });
-
+            );
         }
     }
 })();

@@ -85,17 +85,17 @@
                                 <!--</div>-->
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input id="email" type="text" class="form-control" name="email" value="" placeholder="Username" ng-model="user.username">
+                                    <input id="email" type="text" class="form-control" name="email" value="" placeholder="Username" ng-model="model.user.username">
                                 </div>
 
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password" ng-model="user.password">
+                                    <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password" ng-model="model.user.password">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <a href="#/profile" name="login-submit" id="login-submit" class="form-control btn btn-login" tabeindex="4" ng-click="login(user)"><i class="fa fa-sign-in"></i>Sign In</a>
+                                            <a href="javascript:void(0);" name="login-submit" id="login-submit" class="form-control btn btn-login" tabeindex="4" ng-click="model.login(model.user)"><i class="fa fa-sign-in"></i>Sign In</a>
                                            <!--<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">-->
                                         </div>
                                     </div>

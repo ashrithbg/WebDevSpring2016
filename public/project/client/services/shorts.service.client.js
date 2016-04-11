@@ -27,7 +27,7 @@
         return api;
 
         function addShortForUser(userId,newShort) {
-
+            console.log("In add short client side user id "+ userId);
             return $http.post("/api/project/user/"+userId+"/short",newShort);
 
         }

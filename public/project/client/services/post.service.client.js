@@ -27,7 +27,10 @@
             return service;
 
             function findAllPostsByUser(userId) {
-               return $http.get("/api/project/user/"+userId+"/posts");
+
+               var response = $http.get("/api/project/user/"+userId+"/posts");
+                console.log("In find all posts by user"+JSON.stringify(response));
+                return response;
             }
             function deletePostById(postId){
                return $http.delete("/api/project/post/"+postId)

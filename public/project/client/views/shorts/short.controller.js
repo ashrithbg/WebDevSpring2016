@@ -6,15 +6,21 @@
 
     function shortController($scope,$location,ShortService,UserService) {
 
-        UserService.loggedIn();
-        var currentUser= UserService.getCurrentUser();
-        ShortService.findShortsForUser(
-            currentUser._id).then(
-            function(response){
-                $scope.shorts =response.data;
-            },function(err){
-                console.log("Error retrieving shorts"+err);
-            });
+        //UserService.loggedIn();
+        var currentUser =null;
+        UserService.getCurrentUser().then(function(response){
+                currentUser= response.data;
+                ShortService.findShortsForUser(
+                currentUser._id).then(
+                function(response){
+                    $scope.shorts =response.data;
+                },function(err){
+                    console.log("Error retrieving shorts"+err);
+                });
+        }, function(err){
+            console.log("Error getting the current user");
+        });
+
         console.log("shorts"+$scope.shorts);
         $scope.$location = $location;
 
@@ -30,6 +36,7 @@
         function addShort(newShort){
             if(!newShort || !newShort.title)
                 return;
+            console.log("current user id"+currentUser._id);
             ShortService.addShortForUser(
                 currentUser._id,
                 newShort).then(
@@ -52,9 +59,9 @@
 
         function updateShort(short){
             console.log("short to be updated"+short.title);
-            console.log("short to be updated"+short.id);
+            console.log("short to be updated"+short._id);
 
-            ShortService.updateShortById(short.id,
+            ShortService.updateShortById(short._id,
                 short).then(
                 function(response){
                     var selectedIndex = $scope.selectedIndex;
@@ -77,7 +84,7 @@
         }
         function deleteShort(index){
             var shorts = $scope.shorts;
-            var shortId = shorts[index].id;
+            var shortId = shorts[index]._id;
             ShortService.deleteShortById(
                 shortId).then(
                 function(shorts){
@@ -96,10 +103,10 @@
         }
         //var selectedIndex = null;
         function selectShort(index){
-
-            console.log(index);
+            console.log("In select short");
+            console.log("In select short"+index);
             var selectedShort= {
-                id: $scope.shorts[index].id,
+                _id: $scope.shorts[index]._id,
                 title: $scope.shorts[index].title,
                 userId: $scope.shorts[index].userId,
                 description: $scope.shorts[index].description,
@@ -112,7 +119,7 @@
 
         }
 
-        console.log("In upload Controller");
+
 
     }
 

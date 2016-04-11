@@ -37,7 +37,7 @@
         }
         function findUserByCredentials(username, password) {
 
-            return $http.get('/api/project/user?username='+username+"&password="+password);
+            return $http.post('/api/project/user/login',{'username':username,'password':password});
 
         }
 
@@ -57,18 +57,20 @@
 
 
         function findUserById(id) {
-            $http.get('/api/project/user/'+id);
+            return $http.get('/api/project/user/'+id);
         }
         function findUserByUsername (username) {
-            $http.get('/api/project/user?username='+username);
+            console.log("username = "+username);
+            return $http.get('/api/project/user?username='+username);
 
         }
         function setCurrentUser (user) {
+            console.log("current user"+JSON.stringify(user));
             $rootScope.currentUser = user;
         }
 
         function getCurrentUser () {
-            return $rootScope.currentUser;
+            return $http.get("/api/project/user/loggedin");
         }
 
     }

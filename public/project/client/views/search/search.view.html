@@ -1,51 +1,42 @@
-<!--<div class="container-fluid" ng-controller="SearchController">-->
-    <!--<video autoplay loop muted id="bgvid">-->
-        <!--<source src="css/videos/Sunset-Lapse.mp4" type="video/mp4">-->
-    <!--</video>-->
-    <!--<div class="row col-sm-12">-->
-        <!--<div class="col-sm-12">-->
-            <!--<h1 class="page-header">ShortKut</h1>-->
-            <!--<div class="featurette">-->
-                <!--<div class="featurette-inner text-center">-->
-                    <!--<form role="form" class="search has-button ng-pristine ng-valid">-->
 
-                        <!--<div class="form-group">-->
-                            <!--<input type="search" placeholder="Search shorts..." class="form-control form-control-lg" ng-model="query">-->
+<div class="container-fluid col-md-offset-2 col-xs-offset-0 " ng-if="shorts">
+    <video autoplay loop muted id="bgvid">
+        <source src="css/videos/Night-Traffic.mp4" type="video/mp4">
+    </video>
+    <h3>Search Results</h3>
+    <div ng-repeat="short in shorts">
 
-                                <!--<a href="#/search/{{query}}" class="btn btn-warning btn-block">-->
-                                    <!--Search-->
-                                <!--</a>-->
-
-                        <!--</div>-->
-                        <!--&lt;!&ndash; /form-group &ndash;&gt;-->
-                    <!--</form>-->
-                    <!--&lt;!&ndash; /.max-width on this form &ndash;&gt;-->
-
-                <!--</div>-->
-                <!--&lt;!&ndash; /.featurette-inner (display:table-cell) &ndash;&gt;-->
-
-            <!--</div>-->
-
-        <!--</div>-->
-
-    <!--</div>-->
-<!--</div>-->
-<!--<div id="vidtop-content" class="col-md-offset-1 col-xs-offset-0 container-fluid" ng-if="shorts">-->
-    <!--<h3>Search Results</h3>-->
-    <!--<div class="card-deck-wrapper">-->
-        <!--<div class="card-deck">-->
-            <!--<div ng-repeat="short in shorts">-->
-                <!--<div class="card col-lg-12 col-xs-12">-->
-                    <!--<div class="card-block">-->
-                        <!--<iframe ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>-->
-                        <!--<h4 class="card-title">{{short.title}}</h4>-->
-                        <!--<a href="#/details/search/{{short.id}}" class="btn btn-primary">View</a>-->
+                <div class="short-panel panel panel-default bootcards-media col-lg-6">
+                    <div class="panel-heading clearfix">
+                        <div class="row">
+                            <h3 class="panel-title">{{short.title}}</h3>
+                        </div>
+                    </div>
+                    <!--<div class="panel-body">-->
+                       <!--{{short.description}}-->
                     <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group">
+                                <a href="#/details/search/{{short.id}}" class="btn btn-info"
+                                    <i class="fa fa-eye"></i>
+                                    View
+                                </a>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
 
 
 

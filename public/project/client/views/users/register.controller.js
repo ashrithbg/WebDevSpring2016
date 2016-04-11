@@ -26,16 +26,35 @@
                 $scope.error = "Passwords must match";
                 return;
             }
-            var user = UserService.findUserByUsername(user.username);
-            if (user != null) {
-                $scope.error = "User already exists";
-                return;
-            }
-            UserService.createUser($scope.user,function(newUser){
-                UserService.setCurrentUser(newUser);
-            });
-
-            $location.url("/profile");
+            //var user = UserService.findUserByUsername(user.username);
+            //if (user != null) {
+            //    $scope.error = "User already exists";
+            //    return;
+            //}
+            //UserService.createUser($scope.user,function(newUser){
+            //    UserService.setCurrentUser(newUser);
+            //});
+            //
+            //$location.url("/profile");
+            UserService.findUserByUsername(user.username).then(
+                function(found_user){
+                    if (found_user.data != null) {
+                        $scope.error = "User already exists";
+                        return;
+                    }
+                    else{
+                        console.log("emails"+user.emails);
+                        UserService.createUser(user).then(function(newUser){
+                            console.log("created user");
+                            UserService.setCurrentUser(newUser);
+                            $location.url("/profile");
+                        },function(err){
+                            console.log("Error creating user");
+                        });
+                    }
+                }, function(err){
+                    console.log("Error authenticatiing user");
+                });
         }
     }
 })();

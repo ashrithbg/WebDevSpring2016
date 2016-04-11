@@ -1,3 +1,13 @@
-/**
- * Created by ashrith on 3/4/16.
- */
+"use strict";
+(function(){
+    angular
+        .module("ShortKutApp")
+        .controller("UserHomeController", UserHomeController);
+
+    function UserHomeController($scope,$location) {
+        $scope.$location = $location;
+    }
+})();
+
+
+
