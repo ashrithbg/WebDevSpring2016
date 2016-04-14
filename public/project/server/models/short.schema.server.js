@@ -3,6 +3,7 @@ module.exports=function(mongoose){
     var ReviewSchema = require("./review.schema.server.js")(mongoose);
     var ShortSchema = mongoose.Schema({
         "title":String,
+        "ytID":String,
         "description":String,
         "url":String,
         "language":String,

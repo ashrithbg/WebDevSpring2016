@@ -70,7 +70,7 @@
 //}
 
 
-module.exports=function(app,userModel){
+module.exports=function(app,userModel,postModel, shortModel){
     //app.post('/api/assignment/login',login);
     app.post('/api/project/user',createUser);
     app.get('/api/project/user',getUserByUsername);
@@ -81,6 +81,8 @@ module.exports=function(app,userModel){
     app.get('/api/project/user/:id',getUserById);
 
     app.post("/api/project/user/login", login);
+    app.get("/api/project/user/:id/shorts/likes",findShortLikes);
+    app.get("/api/project/user/:id/posts/likes",findPostLikes);
 
     app.put('/api/project/user/:id',updateUser);
     app.delete('/api/project/user/:id',deleteUser);
@@ -198,6 +200,41 @@ module.exports=function(app,userModel){
     function loggedin(req, res) {
         console.log("In logged in"+req.session.currentUser);
         res.json(req.session.currentUser);
+    }
+
+    function findShortLikes(req,res){
+
+        var userId = req.params.id;
+
+        userModel.findShortsLikedByUser(userId).then(function(shortLikes){
+            res.json(shortLikes);
+        },function(err){
+            res.status(400).send(err);
+        });
+
+    }
+
+
+    function findPostLikes(req,res){
+        var userId = req.params.id;
+        var postsLikedByUser =[];
+        userModel.findPostsLikedByUser(userId).then(function(postLikes){
+            postLikes.forEach(function(entry){
+                postModel.findShortById(entry).then(
+                    function(post){
+                        postsLikedByUser.push(post);
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                );
+
+            });
+            res.json(postsLikedByUser);
+        },function(err){
+            res.status(400).send(err);
+        })
+
     }
 
 };

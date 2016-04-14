@@ -4,17 +4,52 @@
         .module("FormBuilderApp")
         .controller("AdminController", adminController);
 
-    function adminController($scope,UserService){
-        UserService.logged_in();
-        $scope.admin = admin;
+    function adminController($scope, UserService)
+    {
+        $scope.remove = remove;
+        $scope.update = update;
+        $scope.add    = add;
+        $scope.select = select;
 
-        //if(typeof $rootScope.currentUser === 'undefined'){
-        //
-        //    $location.url("/home");
-        //}
+        function init() {
+            UserService
+                .findAllUsers()
+                .then(handleSuccess, handleError);
+        }
+        init();
 
-        function admin(){
-            console.log("In admin");
+        function remove(user)
+        {
+            UserService
+                .deleteUserById(user._id)
+                .then(handleSuccess, handleError);
+        }
+
+        function update(user)
+        {
+            UserService
+                .updateUser(user._id, user)
+                .then(handleSuccess, handleError);
+        }
+
+        function add(user)
+        {
+            UserService
+                .createUser(user)
+                .then(handleSuccess, handleError);
+        }
+
+        function select(user)
+        {
+            $scope.user = angular.copy(user);
+        }
+
+        function handleSuccess(response) {
+            $scope.users = response.data;
+        }
+
+        function handleError(error) {
+            $scope.error = error;
         }
     }
 })();

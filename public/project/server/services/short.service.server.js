@@ -1,12 +1,13 @@
 module.exports=function(app, userModel, shortModel){
 
+
     app.get("/api/project/user/:userId/shorts",getShorts);
     app.get("/api/project/short/:shortId",getShort);
    // app.get("/api/project/short",);
     app.post("/api/project/user/:userId/short",addShort);
     app.delete("/api/project/short/:shortId",deleteShort);
     app.put("/api/project/short/:shortId",updateShort);
-    app.post("/api/project/user/:userId/movie/:shortId", userLikesShort);
+    app.post("/api/project/user/:userId/short/:shortId", userLikesShort);
 
     function getShorts(req, res){
         var user = req.params.userId;
@@ -46,11 +47,11 @@ module.exports=function(app, userModel, shortModel){
         var short;
 
         shortModel
-            .userLikesMovie(userId, shortYoutube)
+            .userLikesShort(userId, shortYoutube)
             // add user to movie likes
             .then(
-                function (movie) {
-                    return userModel.userLikesMovie(userId, short);
+                function (short) {
+                    return userModel.userLikesShort(userId, short);
                 },
                 function (err) {
                     res.status(400).send(err);

@@ -775,3 +775,9 @@ video#bgvid {
 .grid-item { width: 400px; }
 .grid-item--width2 { width: 400px; }
 
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+

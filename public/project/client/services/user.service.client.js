@@ -17,7 +17,9 @@
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             login:login,
-            loggedIn:loggedIn
+            loggedIn:loggedIn,
+            findUserPostLikes:findUserPostLikes,
+            findUserShortLikes:findUserShortLikes
 
         };
         return service;
@@ -71,6 +73,13 @@
 
         function getCurrentUser () {
             return $http.get("/api/project/user/loggedin");
+        }
+
+        function findUserShortLikes(userId){
+            return $http.get("/api/project/user/"+userId+"/shorts/likes");
+        }
+        function findUserPostLikes(userId){
+            return $http.get("/api/project/user/"+userId+"/posts/likes");
         }
 
     }

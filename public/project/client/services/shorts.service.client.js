@@ -22,7 +22,8 @@
             deleteShortById: deleteShortById,
             updateShortById: updateShortById,
             findShortsForUser:findShortsForUser,
-            findShortById:findShortById
+            findShortById:findShortById,
+            userLikesShort:userLikesShort
         };
         return api;
 
@@ -50,6 +51,10 @@
         function findShortsForUser(userId) {
             console.log("In find shorts client side");
             return $http.get("/api/project/user/"+userId+"/shorts");
+        }
+
+        function userLikesShort(userId, short) {
+            return $http.post("/api/project/user/"+userId+"/short/"+short.id, short);
         }
     }
 })();

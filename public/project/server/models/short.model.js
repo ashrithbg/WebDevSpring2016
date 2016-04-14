@@ -12,7 +12,7 @@ module.exports=function(mongoose) {
         deleteShortById: deleteShortById,
         updateShortById: updateShortById,
         findShortsForUser:findShortsForUser,
-        findShortById:findShortById,
+        xfindShortById:findShortById,
         findUserLikes:findUserLikes,
         findReviewsForShort: findReviewsForShort,
         findCommentsForShort: findCommentsForShort,
@@ -230,7 +230,7 @@ module.exports=function(mongoose) {
         var deferred = q.defer();
 
         // find the movie by youtube ID
-        ShortModel.findOne({"ytId": short.ytId},
+        ShortModel.findOne({"ytId": short.id},
 
             function (err, doc) {
 
@@ -254,8 +254,8 @@ module.exports=function(mongoose) {
                 } else {
                     // if there's no movie
                     // create a new instance
-                    short = new Short({
-                        ytId: short.ytId,
+                    var new_short = new ShortModel({
+                        ytId: short.id,
                         title: short.title,
                         description: short.description,
                         url:short.url,
@@ -263,9 +263,9 @@ module.exports=function(mongoose) {
                         likes: []
                     });
                     // add user to likes
-                    short.likes.push (userId);
+                    new_short.likes.push (userId);
                     // save new instance
-                    short.save(function(err, doc) {
+                    new_short.save(function(err, doc) {
                         if (err) {
                             deferred.reject(err);
                         } else {

@@ -9,7 +9,7 @@
         var service = {
             findAllUsers : findAllUsers,
             findUserById : findUserById,
-            findUserByCredentials:findUserByCredentials,
+            //findUserByCredentials:findUserByCredentials,
             findUserByUsername : findUserByUsername,
             createUser:createUser,
             deleteUserById:deleteUserById,
@@ -27,26 +27,26 @@
                 $location.url("/");
             }
         }
-        function login(credentials) {
-            return $http.post("/api/assignment/login", credentials);
+        function login(user) {
+            console.log("user"+JSON.stringify(user));
+            return $http.post("/api/assignment/user/login",user);
         }
 
-        function findAllUsers()
-        {
+        function findAllUsers(){
             return $http.get('/api/assignment/user');
         }
-        function findUserByCredentials(username, password) {
-
-            return $http.post('/api/assignment/user/login',{'username':username,'password':password});
-
-        }
+        //function findUserByCredentials(username, password) {
+        //
+        //    return $http.post('/api/assignment/user/login',{'username':username,'password':password});
+        //
+        //}
 
         function deleteUserById(userId){
             return $http.delete('/api/assignment/user/'+userId);
 
         }
         function createUser (user) {
-            return $http.post('/api/assignment/user',user);
+            return $http.post('/api/assignment/user/register',user);
 
         }
 

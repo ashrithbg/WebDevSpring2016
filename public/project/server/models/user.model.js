@@ -17,7 +17,9 @@ module.exports=function(db, mongoose){
         findUserByUsername:findUserByUsername,
         userLikesShort: userLikesShort,
         userReviewsShort: userReviewsShort,
-        userCommentsOnShort: userCommentsOnShort
+        userCommentsOnShort: userCommentsOnShort,
+        findShortsLikedByUser:findShortsLikedByUser,
+        findPostsLikedByUser:findPostsLikedByUser
     };
     return api;
 
@@ -34,7 +36,7 @@ module.exports=function(db, mongoose){
             } else {
 
                 // add movie id to user likes
-                doc.likes.push (short.shortId);
+                doc.shortLikes.push (short.id);
 
                 // save user
                 doc.save (function (err, doc) {
@@ -193,5 +195,35 @@ module.exports=function(db, mongoose){
         return deferred.promise;
     }
 
+    function findShortsLikedByUser(userId){
+        var deferred = q.defer();
+        console.log("User id "+userId);
+        UserModel.findById(userId,function(err, found_user){
+            if(err){
+                deferred.reject(err);
+            }
+            else{
+
+                deferred.resolve(found_user.shortLikes);
+            }
+        });
+        return deferred.promise;
+
+
+    }
+
+    function findPostsLikedByUser(userId){
+        var deferred = q.defer();
+        UserModel.findById(userId,function(err, found_user){
+            if(err){
+                deferred.reject(err);
+            }
+            else{
+                deferred.resolve(found_user.postLikes);
+            }
+        });
+        return deferred.promise;
+
+    }
 
 };

@@ -28,8 +28,19 @@
         $scope.deleteShort = deleteShort;
         $scope.updateShort = updateShort;
         $scope.selectShort = selectShort;
+        $scope.favorite = favorite;
         //$scope.getShortsByUser = getShortsByUser;
 
+        function favorite(short) {
+            if(currentUser) {
+                $scope.short.likes = [];
+                $scope.short.likes.push(currentUser._id);
+                ShortService
+                    .userLikesShort(currentUser._id, short);
+            } else {
+                $location.url("/login");
+            }
+        }
 
 
 

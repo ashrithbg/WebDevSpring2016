@@ -50,6 +50,8 @@
                     console.log("Error authenticatiing user");
             });
 
+            //UserService.register(user).then()function(newUser)
+
 
         }
     }

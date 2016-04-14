@@ -9,7 +9,12 @@ module.exports=function(mongoose){
         "dob":{type:Date, default: Date.now},
         "description":String,
         followers: [String],
-        following: [String]
+        following: [String],
+        shortLikes: [String],
+        shortComments:[String],
+        postLikes:[String],
+        postComments:[String],
+        reviews: [String]
     },{collection: 'project.shortkut.user'});
 
     return UserSchema;

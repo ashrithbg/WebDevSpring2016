@@ -6,8 +6,11 @@ var mongoose = require("mongoose");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
-//var connectionString = 'mongodb://127.0.0.1:27017/formMakerDb';
-var connectionString = 'mongodb://127.0.0.1:27017/ShortKutDb';
+var passport = require('passport');
+
+
+var connectionString = 'mongodb://127.0.0.1:27017/formMakerDb';
+//var connectionString = 'mongodb://127.0.0.1:27017/ShortKutDb';
 
 // use remote connection string
 // if running in remote server
@@ -28,9 +31,14 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.session({ secret: "This is a secret1",resave:true, saveUninitialized: true}));
 app.use(express.cookieParser());
-app.use(express.session({ secret: "This is a secret1"}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(__dirname + '/public'));
+
 
 app.get('/hello', function(req, res){
     res.send('hello world');

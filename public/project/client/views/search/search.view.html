@@ -21,15 +21,21 @@
                     <div class="panel-footer">
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                <a href="#/details/search/{{short.id}}" class="btn btn-info"
+                                <a href="#/details/search/{{short.id}}" class="btn btn-info">
                                     <i class="fa fa-eye"></i>
                                     View
                                 </a>
                             </div>
-                            <div class="btn-group">
-                                <button class="btn">
-                                    <i class="fa fa-heart"></i>
+                            <div class="btn-group" ng-controller="ShortController">
+                                <!--<button class="btn" ng-click="favorite(short)">-->
+                                    <!--<i class="fa fa-heart"></i>-->
+                                <!--</button>-->
+                                <button class="btn btn-success" ng-click="favorite(short)">
+                                    <i class="fa fa-thumbs-up" ng-show=""></i>
+                                    <span ng-show="!short || !short.likes || currentUser._id.shortLikes.indexOf(short.ytId) == -1" class="glyphicon glyphicon-star-empty"></span>
                                 </button>
+
+
                             </div>
 
                         </div>
