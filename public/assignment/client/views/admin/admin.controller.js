@@ -4,12 +4,22 @@
         .module("FormBuilderApp")
         .controller("AdminController", adminController);
 
-    function adminController($scope, UserService)
+    function adminController($scope,$filter, UserService)
     {
         $scope.remove = remove;
         $scope.update = update;
         $scope.add    = add;
         $scope.select = select;
+
+
+        var orderBy = $filter('orderBy');
+        $scope.order = function(predicate) {
+            $scope.predicate = predicate;
+            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+            $scope.users = orderBy($scope.users, predicate, $scope.reverse);
+        };
+        $scope.order('username', true);
+
 
         function init() {
             UserService
@@ -45,11 +55,17 @@
         }
 
         function handleSuccess(response) {
+            console.log("response"+JSON.stringify(response));
+            $scope.user={};
             $scope.users = response.data;
+
         }
 
         function handleError(error) {
             $scope.error = error;
         }
+
+
+
     }
 })();

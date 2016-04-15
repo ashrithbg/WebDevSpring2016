@@ -8,7 +8,7 @@ module.exports=function(app,userModel){
     app.get('/api/assignment/user',getUserByUsername);
     app.get("/api/assignment/user/loggedin", loggedin);
     app.post("/api/assignment/user/logout", logout);
-    app.get('/api/assignment/user', auth, getAllUsers);
+    app.get('/api/assignment/users', auth, getAllUsers);
     app.get('/api/assignment/user/:id',getUserById);
     app.post("/api/assignment/user/login", passport.authenticate('local'),login);
     app.put('/api/assignment/user/:id', auth, updateUser);
@@ -36,7 +36,7 @@ module.exports=function(app,userModel){
         } else {
             newUser.roles = ["student"];
         }
-
+        console.log("In create user user service server",JSON.stringify(newUser));
         // first check if a user already exists with the username
         userModel
             .findUserByUsername(newUser.username)
@@ -163,20 +163,27 @@ module.exports=function(app,userModel){
 
     function deleteUser(req,res){
         //res.json(userModel.deleteUser(req.params.id));
-        userModel.deleteUser(req.params.id).then(
+        userModel.deleteUserById(req.params.id).then(
             function(docs){
-                res.json(docs);
+               return userModel.findAllUsers();
             }, function(err){
                 res.status(400).send(err);
             }
 
+        ).then(
+            function(users){
+                res.json(users);
+            },
+            function(err){
+                res.status(400).send(err);
+            }
         );
 
     }
 
 
-    function localStrategy(req, res) {
-        var credentials = req.body;
+    function localStrategy(username, password,done) {
+
         //userModel.findUserByCredentials(credentials)
         //    .then(
         //        function (doc) {
@@ -193,7 +200,7 @@ module.exports=function(app,userModel){
         //    );
 
         userModel
-            .findUserByCredentials(credentials)
+            .findUserByCredentials({'username':username,'password':password})
             .then(
                 function(user) {
                     if (!user) { return done(null, false); }

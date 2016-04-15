@@ -65,16 +65,19 @@ module.exports=function(db,mongoose){
     function createUser (user) {
 
         var deferred = q.defer();
-        console.log(JSON.stringify(user));
-        user.emails=user.emails.split(",");
+        console.log("In user model createUser "+JSON.stringify(user));
+        if(user.emails)
+            user.emails=user.emails.split(",");
         // insert new user with mongoose user model's create()
         UserModel.create(user, function (err, doc) {
 
             if (err) {
                 // reject promise if error
+                console.log("Error while creating user in user model"+ JSON.stringify(err));
                 deferred.reject(err);
             } else {
                 // resolve promise
+                console.log("In createUser model"+doc);
                 deferred.resolve(doc);
             }
 

@@ -25,8 +25,8 @@
 
                     UserService.setCurrentUser(response.data);
                     $scope.profile = response.data;
-                    $scope.profile.emails = response.data.emails.join(",");
-                    $scope.profile.phones = response.data.phones.join(",");
+                    //$scope.profile.emails = response.data.emails.join(",");
+                    //$scope.profile.phones = response.data.phones.join(",");
 
                 }, function(err){
                 console.log("Error updating profile"+console.log(err));

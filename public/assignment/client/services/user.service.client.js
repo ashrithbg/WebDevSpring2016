@@ -17,7 +17,9 @@
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             login:login,
-            loggedIn:loggedIn
+            loggedIn:loggedIn,
+            logout:logout,
+            register:register
 
         };
         return service;
@@ -33,7 +35,7 @@
         }
 
         function findAllUsers(){
-            return $http.get('/api/assignment/user');
+            return $http.get('/api/assignment/users');
         }
         //function findUserByCredentials(username, password) {
         //
@@ -45,8 +47,12 @@
             return $http.delete('/api/assignment/user/'+userId);
 
         }
-        function createUser (user) {
+        function register (user) {
             return $http.post('/api/assignment/user/register',user);
+
+        }
+        function createUser (user) {
+            return $http.post('/api/assignment/user',user);
 
         }
 
@@ -71,6 +77,9 @@
 
         function getCurrentUser () {
             return $http.get("/api/assignment/user/loggedin");
+        }
+        function logout(){
+            return $http.post("/api/assignment/user/logout");
         }
 
     }
