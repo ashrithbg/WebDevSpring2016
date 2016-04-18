@@ -31,5 +31,6 @@
         function renderError(err){
             console.log("Error while getting details of the short"+JSON.stringify(err));
         }
+
     }
 })();

@@ -14,7 +14,7 @@
                     templateUrl:"views/search/search.view.html",
                     controller: "SearchController"
                 })
-                .when("/details/shorts/:id", {
+                .when("/details/short/:id", {
                     templateUrl: "views/details/short.details.html",
                     controller: "ShortDetailsController as model"
                 }).when("/details/posts/:id", {

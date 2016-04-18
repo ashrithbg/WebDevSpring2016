@@ -3,18 +3,16 @@
     <video autoplay loop muted id="bgvid">
         <source src="css/videos/Night-Traffic.mp4" type="video/mp4">
     </video>
-    <h3>Search Results</h3>
-    <div ng-repeat="short in shorts">
 
-                <div class="short-panel panel panel-default bootcards-media col-lg-6">
+    <h3>Search Results</h3>
+
+    <div ng-repeat="short in shorts">
+         <div class="short-panel panel panel-default bootcards-media col-lg-6">
                     <div class="panel-heading clearfix">
                         <div class="row">
                             <h3 class="panel-title">{{short.title}}</h3>
                         </div>
                     </div>
-                    <!--<div class="panel-body">-->
-                       <!--{{short.description}}-->
-                    <!--</div>-->
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe class="embed-responsive-item" ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
                     </div>
@@ -25,17 +23,6 @@
                                     <i class="fa fa-eye"></i>
                                     View
                                 </a>
-                            </div>
-                            <div class="btn-group" ng-controller="ShortController">
-                                <!--<button class="btn" ng-click="favorite(short)">-->
-                                    <!--<i class="fa fa-heart"></i>-->
-                                <!--</button>-->
-                                <button class="btn btn-success" ng-click="favorite(short)">
-                                    <i class="fa fa-thumbs-up" ng-show=""></i>
-                                    <span ng-show="!short || !short.likes || currentUser._id.shortLikes.indexOf(short.ytId) == -1" class="glyphicon glyphicon-star-empty"></span>
-                                </button>
-
-
                             </div>
 
                         </div>

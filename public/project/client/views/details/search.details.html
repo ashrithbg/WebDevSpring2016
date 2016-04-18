@@ -1,7 +1,62 @@
-<div class="container-fluid" ng-controller="SearchDetailsController">
-    <h2>Short Details</h2>
-    <h3>{{model.details.title}}</h3>
-    <p>{{model.details.description}}</p>
-    <p>{{model.details.author}}</p>
-    <iframe ng-src="{{model.details.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+<div class="container-fluid">
+    <div class="panel panel-success col-md-8">
+        <div class="panel-heading">{{model.details.title}}</div>
+        <div class="panel-body" >
+            <p class="visible-lg">{{model.details.description}}</p>
+            <p class="visible-lg">{{model.details.author}}</p>
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="{{model.details.url}}"></iframe>
+            </div>
+            <br>
+            <div class="row">
+                <a href="" ng-show="model.likes.indexOf(currentUser._id) > -1 || currentUser.shortLikes.indexOf(model.details.id) > -1"  ng-click="model.unfavorite(model.details)" ><i class="fa fa-2x fa-thumbs-up pull-right" ></i></a>
+                <a href="" ng-show="model.likes.indexOf(currentUser._id) == -1" ng-click="model.favorite(model.details)"><i class="fa fa-2x fa-thumbs-o-up pull-right" ></i></a>
+                <div class="well">
+                    <textarea class="form-control" ng-model="model.review.content" placeholder="Enter your review"></textarea>
+                </div>
+                <a href="" ng-if="!model.updateFlag" class="btn btn-lg btn-success" ng-click="model.reviewShort(model.review,model.details)">Add Review</a>
+                <a href="" ng-if="model.updateFlag" class="btn btn-lg btn-success" ng-click="model.updateReview(model.review, model.details)">Update Review</a>
+                <a href="" ng-if="model.updateFlag" class="btn btn-lg btn-danger" ng-click="model.cancel()">Cancel</a>
+
+                <div ng-if="model.userReviews.length > 0">
+                    <h4>Reviews</h4>
+                    <ul>
+                            <div ng-repeat="review in model.userReviews">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel panel-default">
+                                        <div ng-if="currentUser._id != review.userId" class="panel-heading">
+                                            <a href="#/profile/public/{{review.username}}"><strong>{{review.username}}</strong></a>
+                                        </div>
+                                        <div ng-if="currentUser._id == review.userId" class="panel-heading">
+                                            <button class="btn btn-danger pull-right" ng-click="model.deleteReview(review,model.details)"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-warning pull-right" ng-click="model.selectedReview(review,model.details)"><i class="fa fa-pencil"></i></button>
+                                        </div>
+                                        <div class="panel-body">
+                                            {{review.content}}
+                                        </div><!-- /panel-body -->
+                                    </div><!-- /panel panel-default -->
+                                </div><!-- /col-sm-5 -->
+                                <!--<div class="well clearfix">-->
+                                    <!--{{review.content}}-->
+                                    <!--<div ng-if="currentUser._id == review.userId">-->
+                                        <!--<button class="btn btn-danger pull-right" ng-click="model.deleteReview(review,model.details)"><i class="fa fa-trash"></i></button>-->
+                                        <!--<button class="btn btn-warning pull-right" ng-click="model.selectedReview(review,model.details)"><i class="fa fa-pencil"></i></button>-->
+                                    <!--</div>-->
+                                    <!--<div ng-if="currentUser._id != review.userId" class="row pull-right">-->
+                                        <!--<a href="#/profile/public/{{review.username}}">{{review.username}}</a>-->
+                                    <!--</div>-->
+
+                                <!--</div>-->
+                            </div>
+                            </div>
+                    </ul>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
 </div>

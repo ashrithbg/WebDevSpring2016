@@ -16,10 +16,10 @@ module.exports=function(db, mongoose){
         findAllUsers:findAllUsers,
         findUserByUsername:findUserByUsername,
         userLikesShort: userLikesShort,
-        userReviewsShort: userReviewsShort,
-        userCommentsOnShort: userCommentsOnShort,
+        userUnlikesShort:userUnlikesShort,
         findShortsLikedByUser:findShortsLikedByUser,
-        findPostsLikedByUser:findPostsLikedByUser
+        findPostsLikedByUser:findPostsLikedByUser,
+        findUsersByIds:findUsersByIds
     };
     return api;
 
@@ -36,7 +36,8 @@ module.exports=function(db, mongoose){
             } else {
 
                 // add movie id to user likes
-                doc.shortLikes.push (short.id);
+                console.log("In user model short id ###"+short.ytID);
+                doc.shortLikes.push (short.ytID);
 
                 // save user
                 doc.save (function (err, doc) {
@@ -55,15 +56,39 @@ module.exports=function(db, mongoose){
         return deferred.promise;
 
     }
-    function userCommentsOnShort(userId, shortId, comment){
+    function userUnlikesShort(userId,short){
+
+        var deferred = q.defer();
+
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+
+                // add movie id to user likes
+                console.log("In user model short id"+short.ytID);
+                doc.shortLikes.splice(doc.shortLikes.indexOf(short.ytID),1);
+
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+
+                        // resolve promise with user
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
 
     }
-
-    function userReviewsShort(userId, shortId, review){
-
-    }
-
-
 
 
     function findAllUsers()
@@ -224,6 +249,23 @@ module.exports=function(db, mongoose){
         });
         return deferred.promise;
 
+    }
+
+    function findUsersByIds (userIds) {
+        var deferred = q.defer();
+
+        // find all users in array of user IDs
+        UserModel.find({
+            _id: {$in: userIds}
+        }, function (err, users) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(users);
+            }
+        });
+
+        return deferred.promise;
     }
 
 };

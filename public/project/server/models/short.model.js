@@ -1,5 +1,5 @@
 var q = require("q");
-module.exports=function(mongoose) {
+module.exports=function(db, mongoose) {
 
     var ShortSchema = require("./short.schema.server.js")(mongoose);
 
@@ -12,11 +12,17 @@ module.exports=function(mongoose) {
         deleteShortById: deleteShortById,
         updateShortById: updateShortById,
         findShortsForUser:findShortsForUser,
-        xfindShortById:findShortById,
+        findShortById:findShortById,
         findUserLikes:findUserLikes,
         findReviewsForShort: findReviewsForShort,
         findCommentsForShort: findCommentsForShort,
-        userLikesShort:userLikesShort
+        userLikesShort:userLikesShort,
+        userUnlikesShort:userUnlikesShort,
+        addShortReview:addShortReview,
+        findShortByYtID:findShortByYtID,
+        deleteShortReview:deleteShortReview,
+        //updateShortReview:updateShortReview
+
         //updateReview:updateReview,
         //updateComment:updateComment
 
@@ -146,7 +152,21 @@ module.exports=function(mongoose) {
             });
         return deferred.promise;
     }
+    function findShortByYtID(shortId){
+        var deferred = q.defer();
+        ShortModel.findOne({ytID:shortId},
+            function(err,doc){
+                if(err){
+                    deferred.reject(err);
+                }
+                else{
+                    deferred.resolve(doc);
+                }
 
+            });
+        return deferred.promise;
+
+    }
     function findShortsForUser(userId) {
         //var userShorts = [];
         //console.log("In find shorts for user server");
@@ -194,11 +214,12 @@ module.exports=function(mongoose) {
     function findReviewsForShort(shortId){
 
         var deferred = q.defer();
-        ShortModel.findById(shortId,function(err, doc){
+        ShortModel.findOne({"ytID":shortId},function(err, doc){
             if(err){
                 deferred.reject(err);
             }
             else{
+                console.log("in findReviewsForShort",JSON.stringify(doc));
                 if(doc)
                     deferred.resolve(doc.reviews);
 
@@ -230,7 +251,7 @@ module.exports=function(mongoose) {
         var deferred = q.defer();
 
         // find the movie by youtube ID
-        ShortModel.findOne({"ytId": short.id},
+        ShortModel.findOne({"ytID": short.id},
 
             function (err, doc) {
 
@@ -252,16 +273,17 @@ module.exports=function(mongoose) {
                         }
                     });
                 } else {
-                    // if there's no movie
-                    // create a new instance
+                    console.log("Short id:", short.id);
                     var new_short = new ShortModel({
-                        ytId: short.id,
+                        ytID: short.id,
                         title: short.title,
                         description: short.description,
                         url:short.url,
                         language:short.language,
                         likes: []
                     });
+
+                    console.log("Newly added short", JSON.stringify(new_short));
                     // add user to likes
                     new_short.likes.push (userId);
                     // save new instance
@@ -277,6 +299,140 @@ module.exports=function(mongoose) {
 
         return deferred.promise;
     }
+
+    function userUnlikesShort (userId, short) {
+
+        var deferred = q.defer();
+
+        // find the movie by youtube ID
+        ShortModel.findOne({"ytID": short.id},
+
+            function (err, doc) {
+
+                // reject promise if error
+                if (err) {
+                    deferred.reject(err);
+                }
+
+
+                if (doc) {
+                    doc.likes.splice(doc.likes.indexOf(userId),1);
+                    // save changes
+                    doc.save(function(err, doc){
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc);
+                        }
+                    });
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    function findUserLikes(shortId){
+        var deferred = q.defer();
+        ShortModel.findShortById(shortId,function(err, doc){
+            if(err){
+                deferred.reject(err);
+            }
+            if(doc){
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
+
+    }
+        function addShortReview(short, review){
+
+            var deferred = q.defer();
+
+            // find the movie by youtube ID
+            ShortModel.findOne({"ytID": short.id},
+
+                function (err, doc) {
+
+                    // reject promise if error
+                    if (err) {
+                        deferred.reject(err);
+                    }
+
+                    // if there's a movie
+                    if (doc) {
+                        // add user to likes
+                        doc.reviews.push (review.id);
+                        // save changes
+                        doc.save(function(err, doc){
+                            if (err) {
+                                deferred.reject(err);
+                            } else {
+                                deferred.resolve(doc.reviews);
+                            }
+                        });
+                    } else {
+                        console.log("Short id:", short.id);
+                        var new_short = new ShortModel({
+                            ytID: short.id,
+                            title: short.title,
+                            description: short.description,
+                            url:short.url,
+                            language:short.language,
+                            reviews: []
+                        });
+
+                        console.log("Newly added short", JSON.stringify(new_short));
+                        // add user to likes
+                        new_short.reviews.push (review.id);
+                        // save new instance
+                        new_short.save(function(err, doc) {
+                            if (err) {
+                                deferred.reject(err);
+                            } else {
+                                deferred.resolve(doc.reviews);
+                            }
+                        });
+                    }
+                });
+
+            return deferred.promise;
+
+        }
+
+
+    function deleteShortReview(shortId, reviewId){
+
+        var deferred = q.defer();
+
+        // find the movie by youtube ID
+        ShortModel.findOne({"ytID": shortId},
+
+            function (err, doc) {
+
+                // reject promise if error
+                if (err) {
+                    deferred.reject(err);
+                }
+
+
+                if (doc) {
+                    doc.reviews.splice(doc.reviews.indexOf(reviewId),1);
+                    // save changes
+                    doc.save(function(err, doc){
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc.reviews);
+                        }
+                    });
+                }
+            });
+
+        return deferred.promise;
+
+
+    }
+
 
 
 };

@@ -5,16 +5,7 @@
 
     function ShortService ($http) {
 
-        //
-        //var shorts =[
-        //    {"id":121,"userId":123,"title":"Lorem ipsum123", "language":"English", "description":"Tote bag twee butcher", "url":$sce.trustAsResourceUrl("https://www.youtube.com/embed/XGSy3_Czz8k")},
-        //    {"id":111,"userId":123,"title":"Lorem ipsum123", "language":"English","description":"Tote bag twee butcher", "url":$sce.trustAsResourceUrl("https://www.youtube.com/embed/VW5nphkHmUQ")},
-        //    {"id":12212,"userId":345,"title":"Lorem ipsum345", "language":"English","description":"Tote bag twee butcher","url":$sce.trustAsResourceUrl("https://www.youtube.com/embed/WwV7ENOTeek")},
-        //    {"id":21212,"userId":345,"title":"Lorem ipsum345", "language":"Korean", "description":"Tote bag twee butcher", "url":$sce.trustAsResourceUrl("https://www.youtube.com/embed/HQwd-Qx4ci0")},
-        //    {"id":3456,"userId":456,"title":"Lorem ipsum456", "language":"Korean","description":"Tote bag twee butcher", "url":$sce.trustAsResourceUrl("https://www.youtube.com/embed/qXNT0m7QZ2k")},
-        //    {"id":76788,"userId":567,"title":"Lorem ipsum567", "language":"English","description":"Tote bag twee butcher","url":$sce.trustAsResourceUrl("https://www.youtube.com/embed/RqCsMW90W0k")}
-        //
-        //];
+
         var api = {
             //getAllMovies: getAllMovies,
             getShortsByUser: getShortsByUser,
@@ -23,7 +14,14 @@
             updateShortById: updateShortById,
             findShortsForUser:findShortsForUser,
             findShortById:findShortById,
-            userLikesShort:userLikesShort
+            userLikesShort:userLikesShort,
+            userUnlikesShort:userUnlikesShort,
+            findUserLikes: findUserLikes,
+            findUserReviews: findUserReviews,
+            findShortReviews:findShortReviews,
+            addReview:addReview,
+            updateReview:updateReview,
+            deleteReview:deleteReview
         };
         return api;
 
@@ -56,5 +54,31 @@
         function userLikesShort(userId, short) {
             return $http.post("/api/project/user/"+userId+"/short/"+short.id, short);
         }
+        function userUnlikesShort(userId, short) {
+            return $http.post("/api/project/user/"+userId+"/unlike/short/"+short.id, short);
+        }
+
+        function findUserLikes(shortId){
+            return $http.get("/api/project/short/"+shortId+"/likes");
+        }
+        function findUserReviews(userId){
+            return $http.get("/api/project/user/"+userId+"/reviews");
+        }
+        function findShortReviews(shortId){
+            return $http.get("/api/project/short/"+shortId+"/reviews");
+        }
+        function addReview(userId,username,short,review){
+            console.log("In add review client service user Id is "+userId);
+            console.log("In add review client service review "+ JSON.stringify(review));
+            console.log("In add review client service short "+ JSON.stringify(short));
+            return $http.post("/api/project/user/"+userId+"/short/review",{"review":review,"short":short,"username":username});
+        }
+        function updateReview(shortId, reviewId, review){
+            return $http.put("/api/project/short/"+shortId+"/review/"+reviewId,review);
+        }
+        function deleteReview(shortId, reviewId){
+            return $http.delete("/api/project/short/"+shortId+"/review/"+reviewId);
+        }
+
     }
 })();

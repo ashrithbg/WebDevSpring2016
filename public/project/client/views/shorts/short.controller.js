@@ -29,9 +29,28 @@
         $scope.updateShort = updateShort;
         $scope.selectShort = selectShort;
         $scope.favorite = favorite;
+        $scope.reviewShort = reviewShort;
         //$scope.getShortsByUser = getShortsByUser;
 
         function favorite(short) {
+            if(currentUser) {
+                $scope.short.likes = [];
+                $scope.short.likes.push(currentUser._id);
+                ShortService
+                    .userLikesShort(currentUser._id, short).then(
+                    function(response){
+                        UserService.setCurrentUser(response.data);
+                    },
+                    function(err){
+                        console.log("Error while getting updated user after likes",JSON.stringify(err));
+                    }
+                );
+            } else {
+                $location.url("/login");
+            }
+        }
+
+        function reviewShort(review,short){
             if(currentUser) {
                 $scope.short.likes = [];
                 $scope.short.likes.push(currentUser._id);
@@ -40,6 +59,7 @@
             } else {
                 $location.url("/login");
             }
+
         }
 
 

@@ -1,7 +1,27 @@
+<!--<div class="container-fluid" ng-controller="ShortDetailsController">-->
+    <!--<h2>Short Details</h2>-->
+    <!--<h3>{{model.details.title}}</h3>-->
+    <!--<p>{{model.details.description}}</p>-->
+    <!--<p>{{model.details.language}}</p>-->
+    <!--<iframe ng-src="{{model.details.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>-->
+<!--</div>-->
+
 <div class="container-fluid" ng-controller="ShortDetailsController">
-    <h2>Short Details</h2>
-    <h3>{{model.details.title}}</h3>
-    <p>{{model.details.description}}</p>
-    <p>{{model.details.language}}</p>
-    <iframe ng-src="{{model.details.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+    <div class="panel panel-success col-md-8">
+        <div class="panel-heading">{{model.details.title}}</div>
+        <div class="panel-body" >
+            <p class="visible-lg">{{model.details.description}}</p>
+            <p class="visible-lg">{{model.details.author}}</p>
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="{{model.details.url}}"></iframe>
+            </div>
+            <br>
+            <div class="row" ng-controller="ShortController">
+                <button class="btn btn-success" ng-click="favorite(short)">
+                    <span ng-show="!short || !short.likes || short.likes.indexOf(currentUser._id) == -1" class="glyphicon glyphicon-star-empty"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 </div>

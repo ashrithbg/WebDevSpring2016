@@ -1,7 +1,6 @@
-var posts = require("./post.mock.json");
 var q = require("q");
 
-module.exports=function(mongoose){
+module.exports=function(db,mongoose){
 
     var PostSchema = require("./post.schema.server.js")(mongoose);
 

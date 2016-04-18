@@ -1,10 +1,10 @@
 module.exports=function(mongoose){
 
     var ReviewSchema = mongoose.Schema({
-        "review":String,
+        "content":String,
         "userId":String,
         "shortId":String,
-        "rating":Number
+        "username":String
     },{collection: 'project.shortkut.review'});
 
     return ReviewSchema;
