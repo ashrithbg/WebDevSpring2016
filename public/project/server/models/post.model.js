@@ -32,7 +32,7 @@ module.exports=function(db,mongoose){
 
 
         var deferred = q.defer();
-
+        console.log("user id ",userId);
         PostModel.find({"userId":userId},function(err,posts){
             if(err){
                 deferred.reject(err);

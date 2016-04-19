@@ -781,3 +781,23 @@ video#bgvid {
     margin: 0 auto;
 }
 
+
+.prf-follower-btn{
+    background-color:#cdd422;
+}
+
+.prf-shorts-btn{
+    background-color: #FF4136;
+}
+
+.prf-following-btn{
+    background-color:#FF851B;
+}
+
+.prf-profile-btn{
+    background-color:#39CCCC;
+}
+
+.prf-reviews-btn{
+    background-color:#FFDC00;
+}

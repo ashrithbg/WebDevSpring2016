@@ -74,6 +74,7 @@
             return $http.post("/api/project/user/"+userId+"/short/review",{"review":review,"short":short,"username":username});
         }
         function updateReview(shortId, reviewId, review){
+            console.log("short id is ",shortId);
             return $http.put("/api/project/short/"+shortId+"/review/"+reviewId,review);
         }
         function deleteReview(shortId, reviewId){

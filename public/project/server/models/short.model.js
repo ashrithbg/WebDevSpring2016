@@ -214,6 +214,7 @@ module.exports=function(db, mongoose) {
     function findReviewsForShort(shortId){
 
         var deferred = q.defer();
+        console.log("inf find reviews for short",shortId);
         ShortModel.findOne({"ytID":shortId},function(err, doc){
             if(err){
                 deferred.reject(err);
@@ -361,7 +362,7 @@ module.exports=function(db, mongoose) {
                     // if there's a movie
                     if (doc) {
                         // add user to likes
-                        doc.reviews.push (review.id);
+                        doc.reviews.push (review._id);
                         // save changes
                         doc.save(function(err, doc){
                             if (err) {
@@ -383,7 +384,7 @@ module.exports=function(db, mongoose) {
 
                         console.log("Newly added short", JSON.stringify(new_short));
                         // add user to likes
-                        new_short.reviews.push (review.id);
+                        new_short.reviews.push (review._id);
                         // save new instance
                         new_short.save(function(err, doc) {
                             if (err) {
@@ -414,10 +415,11 @@ module.exports=function(db, mongoose) {
                     deferred.reject(err);
                 }
 
-
                 if (doc) {
+                    console.log("In short model before splice",JSON.stringify(doc.reviews))
                     doc.reviews.splice(doc.reviews.indexOf(reviewId),1);
                     // save changes
+                    console.log("In short model after splice",JSON.stringify(doc.reviews))
                     doc.save(function(err, doc){
                         if (err) {
                             deferred.reject(err);

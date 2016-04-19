@@ -28,7 +28,7 @@ module.exports=function(app, userModel, shortModel, reviewModel){
 
     function getShort(req, res){
         var short = req.params.shortId;
-        shortModel.findShortById(short).then(function(short){
+        shortModel.findShortByYtID(short).then(function(short){
             res.json(short);
         }, function(err){
             res.status(400).send(err);
@@ -156,7 +156,7 @@ module.exports=function(app, userModel, shortModel, reviewModel){
         var short = short_review.short;
         var username = short_review.username;
 
-
+        console.log("short before adding review",JSON.stringify(short_review.short));
 
         //shortModel
         //    .userReviewsShort(short, review)
@@ -269,10 +269,14 @@ module.exports=function(app, userModel, shortModel, reviewModel){
         var user = req.params.userId;
         reviewModel.findAllReviewsByUser(user).then(
             function(reviews){
+                return reviewModel.findReviewsByIds(reviews);
+            },function(err){
+                res.status(400).send(err);
+            }).then(function(reviews){
                 res.json(reviews);
             },function(err){
                 res.status(400).send(err);
-            });
+        });
 
     }
     function getReviewsByShort(req,res){

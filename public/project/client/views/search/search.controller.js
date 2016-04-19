@@ -7,6 +7,7 @@
     function SearchController($scope,$sce,$routeParams,YoutubeService) {
         console.log("In search controller");
         var query = $routeParams.query;
+        $scope.query = null;
         console.log(query);
         if(query) {
             //UserService.getCurrentUser().then(function(response){
@@ -16,6 +17,7 @@
             //});
 
             search(query);
+
         }
         $scope.search = search;
 
@@ -28,6 +30,7 @@
         function renderShorts(response) {
             var searchResults = [];
             $scope.shorts=response.data;
+            $scope.query= null;
         }
         function renderError(err){
             console.log("Error while retrieving search results"+JSON.stringify(err));

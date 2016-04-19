@@ -19,7 +19,13 @@ module.exports=function(db, mongoose){
         userUnlikesShort:userUnlikesShort,
         findShortsLikedByUser:findShortsLikedByUser,
         findPostsLikedByUser:findPostsLikedByUser,
-        findUsersByIds:findUsersByIds
+        findUsersByIds:findUsersByIds,
+        addToFollowing:addToFollowing,
+        addToFollowers:addToFollowers,
+        removeFromFollowing:removeFromFollowing,
+        removeFromFollowers:removeFromFollowers,
+        findFollowersById:findFollowersById,
+        findFollowingById:findFollowingById
     };
     return api;
 
@@ -111,9 +117,11 @@ module.exports=function(db, mongoose){
         var deferred = q.defer();
         UserModel.findOne({'username':credentials.username,'password':credentials.password},function(err,user){
             if(err){
+                console.log(JSON.stringify(err));
                 deferred.reject(err);
             }
             else{
+                console.log(JSON.stringify(user));
                 deferred.resolve(user);
             }
 
@@ -172,16 +180,19 @@ module.exports=function(db, mongoose){
                 found_user.description = user.description;
                 found_user.roles = user.roles;
                 found_user.dob = user.dob;
+                found_user.save (function (err, found_user) {
 
-                found_user.save(function(err,updated_user){
-                    if(err){
+                    if (err) {
                         deferred.reject(err);
-                    }
-                    else{
-                        deferred.resolve(updated_user);
-                    }
+                    } else {
 
+                        // resolve promise with user
+                        console.log("In user.model.js",JSON.stringify(found_user));
+                        deferred.resolve (found_user);
+                    }
                 });
+
+
             }
 
         });
@@ -228,7 +239,6 @@ module.exports=function(db, mongoose){
                 deferred.reject(err);
             }
             else{
-
                 deferred.resolve(found_user.shortLikes);
             }
         });
@@ -268,4 +278,134 @@ module.exports=function(db, mongoose){
         return deferred.promise;
     }
 
+
+    function addToFollowing(follower,following){
+        var deferred = q.defer();
+        UserModel.findById(follower,function(err, found_user){
+           if(err){
+               deferred.reject(err);
+           }
+           else{
+               if(found_user){
+                   var followingUsers = found_user.following;
+                   followingUsers.push(following);
+                   found_user.save(function(err,updated_user){
+                       if(err){
+                           deferred.reject(err);
+                       }
+                       else{
+                           deferred.resolve(updated_user.following);
+                       }
+
+                   });
+               }
+           }
+
+       });
+        return deferred.promise;
+
+    }
+
+    function addToFollowers(following,follower){
+        var deferred = q.defer();
+        UserModel.findById(following,function(err, found_user){
+            if(err){
+                deferred.reject(err);
+            }
+            else{
+                if(found_user){
+                    var followers = found_user.followers;
+                    followers.push(follower);
+                    found_user.save(function(err,updated_user){
+                        if(err){
+                            deferred.reject(err);
+                        }
+                        else{
+                            deferred.resolve(updated_user.followers);
+                        }
+
+                    });
+                }
+            }
+
+        });
+        return deferred.promise;
+
+    }
+    function removeFromFollowing(follower,following){
+        var deferred = q.defer();
+        UserModel.findById(follower,function(err, found_user){
+            if(err){
+                deferred.reject(err);
+            }
+            else{
+                if(found_user){
+                    var followingUsers = found_user.following;
+                    followingUsers.splice(followingUsers.indexOf(following),1);
+                    found_user.save(function(err,updated_user){
+                        if(err){
+                            deferred.reject(err);
+                        }
+                        else{
+                            deferred.resolve(updated_user.following);
+                        }
+
+                    });
+                }
+            }
+
+        });
+        return deferred.promise;
+
+    }
+
+    function removeFromFollowers(following,follower){
+        var deferred = q.defer();
+        UserModel.findById(following,function(err, found_user){
+            if(err){
+                deferred.reject(err);
+            }
+            else{
+                if(found_user){
+                    var followers = found_user.followers;
+                    followers.splice(followers.indexOf(follower),1);
+                    found_user.save(function(err,updated_user){
+                        if(err){
+                            deferred.reject(err);
+                        }
+                        else{
+                            deferred.resolve(updated_user.followers);
+                        }
+
+                    });
+                }
+            }
+
+        });
+        return deferred.promise;
+
+    }
+    function findFollowersById(user){
+        var deferred = q.defer();
+        UserModel.findById(user,function(err,found_user){
+            if(err)
+                deferred.reject(err);
+            else{
+                deferred.resolve(found_user.followers);
+            }
+            return deferred.promise;
+        });
+    }
+    function findFollowingById(user){
+        var deferred = q.defer();
+        UserModel.findById(user,function(err,found_user){
+            if(err)
+                deferred.reject(err);
+            else{
+                deferred.resolve(found_user.following);
+            }
+            return deferred.promise;
+        });
+
+    }
 };

@@ -1,0 +1,79 @@
+<div class="container-fluid col-md-offset-3">
+    <video autoplay loop muted id="bgvid">
+    <source src="css/videos/Blurry-People.mp4" type="video/mp4">
+    </video>
+    <div class="row">
+        <div class="col-md-8 col-xs-10">
+            <div class="well panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <img src="http://api.randomuser.me/portraits/women/21.jpg" alt="" class="center-block img-circle img-thumbnail img-responsive">
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-8">
+                            <h2>{{model.public.username}}</h2>
+                            <p><strong>About: </strong> {{model.public.description}}</p>
+                            <p><strong>Role: </strong></p>
+
+                        </div>
+                        <!--/col-->
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>{{model.followers.length}} </strong></h2>
+                            <p><small>Followers</small></p>
+                            <div ng-if="currentUser._id!= model.public._id">
+                                <button class="btn btn-success btn-block" ng-click="model.follow(currentUser._id,model.public)"  ng-show="model.followers.indexOf(currentUser.username) == -1" ><span class="fa fa-plus-circle"></span> Follow </button>
+                                <button class="btn btn-danger btn-block" ng-click="model.unfollow(currentUser._id,model.public)" ng-show="model.followers.indexOf(currentUser.username) > -1"><span class="fa fa-minus-circle"></span> Unfollow </button>
+                            </div>
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>{{model.following.length}}</strong></h2>
+                            <p><small>Following</small></p>
+                            <button class="btn btn-info btn-block" ng-click="showShortDetails = ! showShortDetails"><span class="fa fa-video-camera"></span>Shorts</button>
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong>43</strong></h2>
+                            <p><small>Snippets</small></p>
+                            <button type="button" class="btn btn-primary btn-block" ng-click="showPostDetails = ! showPostDetails"><span class="fa fa-flag"></span>Posts </button>
+                        </div>
+                        <!--/col-->
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+        <!--/col-->
+    </div>
+    <div class="row" ng-class="{ 'hidden': ! showPostDetails }">
+        <div class="col-md-8 col-xs-10">
+            <div class="well panel panel-default">
+                <div class="panel-body">
+                    <p>Posts by {{model.public.username}}</p>
+                    <div ng-repeat="post in model.posts">
+                        <a href="#/posts/{{post._id}}">{{post.title}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-class="{ 'hidden': ! showShortDetails }">
+        <div class="col-md-8 col-xs-10">
+            <div class="well panel panel-default">
+                <div class="panel-body">
+                    <p>Shorts by {{model.public.username}}</p>
+                    <div ng-repeat="short in model.shorts">
+                        <a href="#/shorts/{{short._id}}">{{short.title}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/row-->
+</div>
+
+<!--/container-->

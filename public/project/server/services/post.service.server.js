@@ -12,6 +12,7 @@ module.exports=function(app, userModel, postModel){
         var user = req.params.userId;
         postModel.findAllPostsByUser(user).then(
             function(posts){
+                console.log("In post service",JSON.stringify(posts));
                 res.json(posts);
             },function(err){
             res.status(400).send(err);

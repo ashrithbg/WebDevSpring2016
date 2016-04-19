@@ -4,18 +4,25 @@
         .module("ShortKutApp")
         .controller("HeaderController",headerController);
 
-    function headerController($location, $scope) {
+    function headerController($location, $scope,$rootScope,UserService) {
         $scope.$location = $location;
         $scope.logout = logout;
-        $scope.renderShorts = renderShorts;
+        //$scope.renderShorts = renderShorts;
+
+        $scope.logout = logout;
 
         function logout() {
-            UserService.setCurrentUser(null);
-
-            $location.url("/home");
-        }
-        function renderShorts(){
-            $location.url("/shorts");
+            UserService
+                .logout()
+                .then(
+                    function(response){
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    },
+                    function(err) {
+                        $scope.error = err;
+                    }
+                );
         }
     }
 })();

@@ -44,7 +44,7 @@
                     }
                     else{
                         console.log("emails"+user.emails);
-                        UserService.createUser(user).then(function(newUser){
+                        UserService.register(user).then(function(newUser){
                             console.log("created user");
                             UserService.setCurrentUser(newUser);
                             $location.url("/profile");

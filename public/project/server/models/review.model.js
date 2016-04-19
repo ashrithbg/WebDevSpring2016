@@ -46,12 +46,11 @@ module.exports=function(db, mongoose){
 
     function createReviewForUser(userId, user, short, review){
 
-
         var newReview = {
             username:user,
             content: review.content,
             userId: userId,
-            shortId: short.id
+            shortId: short._id != null? short.ytID:short.id
         };
         var deferred = q.defer();
         ReviewModel.create(newReview, function (err, doc) {
@@ -153,6 +152,7 @@ module.exports=function(db, mongoose){
             if (err) {
                 deferred.reject(err);
             } else {
+                console.log("In review model",JSON.stringify(reviews));
                 deferred.resolve(reviews);
             }
         });

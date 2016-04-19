@@ -5,12 +5,11 @@
         .module("ShortKutApp")
         .controller("SearchDetailsController", SearchDetailsController);
 
-    function SearchDetailsController($scope, $http, $routeParams, UserService, ShortService, YoutubeService) {
+    function SearchDetailsController( $rootScope, $routeParams, UserService, ShortService, YoutubeService) {
         var vm = this;
         var id = $routeParams.id;
         console.log(id);
-        var currentUser = null;
-
+        var currentUser = $rootScope.currentUser;
         vm.updateFlag = false;
         vm.favorite = favorite;
         vm.unfavorite = unfavorite;
@@ -22,9 +21,7 @@
 
         function init() {
             UserService.getCurrentUser().then(function(response){
-                    currentUser = response.data;
-                    //vm.likes =response.data.shortLikes;
-
+                    var currentUser = response.data;
                      vm.likes =[];
                      vm.reviews =[];
                      if(currentUser.shortLikes.indexOf(id) > -1) {
@@ -50,12 +47,14 @@
                     );
                     ShortService.findShortReviews(id).then(
                         function(response){
+                            console.log("In find short reviews, short id",id);
                             vm.userReviews = response.data;
-                            for(var r in vm.userReviews){
-                                if(currentUser._id == vm.userReviews[r].userId){
-                                    vm.review = vm.userReviews[r].userId;
-                                }
-                            }
+                            console.log("User reviews : ",JSON.stringify(response.data));
+                            //for(var r in vm.userReviews){
+                            //    if(currentUser._id == vm.userReviews[r].userId){
+                            //        vm.review = vm.userReviews[r].userId;
+                            //    }
+                            //}
                         },function(err){
                             console.log("Error while retrieiving reviews for short",JSON.stringify(err));
                         });
@@ -72,7 +71,16 @@
 
 
         function fetchShort(id) {
-            YoutubeService.findShortById(id).then(renderDetails,renderError);
+            ShortService.findShortById(id).then(function(response){
+                if(response.data!=null)
+                    vm.details = response.data;
+                else
+                    YoutubeService.findShortById(id).then(renderDetails,renderError);
+            },function(err){
+                console.log("Error while retrieving search details from db"+err);
+            });
+
+
         }
 
         function renderDetails(response) {
@@ -133,10 +141,13 @@
             if(currentUser) {
                 console.log("In search controller",JSON.stringify(short));
                 console.log("In search controller",JSON.stringify(review));
-                ShortService.updateReview(short.id,review._id,review).then(
+
+                ShortService.updateReview(review.shortId,review._id,review).then(
                     function(response){
                         console.log("reviews",JSON.stringify(response.data));
                         vm.userReviews=response.data;
+                        vm.review ={};
+                        vm.updateFlag = false;
                     },
                     function(err){
                         console.log("Error retrieving reviews",console.log(err));
@@ -150,7 +161,7 @@
         function deleteReview(review,short){
             if(currentUser) {
                 console.log("To be deleted review",JSON.stringify(review));
-                ShortService.deleteReview(short.id,review._id).then(
+                ShortService.deleteReview(review.shortId,review._id).then(
                     function(response){
                         console.log("reviews",JSON.stringify(response.data));
                         vm.userReviews=response.data;

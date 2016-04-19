@@ -1,5 +1,8 @@
 <div class="container-fluid">
-    <div class="panel panel-success col-md-8">
+    <video autoplay loop muted id="bgvid">
+        <source src="css/videos/Night-Traffic.mp4" type="video/mp4">
+    </video>
+    <div class="panel panel-success col-md-8 col-md-offset-3">
         <div class="panel-heading">{{model.details.title}}</div>
         <div class="panel-body" >
             <p class="visible-lg">{{model.details.description}}</p>
@@ -29,8 +32,8 @@
                                             <a href="#/profile/public/{{review.username}}"><strong>{{review.username}}</strong></a>
                                         </div>
                                         <div ng-if="currentUser._id == review.userId" class="panel-heading">
-                                            <button class="btn btn-danger pull-right" ng-click="model.deleteReview(review,model.details)"><i class="fa fa-trash"></i></button>
-                                            <button class="btn btn-warning pull-right" ng-click="model.selectedReview(review,model.details)"><i class="fa fa-pencil"></i></button>
+                                            <a class="btn btn-danger pull-right" ng-click="model.deleteReview(review,model.details)"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-warning pull-right" ng-click="model.selectedReview(review,model.details)"><i class="fa fa-pencil"></i></a>
                                         </div>
                                         <div class="panel-body">
                                             {{review.content}}
