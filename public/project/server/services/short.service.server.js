@@ -1,4 +1,5 @@
 module.exports=function(app, userModel, shortModel, reviewModel){
+
     app.post("/api/project/user/:userId/short/review",userReviewsShort);
     app.get("/api/project/user/:userId/shorts",getShorts);
     app.get("/api/project/short/:shortId",getShort);
@@ -13,7 +14,6 @@ module.exports=function(app, userModel, shortModel, reviewModel){
     app.get("/api/project/user/:userId/reviews",getReviewsByUser);
     app.get("/api/project/short/:shortId/reviews",getReviewsByShort);
     app.get("/api/project/review/:reviewId",findReview);
-
 
     function getShorts(req, res){
         var user = req.params.userId;
@@ -39,6 +39,11 @@ module.exports=function(app, userModel, shortModel, reviewModel){
     function addShort(req, res){
         var short = req.body;
         shortModel.addShortForUser(req.params.userId,short).then(function(shorts){
+            console.log("In add short for user",console.log(shorts));
+            return shortModel.findShortsForUser(req.params.userId);
+        },function(err){
+            res.status(400).send(err);
+        }).then(function(shorts){
             res.json(shorts);
         },function(err){
             res.status(400).send(err);
@@ -104,6 +109,7 @@ module.exports=function(app, userModel, shortModel, reviewModel){
 
     function updateShort(req, res){
         var short = req.body;
+        console.log("in update short",JSON.stringify(short));
         shortModel.updateShortById(req.params.shortId,short).then(function(short){
             res.json(short);
         },function(err){
@@ -156,30 +162,7 @@ module.exports=function(app, userModel, shortModel, reviewModel){
         var short = short_review.short;
         var username = short_review.username;
 
-        console.log("short before adding review",JSON.stringify(short_review.short));
 
-        //shortModel
-        //    .userReviewsShort(short, review)
-        //    // add user to movie likes
-        //    .then(
-        //        function (short) {
-        //
-        //            return reviewModel.createReviewForUser(userId, short,review)
-        //
-        //        },
-        //        function (err) {
-        //            res.status(400).send(err);
-        //        }
-        //    ).then(function(reviews){
-        //        res.json(reviews);
-        //    },function(err){
-        //        res.status(400).send(err);
-        //    }
-        //);
-            // add movie to user likes
-        console.log("in short service user id"+ userId);
-        console.log("Short",JSON.stringify(short));
-        console.log("Review",JSON.stringify(review));
         reviewModel.createReviewForUser(userId, username, short,review)
             .then(function(review){
                 return shortModel.addShortReview(short,review);
@@ -205,23 +188,6 @@ module.exports=function(app, userModel, shortModel, reviewModel){
 
         var reviewId = req.params.reviewId;
         var shortId = req.params.shortId;
-        //shortModel
-        //    .userDeletesReview(short, review)
-        //    // add user to movie likes
-        //    .then(
-        //        function (short) {
-        //            return reviewModel.deleteReviewById(review._id);
-        //        },
-        //        function (err) {
-        //            res.status(400).send(err);
-        //        }
-        //    ).then(function(reviews){
-        //        res.json(reviews);
-        //    },function(err){
-        //        res.status(400).send(err);
-        //    }
-        //);
-
         reviewModel.deleteReviewById(reviewId).then(
             function(reviews){
                 return shortModel.deleteShortReview(shortId,reviewId);

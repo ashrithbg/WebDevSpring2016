@@ -30,14 +30,28 @@ module.exports=function(db, mongoose) {
     };
     return api;
 
+    function youtubeID (url) {
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+
+        if (match && match[2].length == 11) {
+            return match[2];
+        } else {
+            return 'error';
+        }
+    };
+
     function addShortForUser(userId, newShort) {
+
+
 
         var newShort = {
             title: newShort.title,
             userId: userId,
             language: newShort.language,
-            url: newShort.url,
-            description: newShort.description
+            url: "https://www.youtube.com/embed/"+youtubeID(newShort.url),
+            description: newShort.description,
+            ytID:youtubeID(newShort.url)
         };
         var deferred = q.defer();
         ShortModel.create(newShort, function (err, doc) {
@@ -46,9 +60,6 @@ module.exports=function(db, mongoose) {
                 deferred.reject(err);
             } else {
                 var docs="";
-                if(doc){
-                    docs=findShortsForUser(userId);
-                }
                 deferred.resolve(docs);
             }
 
@@ -59,14 +70,8 @@ module.exports=function(db, mongoose) {
     }
 
     function deleteShortById(shortId) {
-        //var shortToDelete = findShortById(shortId);
-        //console.log(shortToDelete.id);
-        //if (shortToDelete != null) {
-        //    shorts.splice(shorts.indexOf(shortToDelete), 1);
-        //}
-        //return shorts;
         var deferred = q.defer();
-        ShortModel.remove({"_id":shortId}, function(err,posts){
+        ShortModel.remove({"ytID":shortId}, function(err,posts){
             if(err){
                 deferred.reject(err);
             }
@@ -80,26 +85,9 @@ module.exports=function(db, mongoose) {
     }
 
     function updateShortById(shortId, newShort) {
-        //console.log("id is" + newShort.id + "  title is" + newShort.title);
-        //for (var s in shorts) {
-        //    if (shorts[s].id == shortId) {
-        //        console.log("id is " + shorts[s].id);
-        //        var updatedShort = {
-        //            id: shortId,
-        //            title: newShort.title,
-        //            userId: newShort.userId,
-        //            language: newShort.language,
-        //            url: newShort.url,
-        //            description: newShort.description
-        //        };
-        //        shorts[s] = updatedShort;
-        //        return short[s];
-        //    }
-        //}
 
         var deferred = q.defer();
-
-        ShortModel.findById({"_id":shortId},function(err,found_short){
+        ShortModel.findOne({"ytID":shortId},function(err,found_short){
             if(err){
                 deferred.reject(err);
             }
@@ -109,8 +97,8 @@ module.exports=function(db, mongoose) {
                 found_short.description = found_short.description;
                 found_short.url = found_short.url;
                 found_short.language = found_short.language;
-                found_short.comments = newShort.comments;
                 found_short.likes = newShort.likes;
+                found_short.ytID = newShort.ytID;
                 found_short.save(function (err, updated_short) {
                     if (err) {
                         deferred.reject(err);
@@ -128,17 +116,6 @@ module.exports=function(db, mongoose) {
     }
 
     function findShortById(shortId) {
-        //console.log("form id" + shortId);
-        //for (var s in shorts) {
-        //    console.log("id " + shorts[s].id);
-        //    console.log("title " + shorts[s].title);
-        //    if (shorts[s].id == shortId) {
-        //        console.log(shorts[s].title);
-        //        console.log("Found a short" + shorts[s].id);
-        //        return shorts[s];
-        //    }
-        //}
-        //return null;
         var deferred = q.defer();
         ShortModel.findById(shortId,
             function(err,doc){
@@ -168,23 +145,15 @@ module.exports=function(db, mongoose) {
 
     }
     function findShortsForUser(userId) {
-        //var userShorts = [];
-        //console.log("In find shorts for user server");
-        //for (var s in shorts) {
-        //    if (shorts[s].userId == userId) {
-        //        console.log("title is"+shorts[s].title);
-        //        userShorts.push(shorts[s]);
-        //    }
-        //}
-        //return userShorts;
 
         var deferred = q.defer();
-
+        console.log("user id in find shorts for user",userId);
         ShortModel.find({"userId":userId},function(err,shorts){
             if(err){
                 deferred.reject(err);
             }
             else{
+                console.log("shorts in find shorts for user ",shorts);
                 deferred.resolve(shorts);
 
             }
@@ -214,7 +183,6 @@ module.exports=function(db, mongoose) {
     function findReviewsForShort(shortId){
 
         var deferred = q.defer();
-        console.log("inf find reviews for short",shortId);
         ShortModel.findOne({"ytID":shortId},function(err, doc){
             if(err){
                 deferred.reject(err);
@@ -251,17 +219,17 @@ module.exports=function(db, mongoose) {
 
         var deferred = q.defer();
 
-        // find the movie by youtube ID
+
         ShortModel.findOne({"ytID": short.id},
 
             function (err, doc) {
 
-                // reject promise if error
+
                 if (err) {
                     deferred.reject(err);
                 }
 
-                // if there's a movie
+
                 if (doc) {
                     // add user to likes
                     doc.likes.push (userId);
@@ -304,13 +272,9 @@ module.exports=function(db, mongoose) {
     function userUnlikesShort (userId, short) {
 
         var deferred = q.defer();
-
-        // find the movie by youtube ID
         ShortModel.findOne({"ytID": short.id},
 
             function (err, doc) {
-
-                // reject promise if error
                 if (err) {
                     deferred.reject(err);
                 }
@@ -349,8 +313,8 @@ module.exports=function(db, mongoose) {
 
             var deferred = q.defer();
 
-            // find the movie by youtube ID
-            ShortModel.findOne({"ytID": short.id},
+            var shortId = short._id == null? short.id: short.ytID;
+            ShortModel.findOne({"ytID": shortId},
 
                 function (err, doc) {
 
@@ -372,9 +336,9 @@ module.exports=function(db, mongoose) {
                             }
                         });
                     } else {
-                        console.log("Short id:", short.id);
+                        console.log("Short id:", shortId);
                         var new_short = new ShortModel({
-                            ytID: short.id,
+                            ytID: shortId,
                             title: short.title,
                             description: short.description,
                             url:short.url,
@@ -382,9 +346,7 @@ module.exports=function(db, mongoose) {
                             reviews: []
                         });
 
-                        console.log("Newly added short", JSON.stringify(new_short));
-                        // add user to likes
-                        new_short.reviews.push (review._id);
+                        new_short.reviews.push (review._id.toString());
                         // save new instance
                         new_short.save(function(err, doc) {
                             if (err) {
@@ -404,22 +366,19 @@ module.exports=function(db, mongoose) {
     function deleteShortReview(shortId, reviewId){
 
         var deferred = q.defer();
-
-        // find the movie by youtube ID
         ShortModel.findOne({"ytID": shortId},
 
             function (err, doc) {
 
-                // reject promise if error
+
                 if (err) {
                     deferred.reject(err);
                 }
 
                 if (doc) {
-                    console.log("In short model before splice",JSON.stringify(doc.reviews))
+
+
                     doc.reviews.splice(doc.reviews.indexOf(reviewId),1);
-                    // save changes
-                    console.log("In short model after splice",JSON.stringify(doc.reviews))
                     doc.save(function(err, doc){
                         if (err) {
                             deferred.reject(err);

@@ -375,7 +375,6 @@ video#bgvid {
 }
 
 
-/* profile css */
 
 .profile {
     margin: 20px 0;
@@ -726,43 +725,6 @@ video#bgvid {
 
 
 
-.video-img-container {
-    position: relative;
-    display: inline-block; /* added */
-    overflow: hidden; /* added */
-}
-
-.add-video-icon {
-    color:#449d44;
-}
-
-.video-img-container img:hover {
-    opacity: 0.5
-}
-.video-img-container:hover a {
-    opacity: 1; /* added */
-    top: 0; /* added */
-}
-/* added */
-.video-img-container:hover a span {
-    top: 50%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-}
-/* added */
-.video-img-container a {
-    display: block;
-    position: absolute;
-    top: -100%;
-    opacity: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    text-align: center;
-    color: inherit;
-}
 
 .short-panel{
     max-width:400px;
@@ -800,4 +762,8 @@ video#bgvid {
 
 .prf-reviews-btn{
     background-color:#FFDC00;
+}
+
+.box-shadow--16dp {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2)
 }

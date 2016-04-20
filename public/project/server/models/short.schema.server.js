@@ -8,10 +8,8 @@ module.exports=function(mongoose){
         "url":String,
         "language":String,
         "userId":String,
-        "comments":[CommentSchema],
         "likes":[String],
-        "likedBy":[{username:String}],
-        "reviews":[ReviewSchema],
+        "reviews":[String],
         "created":{type:Date, default:Date.now},
         "updated":{type:Date, default:Date.now}
     },{collection: 'project.shortkut.short'});

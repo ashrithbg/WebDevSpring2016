@@ -8,6 +8,7 @@
 
         //UserService.loggedIn();
         var currentUser =null;
+        $scope.error=null;
         UserService.getCurrentUser().then(function(response){
                 currentUser= response.data;
                 ShortService.findShortsForUser(
@@ -30,7 +31,6 @@
         $scope.selectShort = selectShort;
         $scope.favorite = favorite;
         $scope.reviewShort = reviewShort;
-        //$scope.getShortsByUser = getShortsByUser;
 
         function favorite(short) {
             if(currentUser) {
@@ -65,8 +65,18 @@
 
 
         function addShort(newShort){
-            if(!newShort || !newShort.title)
+            if(!newShort){
+                $scope.error = "You must enter a short title and a URL";
                 return;
+            }
+            if(!newShort.title) {
+                $scope.error = "You must enter a short title";
+                return;
+            }
+            if(!newShort.url){
+                $scope.error = "You must enter a URL for your short";
+                return;
+            }
             console.log("current user id"+currentUser._id);
             ShortService.addShortForUser(
                 currentUser._id,
@@ -89,19 +99,28 @@
         }
 
         function updateShort(short){
-            console.log("short to be updated"+short.title);
-            console.log("short to be updated"+short._id);
+            if(!short){
+                $scope.error = "You must enter a short title and a URL";
+                return;
+            }
+            if(!short.title) {
+                $scope.error = "You must enter a short title";
+                return;
+            }
+            if(!short.url){
+                $scope.error = "You must enter a URL for your short";
+                return;
+            }
 
-            ShortService.updateShortById(short._id,
+            console.log("Short to be updated !",JSON.stringify(short));
+
+            ShortService.updateShortById(short.ytID,
                 short).then(
                 function(response){
                     var selectedIndex = $scope.selectedIndex;
                     console.log($scope.selectedIndex);
                     console.log("response"+JSON.stringify(response));
                     if (selectedIndex>=0){
-                        //console.log(selectedIndex);
-                        //console.log(response.config.data.id);
-                        //console.log(response.data.title);
                         $scope.shorts[selectedIndex]=response.config.data;
                         $scope.short={};
 
@@ -115,7 +134,7 @@
         }
         function deleteShort(index){
             var shorts = $scope.shorts;
-            var shortId = shorts[index]._id;
+            var shortId = shorts[index].ytID;
             ShortService.deleteShortById(
                 shortId).then(
                 function(shorts){
@@ -142,7 +161,10 @@
                 userId: $scope.shorts[index].userId,
                 description: $scope.shorts[index].description,
                 url: $scope.shorts[index].url,
-                language:$scope.shorts[index].language
+                language:$scope.shorts[index].language,
+                ytID:$scope.shorts[index].ytID,
+                likes:$scope.shorts[index].likes,
+                reviews:$scope.shorts[index].reviews
             };
             $scope.short = selectedShort;
             $scope.selectedIndex = index;

@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 col-xs-12">
-                    <div class="well panel panel-default">
+                    <div class="well panel panel-default box-shadow--16dp">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 text-center">
@@ -24,7 +24,7 @@
                                 <!--/col-->
                                 <div class="clearfix"></div>
                                 <div class="col-xs-12 col-sm-4">
-                                    <button class="btn btn-block prf-follower-btn" ng-click="showFollowerDetails = ! showFollowerDetails"><span class="fa fa-users"></span>({{profileHeader.followers.length}}) Followers</button>
+                                    <button class="btn btn-block prf-follower-btn" ng-click="showFollowersDetails = ! showFollowersDetails"><span class="fa fa-users"></span>({{profileHeader.followers.length}}) Followers</button>
                                     <button class="btn btn-block prf-profile-btn" ng-click="showProfileDetails = ! showProfileDetails"><span class="fa fa-user"></span>Edit Profile</button>
                                 </div>
                                 <!--/col-->
@@ -64,9 +64,11 @@
                     <div class="well panel panel-default">
                         <div class="panel-body">
                             <p>Shorts by {{profile.username}}</p>
-                            <div ng-repeat="short in shortLikes track by $index">
-
+                            <div ng-show ="shortLikes.length >0" ng-repeat="short in shortLikes track by $index">
                                 <a href="#/details/search/{{short.ytID}}">{{short.title}}</a>
+                            </div>
+                            <div ng-show="shortLikes.length == 0" class="alert alert-info">
+                                <strong>Info!</strong> You've not liked any shorts
                             </div>
                         </div>
                     </div>
@@ -151,8 +153,11 @@
                                 Reviews
                             </div>
                             <div class="panel-body">
-                                <div ng-repeat="review in userReviews">
+                                <div ng-show="userReviews.length > 0" ng-repeat="review in userReviews">
                                     <a href="#/details/search/{{review.shortId}}">{{review.content}}</a>
+                                </div>
+                                <div ng-show="userReviews.length == 0" class="alert alert-info">
+                                    <strong>Info!</strong> No reviews yet!
                                 </div>
                             </div>
                         </div>
@@ -163,8 +168,11 @@
                         <div class="well panel panel-default">
                             <div class="panel-body">
                                 <p> Following </p>
-                                <div ng-repeat="user in following">
+                                <div ng-show="following.length >0" ng-repeat="user in following">
                                     <a href="#/profile/public/{{user}}">{{user}}</a>
+                                </div>
+                                <div ng-show="following.length == 0" class="alert alert-info">
+                                    <strong>Info!</strong> You don't follow anyone yet
                                 </div>
                             </div>
                         </div>
@@ -176,8 +184,11 @@
                         <div class="well panel panel-default">
                             <div class="panel-body">
                                 <p> Followers </p>
-                                <div ng-repeat="user in followers">
+                                <div ng-show="followers.length >0" ng-repeat="user in followers">
                                     <a href="#/profile/public/{{user}}">{{user}}</a>
+                                </div>
+                                <div ng-show="followers.length == 0" class="alert alert-info">
+                                    <strong>Info!</strong> No followers yet
                                 </div>
                             </div>
                         </div>

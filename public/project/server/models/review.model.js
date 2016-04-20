@@ -139,20 +139,15 @@ module.exports=function(db, mongoose){
     function findReviewsByIds (ids) {
 
         var deferred = q.defer();
-        var reviewIds = [];
-        for(var r in ids){
-            reviewIds.push(ids[r]._id);
-        }
-        // find all movies
-        // whose imdb IDs
-        // are in imdbIDs array
-        ReviewModel.find({
-            _id: {$in: reviewIds}
-        }, function (err, reviews) {
+
+        console.log("IDS AFTER DELETE",JSON.stringify(ids));
+
+        ReviewModel.find({"_id": { $in: ids}}, function (err, reviews) {
             if (err) {
                 deferred.reject(err);
-            } else {
-                console.log("In review model",JSON.stringify(reviews));
+            }
+            else {
+                console.log("REVIEWS",JSON.stringify(reviews));
                 deferred.resolve(reviews);
             }
         });

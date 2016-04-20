@@ -34,6 +34,7 @@
             return $http.delete("/api/project/short/"+shortId);
         }
         function updateShortById (shortId,newShort) {
+            console.log("in update short client service",JSON.stringify(newShort));
             var response= $http.put("/api/project/short/"+shortId, newShort);
             console.log("In update short service client"+JSON.stringify(response));
             return response;
