@@ -4,36 +4,45 @@
 
     app.controller("PostController",postController);
 
-    function postController($scope,$location,UserService,PostService) {
-        $scope.updateFlag = false;
-        UserService.loggedIn();
-        var currentUser= UserService.getCurrentUser().then(function(response) {
-            console.log("current user in form controller " + JSON.stringify(response.data));
-            currentUser = response.data;
-            PostService.findAllPostsByUser(
-                currentUser._id).then(
-                function (response) {
-                    console.log("posts",JSON.stringify(response.data));
-                    $scope.posts = response.data;
-                }, function (err) {
-                    console.log("Error retrieving posts" + err);
-                });
-        });
-        $scope.$location = $location;
-        $scope.createPost = createPost;
-        $scope.updatePost = updatePost;
-        $scope.deletePost = deletePost;
-        $scope.selectPost = selectPost;
-        $scope.cancel = cancel;
+    function postController($location,UserService,PostService) {
+        var vm = this;
+        vm.updateFlag = false;
+        var currentUser= null;
+
+        vm.$location = $location;
+        vm.createPost = createPost;
+        vm.updatePost = updatePost;
+        vm.deletePost = deletePost;
+        vm.selectPost = selectPost;
+        vm.cancel = cancel;
         var selectedIndex = -1;
+
+        function init() {
+
+            UserService.getCurrentUser().then(function (response) {
+                console.log("current user in form controller " + JSON.stringify(response.data));
+                currentUser = response.data;
+                PostService.findAllPostsByUser(
+                    currentUser._id).then(
+                    function (response) {
+                        console.log("posts", JSON.stringify(response.data));
+                        vm.posts = response.data;
+                    }, function (err) {
+                        console.log("Error retrieving posts" + err);
+                    });
+            });
+        }
+
+        init();
+
 
         function createPost(post){
             if(!post || !post.title)
             {
-                $scope.error = "Please enter a title";
+                vm.error = "Please enter a title";
             }
             if(!post.description){
-                $scope.error = "Please enter a description";
+                vm.error = "Please enter a description";
             }
             console.log("In posts"+JSON.stringify(post));
             PostService.createPostForUser(
@@ -43,8 +52,8 @@
                     PostService.findAllPostsByUser(
                         currentUser._id).then(
                         function(response){
-                            $scope.posts = response.data;
-                            $scope.post = {};
+                            vm.posts = response.data;
+                            vm.post = {};
                         },function(err){
                             console.log("Error while retrieving the posts"+err);
                         });
@@ -62,12 +71,12 @@
                 post).then(
                 function(response){
 
-                    if ($scope.selectedIndex>=0){
+                    if (vm.selectedIndex>=0){
                         console.log("updated post"+JSON.stringify(response.data))
-                        $scope.posts[$scope.selectedIndex]=response.data;
-                        $scope.post={};
-                        $scope.updateFlag=false;
-                        //$scope.selectedIndex=-1;
+                        vm.posts[vm.selectedIndex]=response.data;
+                        vm.post={};
+                        vm.updateFlag=false;
+                        //vm.selectedIndex=-1;
                     }
 
                 },function(err){
@@ -76,7 +85,7 @@
             );
         }
         function deletePost(index){
-            var posts = $scope.posts;
+            var posts = vm.posts;
             var postId = posts[index]._id;
             console.log("post id to delete"+postId);
             PostService.deletePostById(
@@ -86,7 +95,7 @@
                         currentUser._id).then(
                         function(response){
 
-                            $scope.posts =response.data;
+                            vm.posts =response.data;
                         },function(err){
                             console.log("Error retrieving posts"+err);
                         });
@@ -95,22 +104,22 @@
         }
         function selectPost(index){
             //selectedIndex = index;
-            $scope.updateFlag = true;
+            vm.updateFlag = true;
             console.log(index);
             var selectedPost= {
-                _id: $scope.posts[index]._id,
-                title: $scope.posts[index].title,
-                userId: $scope.posts[index].userId,
-                description: $scope.posts[index].description
+                _id: vm.posts[index]._id,
+                title: vm.posts[index].title,
+                userId: vm.posts[index].userId,
+                description: vm.posts[index].description
             };
-            $scope.post = selectedPost;
-            $scope.selectedIndex = index;
+            vm.post = selectedPost;
+            vm.selectedIndex = index;
 
         }
 
         function cancel(){
-            $scope.updateFlag = false;
-            $scope.post={};
+            vm.updateFlag = false;
+            vm.post={};
         }
 
 

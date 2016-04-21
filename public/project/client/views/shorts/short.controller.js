@@ -4,40 +4,47 @@
 
     app.controller("ShortController",shortController);
 
-    function shortController($scope,$location,ShortService,UserService) {
+    function shortController($location,ShortService,UserService) {
 
         //UserService.loggedIn();
+        var vm = this;
         var currentUser =null;
-        $scope.error=null;
-        $scope.updateFlag= false;
-        UserService.getCurrentUser().then(function(response){
-                currentUser= response.data;
+        vm.error=null;
+        vm.updateFlag= false;
+
+        vm.$location = $location;
+
+        vm.addShort = addShort;
+        vm.deleteShort = deleteShort;
+        vm.updateShort = updateShort;
+        vm.selectShort = selectShort;
+        vm.favorite = favorite;
+        vm.reviewShort = reviewShort;
+        vm.cancel = cancel;
+
+        function init()
+        {
+            UserService.getCurrentUser().then(function (response) {
+                currentUser = response.data;
                 ShortService.findShortsForUser(
-                currentUser._id).then(
-                function(response){
-                    $scope.shorts =response.data;
-                },function(err){
-                    console.log("Error retrieving shorts"+err);
-                });
-        }, function(err){
-            console.log("Error getting the current user");
-        });
+                    currentUser._id).then(
+                    function (response) {
+                        vm.shorts = response.data;
+                    }, function (err) {
+                        console.log("Error retrieving shorts" + err);
+                    });
+            }, function (err) {
+                console.log("Error getting the current user");
+            });
+        }
+        init();
+        console.log("shorts"+vm.shorts);
 
-        console.log("shorts"+$scope.shorts);
-        $scope.$location = $location;
-
-        $scope.addShort = addShort;
-        $scope.deleteShort = deleteShort;
-        $scope.updateShort = updateShort;
-        $scope.selectShort = selectShort;
-        $scope.favorite = favorite;
-        $scope.reviewShort = reviewShort;
-        $scope.cancel = cancel;
 
         function favorite(short) {
             if(currentUser) {
-                $scope.short.likes = [];
-                $scope.short.likes.push(currentUser._id);
+                vm.short.likes = [];
+                vm.short.likes.push(currentUser._id);
                 ShortService
                     .userLikesShort(currentUser._id, short).then(
                     function(response){
@@ -54,8 +61,8 @@
 
         function reviewShort(review,short){
             if(currentUser) {
-                $scope.short.likes = [];
-                $scope.short.likes.push(currentUser._id);
+                vm.short.likes = [];
+                vm.short.likes.push(currentUser._id);
                 ShortService
                     .userLikesShort(currentUser._id, short);
             } else {
@@ -68,15 +75,15 @@
 
         function addShort(newShort){
             if(!newShort){
-                $scope.error = "You must enter a short title and a URL";
+                vm.error = "You must enter a short title and a URL";
                 return;
             }
             if(!newShort.title) {
-                $scope.error = "You must enter a short title";
+                vm.error = "You must enter a short title";
                 return;
             }
             if(!newShort.url){
-                $scope.error = "You must enter a URL for your short";
+                vm.error = "You must enter a URL for your short";
                 return;
             }
             console.log("current user id"+currentUser._id);
@@ -87,8 +94,8 @@
                     ShortService.findShortsForUser(
                         currentUser._id).then(
                         function(response){
-                            $scope.shorts = response.data;
-                            $scope.short = {};
+                            vm.shorts = response.data;
+                            vm.short = {};
                         },function(err){
                             console.log("Error while retrieving shorts"+err);
                     });
@@ -102,15 +109,15 @@
 
         function updateShort(short){
             if(!short){
-                $scope.error = "You must enter a short title and a URL";
+                vm.error = "You must enter a short title and a URL";
                 return;
             }
             if(!short.title) {
-                $scope.error = "You must enter a short title";
+                vm.error = "You must enter a short title";
                 return;
             }
             if(!short.url){
-                $scope.error = "You must enter a URL for your short";
+                vm.error = "You must enter a URL for your short";
                 return;
             }
 
@@ -119,13 +126,13 @@
             ShortService.updateShortById(short.ytID,
                 short).then(
                 function(response){
-                    var selectedIndex = $scope.selectedIndex;
-                    console.log($scope.selectedIndex);
+                    var selectedIndex = vm.selectedIndex;
+                    console.log(vm.selectedIndex);
                     console.log("response"+JSON.stringify(response));
                     if (selectedIndex>=0){
-                        $scope.shorts[selectedIndex]=response.config.data;
-                        $scope.short={};
-                        $scope.updateFlag=false;
+                        vm.shorts[selectedIndex]=response.config.data;
+                        vm.short={};
+                        vm.updateFlag=false;
 
                     }
 
@@ -136,7 +143,7 @@
             );
         }
         function deleteShort(index){
-            var shorts = $scope.shorts;
+            var shorts = vm.shorts;
             var shortId = shorts[index].ytID;
             ShortService.deleteShortById(
                 shortId).then(
@@ -144,7 +151,7 @@
                     ShortService.findShortsForUser(
                         currentUser._id).then(
                         function(response){
-                            $scope.shorts = response.data;
+                            vm.shorts = response.data;
                         },function(err){
                                 console.log("Error while retrieving shorts"+err);
                             });
@@ -156,27 +163,27 @@
         }
         //var selectedIndex = null;
         function selectShort(index){
-            $scope.updateFlag = true;
+            vm.updateFlag = true;
             var selectedShort= {
-                _id: $scope.shorts[index]._id,
-                title: $scope.shorts[index].title,
-                userId: $scope.shorts[index].userId,
-                description: $scope.shorts[index].description,
-                url: $scope.shorts[index].url,
-                language:$scope.shorts[index].language,
-                ytID:$scope.shorts[index].ytID,
-                likes:$scope.shorts[index].likes,
-                reviews:$scope.shorts[index].reviews
+                _id: vm.shorts[index]._id,
+                title: vm.shorts[index].title,
+                userId: vm.shorts[index].userId,
+                description: vm.shorts[index].description,
+                url: vm.shorts[index].url,
+                language:vm.shorts[index].language,
+                ytID:vm.shorts[index].ytID,
+                likes:vm.shorts[index].likes,
+                reviews:vm.shorts[index].reviews
             };
-            $scope.short = selectedShort;
-            $scope.selectedIndex = index;
-            console.log($scope.selectedIndex);
+            vm.short = selectedShort;
+            vm.selectedIndex = index;
+            console.log(vm.selectedIndex);
 
         }
 
         function cancel(){
-            $scope.updateFlag = false;
-            $scope.short={};
+            vm.updateFlag = false;
+            vm.short={};
         }
 
 

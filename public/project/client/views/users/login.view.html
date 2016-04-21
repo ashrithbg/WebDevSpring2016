@@ -7,12 +7,7 @@
             <div class="panel panel-login">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link">Login</a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="#" id="register-form-link">Register</a>
-                        </div>
+                        <a href=""  id="login-form-link">Login</a>
                     </div>
                     <hr>
                 </div>
@@ -31,43 +26,24 @@
                                     <!--<label for="remember"> Remember Me</label>-->
                                 <!--</div>-->
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <input id="email" type="text" class="form-control" name="email" value="" placeholder="Username" ng-model="model.user.username">
                                 </div>
 
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                     <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password" ng-model="model.user.password">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <a href="javascript:void(0);" name="login-submit" id="login-submit" class="form-control btn btn-login" tabeindex="4" ng-click="model.login(model.user)"><i class="fa fa-sign-in"></i>Sign In</a>
+                                        <div class="col-sm-6 col-xs-6 col-sm-offset-3 col-xs-offset-3">
+                                            <a href="javascript:void(0);" name="login-submit" id="login-submit" class="form-control btn btn-register" tabeindex="4" ng-click="model.login(model.user)"><i class="fa fa-sign-in"></i>Sign In</a>
                                            <!--<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">-->
                                         </div>
                                     </div>
-                                </div>
-
-                            </form>
-                            <form id="register-form"  method="post" role="form" style="display: none;" ng-controller="RegisterController">
-                                <div class="form-group">
-                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" ng-model="user.username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" ng-model="user.email">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="user.password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" ng-model="user.confirmPassword">
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                    <div class="col-sm-12 col-xs-12 col-md-offset-4 col-xs-offset-2">
+                                    <h4>or Sign up <a href="#/register">here</a></h4>
                                         </div>
-                                    </div>
                                 </div>
                             </form>
                         </div>

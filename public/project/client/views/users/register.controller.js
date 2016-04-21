@@ -4,42 +4,34 @@
         .module("ShortKutApp")
         .controller("RegisterController", registerController);
 
-    function registerController($location, $scope, UserService) {
-        $scope.error = null;
-        $scope.register = register;
+    function registerController($location, UserService) {
+        var vm = this;
+        vm.error = null;
+        vm.register = register;
 
         function register(user) {
-            $scope.error = null;
+            vm.error = null;
             if (user == null) {
-                $scope.error = "Please fill in the required fields";
+                vm.error = "Please fill in the required fields";
                 return;
             }
             if (!user.username) {
-                $scope.error = "Please provide a username";
+                vm.error = "Please provide a username";
                 return;
             }
             if (!user.password || !user.confirmPassword) {
-                $scope.error = "Please provide a password";
+                vm.error = "Please provide a password";
                 return;
             }
             if (user.password != user.confirmPassword) {
-                $scope.error = "Passwords must match";
+                vm.error = "Passwords must match";
                 return;
             }
-            //var user = UserService.findUserByUsername(user.username);
-            //if (user != null) {
-            //    $scope.error = "User already exists";
-            //    return;
-            //}
-            //UserService.createUser($scope.user,function(newUser){
-            //    UserService.setCurrentUser(newUser);
-            //});
-            //
-            //$location.url("/profile");
+            
             UserService.findUserByUsername(user.username).then(
                 function(found_user){
                     if (found_user.data != null) {
-                        $scope.error = "User already exists";
+                        vm.error = "User already exists";
                         return;
                     }
                     else{

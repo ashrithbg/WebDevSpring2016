@@ -6,12 +6,12 @@ module.exports=function(mongoose){
         "username":String,
         "password":String,
         "roles":[String],
+        "email":[String],
         "dob":{type:Date, default: Date.now},
         "description":String,
         followers: [String],
         following: [String],
         shortLikes: [String],
-        shortComments:[String],
         postLikes:[String],
         postComments:[String],
         reviews: [String]

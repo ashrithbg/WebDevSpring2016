@@ -12,10 +12,10 @@
                     <div class="well panel panel-default box-shadow--16dp">
                         <div class="panel-body">
                             <div class="container-fluid">
-                                <div ng-if="shorts">
-                                    <div ng-repeat="short in shorts">
+                                <div ng-if="model.shorts">
+                                    <div ng-repeat="short in model.shorts">
 
-                                        <div class="short-panel panel panel-default col-xs-12 col-lg-6 box-shadow--16dp">
+                                        <div class="short-panel panel panel-success col-xs-12 col-lg-6 box-shadow--16dp">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title">{{short.title}}</h3>
                                             </div>
@@ -27,19 +27,19 @@
                                             <div class="panel-footer">
                                                 <div class="btn-group btn-group-justified">
                                                     <div class="btn-group">
-                                                        <button class="visible-lg btn btn-default" ng-click="selectShort($index)" >
+                                                        <button class="visible-lg btn btn-default" ng-click="model.selectShort($index)" >
                                                             <i class="fa fa-check"></i>
                                                             Select
                                                         </button>
-                                                        <div class="visible-xs"><a href="" ng-click="selectShort($index)"><i class="fa fa-check"></i></a></div>
+                                                        <div class="visible-xs"><a href="" ng-click="model.selectShort($index)"><i class="fa fa-check"></i></a></div>
                                                     </div>
                                                     <div class="btn-group">
-                                                        <button class="visible-lg btn btn-danger" ng-click="deleteShort($index)">
+                                                        <button class="visible-lg btn btn-danger" ng-click="model.deleteShort($index)">
                                                             <i class="fa fa-trash"></i>
                                                             Delete
                                                         </button>
 
-                                                        <div class="visible-xs"><a href="" ng-click="deleteShort($index)"><i class="fa fa-trash"></i></a></div>
+                                                        <div class="visible-xs"><a href="" ng-click="model.deleteShort($index)"><i class="fa fa-trash"></i></a></div>
 
                                                     </div>
                                                 </div>
@@ -56,24 +56,24 @@
                                     </div>
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input id="title" type="text" class="form-control" placeholder="Short title" ng-model="short.title">
+                        <input id="title" type="text" class="form-control" placeholder="Short title" ng-model="model.short.title">
                     </div>
                     <div class="form-group">
                         <label for="title">Description</label>
-                        <textarea class="form-control" id="options" ng-model="short.description" placeholder="Short description">Description</textarea>
+                        <textarea class="form-control" id="options" ng-model="model.short.description" placeholder="Short description">Description</textarea>
                     </div>
                     <div class="form-group">
                         <label for="language">Language</label>
-                        <input id="language" type="text" class="form-control" placeholder="Short language" ng-model="short.language">
+                        <input id="language" type="text" class="form-control" placeholder="Short language" ng-model="model.short.language">
                     </div>
                     <div class="form-group">
                         <label for="url">URL</label>
-                        <input id="url" type="text" class="form-control" placeholder="Short URL" ng-model="short.url">
+                        <input id="url" type="text" class="form-control" placeholder="Short URL" ng-model="model.short.url">
                     </div>
                     <div class="form-group">
-                        <a class="btn btn-success btn-lg" ng-show = "!updateFlag" ng-click="addShort(short)"><i class="fa fa-plus" aria-hidden="true"> Add</i></a>
-                        <a class="btn btn-warning btn-lg" ng-show ="updateFlag" ng-click="updateShort(short)"><i class="fa fa-pencil" aria-hidden="true"> Update</i></a>
-                        <a class="btn btn-default btn-lg" ng-show ="updateFlag" ng-click="cancel()"><i class="fa fa-times" aria-hidden="true"> Cancel</i></a>
+                        <a class="btn btn-success btn-lg" ng-show = "!model.updateFlag" ng-click="model.addShort(model.short)"><i class="fa fa-plus" aria-hidden="true"> Add</i></a>
+                        <a class="btn btn-warning btn-lg" ng-show ="model.updateFlag" ng-click="model.updateShort(model.short)"><i class="fa fa-pencil" aria-hidden="true"> Update</i></a>
+                        <a class="btn btn-default btn-lg" ng-show ="model.updateFlag" ng-click="model.cancel()"><i class="fa fa-times" aria-hidden="true"> Cancel</i></a>
                     </div>
                 </form>
 

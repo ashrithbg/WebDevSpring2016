@@ -44,6 +44,8 @@ app.get('/hello', function(req, res){
     res.send('hello world');
 
 });
+
+
 require("./public/project/server/app.js")(app,db, mongoose) ;
 require("./public/assignment/server/app.js")(app, db, mongoose);
 //require("./public/project/server/app.js")(app,db, mongoose) ;

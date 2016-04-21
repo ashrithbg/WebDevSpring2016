@@ -22,14 +22,19 @@
                     controller: "ShortDetailsController as model"
                 }).when("/details/posts/:id", {
                     templateUrl: "views/details/post.details.html",
-                    controller: "PostDetailsController as model"
+                    controller: "PostDetailsController as model",
+
                 }).when("/details/search/:id", {
                     templateUrl: "views/details/search.details.html",
-                    controller: "SearchDetailsController as model"
+                    controller: "SearchDetailsController as model",
+                    resolve: {
+                        loggedIn: checkCurrentUser
+                    }
                 })
                 .when("/search/:query", {
                     templateUrl: "views/search/search.view.html",
-                    controller: "SearchController"
+                    controller: "SearchController",
+                    controllerAs:"model"
                 })
                 .when("/admin",{
                     templateUrl:"views/admin/admin.view.html",
@@ -41,22 +46,26 @@
                     controllerAs:"model"
                 }).when("/register",{
                 templateUrl:"views/users/register.view.html",
-                controller: "RegisterController"
+                controller: "RegisterController",
+                controllerAs:"model"
             }).when("/profile",{
                 templateUrl:"views/users/profile.view.html",
                 controller: "ProfileController",
+                controllerAs:"model",
                 resolve: {
                     loggedIn: checkLoggedin
                 }
             }).when("/shorts",{
                     templateUrl:"views/shorts/short.view.html",
                     controller: "ShortController",
+                    controllerAs: "model",
                     resolve: {
                     loggedIn: checkLoggedin
                 }
                 }).when("/posts",{
                     templateUrl:"views/posts/posts.view.html",
                     controller: "PostController",
+                    controllerAs: "model",
                     resolve: {
                         loggedIn: checkLoggedin
                 }

@@ -16,20 +16,25 @@
                                 </div>
                                 <!--/col-->
                                 <div class="col-xs-12 col-sm-8">
-                                    <h2>{{profileHeader.username}}</h2>
-                                    <p class="visible-lg"><strong>About: </strong> {{profileHeader.description}}</p>
-                                    <p><strong>Role: </strong>{{profileHeader.role[0]}}</p>
+                                    <h2>{{model.profileHeader.username}}</h2>
+                                    <p class="visible-lg" ng-hide="!model.profileHeader.description"><strong>About: </strong> {{model.profileHeader.description}}</p>
+                                    <p ng-hide="!model.profileHeader.roles">
+                                        <strong>Role: </strong>
+                                        <div ng-repeat="role in model.profileHeader.roles">
+                                            <span class="tags">{{role}}</span>
+                                        </div>
+                                    </p>
                                 <hr>
                                 </div>
                                 <!--/col-->
                                 <div class="clearfix"></div>
                                 <div class="col-xs-12 col-sm-4">
-                                    <button class="btn btn-block prf-follower-btn" ng-click="showFollowersDetails = ! showFollowersDetails"><span class="fa fa-users"></span>({{profileHeader.followers.length}}) Followers</button>
+                                    <button class="btn btn-block prf-follower-btn" ng-click="showFollowersDetails = ! showFollowersDetails"><span class="fa fa-users"></span>({{model.profileHeader.followers.length}}) Followers</button>
                                     <button class="btn btn-block prf-profile-btn" ng-click="showProfileDetails = ! showProfileDetails"><span class="fa fa-user"></span>Edit Profile</button>
                                 </div>
                                 <!--/col-->
                                 <div class="col-xs-12 col-sm-4">
-                                    <button class="btn btn-block prf-following-btn" ng-click="showFollowingDetails = ! showFollowingDetails"><span class="fa fa-spotify"></span>({{profileHeader.following.length}}) Following</button>
+                                    <button class="btn btn-block prf-following-btn" ng-click="showFollowingDetails = ! showFollowingDetails"><span class="fa fa-spotify"></span>({{model.profileHeader.following.length}}) Following</button>
                                     <button class="btn btn-block prf-shorts-btn" ng-click="showShortDetails = ! showShortDetails"><span class="fa fa-thumbs-up"></span> Shorts You Liked</button>
                                 </div>
                                 <!--/col-->
@@ -63,11 +68,11 @@
                 <div class="col-md-offset-3 col-md-8 col-xs-12">
                     <div class="well panel panel-default">
                         <div class="panel-body">
-                            <p>Shorts by {{profile.username}}</p>
-                            <div ng-show ="shortLikes.length >0" ng-repeat="short in shortLikes track by $index">
+                            <p>Shorts by {{model.profile.username}}</p>
+                            <div ng-show ="model.shortLikes.length >0" ng-repeat="short in model.shortLikes track by $index">
                                 <a href="#/details/search/{{short.ytID}}">{{short.title}}</a>
                             </div>
-                            <div ng-show="shortLikes.length == 0" class="alert alert-info">
+                            <div ng-show="model.shortLikes.length == 0" class="alert alert-info">
                                 <strong>Info!</strong> You've not liked any shorts
                             </div>
                         </div>
@@ -82,29 +87,47 @@
                             <div class="row" >
                                 <div class="form-group col-lg-8 col-centered">
                                     <label for="username">User Name</label>
-                                    <input type="text" class="form-control" id="username" placeholder="User Name" ng-model="profile.username"/>
+                                    <input type="text" class="form-control" id="username" placeholder="User Name" ng-model="model.profile.username"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-8 col-centered">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="profile.firstName"/>
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="model.profile.firstName"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-8 col-centered">
                                     <label for="lastName">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="profile.lastName"/>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="model.profile.lastName"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-8 col-centered">
                                     <label for="description">Description</label>
-                     <textarea  class="form-control" id="description" placeholder="Tell us what you do, did, will do"
-                                ng-model="profile.description">
-                    </textarea>
+                                         <textarea  class="form-control" id="description" placeholder="Tell us what you do, did, will do"
+                                                    ng-model="model.profile.description">
+                                        </textarea>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="form-group col-lg-8 col-centered">
+                                    <label for="email">Email</label>
+                                         <input type="email"  class="form-control" id="email" ng-model="model.profile.email">
+                                        </input>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-lg-8 col-centered">
+                                    <label for="password">Password</label>
+                                    <input type="password"  class="form-control" id="password"
+                                           ng-model="model.profile.password">
+                                    </input>
+                                </div>
+                            </div>
+
                             <!--<div class="row">-->
                             <!--<div class="form-group col-xs-12 col-lg-8">-->
                             <!--<label for="dob">Date of Birth:</label>-->
@@ -117,12 +140,12 @@
                                         Who are you?
                                     </label>
                                     <div id="role">
-                                        <select class="form-control" ng-model="profile.roles">
-                                            <option ng-selected="profile.roles == 'Director'" >Director</option>
-                                            <option ng-selected="profile.roles == 'Actor'" >Actor</option>
-                                            <option ng-selected="profile.roles == 'Producer'" >Producer</option>
-                                            <option ng-selected="profile.roles == 'Cinematographer'">Cinematographer</option>
-                                            <option ng-selected="profile.roles == 'Music Director'">Music Director</option>
+                                        <select class="form-control" ng-model="model.profile.roles" multiple>
+                                            <option value="Director" >Director</option>
+                                            <option value="Actor" >Actor</option>
+                                            <option value="Producer" >Producer</option>
+                                            <option value="Cinematographer">Cinematographer</option>
+                                            <option value="Music Director">Music Director</option>
                                         </select>
                                     </div>
                                 </div>
@@ -130,16 +153,8 @@
                             <hr>
                             <div class="row col-lg-8 col-centered">
 
-                                <button type="button" class="btn btn-success col-xs-12 col-lg-6" ng-click="update()">Update</button>
+                                <button type="button" class="btn btn-success col-xs-12 col-lg-6" ng-click="model.update()">Update</button>
                             </div>
-                            <!--<div class="row">-->
-                                <!--<div class="form-group col-centered">-->
-                                    <!--<div class="col-sm-offset-3 col-sm-9">-->
-                                        <!--&lt;!&ndash;<button type="submit" class="btn btn-default" href="home.view.html">Register</button>&ndash;&gt;-->
-                                        <!--<a href="" class="btn btn-primary btn-lg" ng-click="update()">Update</a>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
                         </div>
                     </div>
                 </div>
@@ -153,7 +168,7 @@
                                 Reviews
                             </div>
                             <div class="panel-body">
-                                <div ng-show="userReviews.length > 0" ng-repeat="review in userReviews">
+                                <div ng-show="model.userReviews.length > 0" ng-repeat="review in model.userReviews">
                                     <a href="#/details/search/{{review.shortId}}">{{review.content}}</a>
                                 </div>
                                 <div ng-show="userReviews.length == 0" class="alert alert-info">
@@ -168,10 +183,30 @@
                         <div class="well panel panel-default">
                             <div class="panel-body">
                                 <p> Following </p>
-                                <div ng-show="following.length >0" ng-repeat="user in following">
-                                    <a href="#/profile/public/{{user}}">{{user}}</a>
+                                <div ng-show="model.following.length >0" ng-repeat="user in model.following">
+                                    <!--<a href="#/profile/public/{{user}}">{{user}}</a>-->
+                                    <div class="col-lg-3 col-sm-6">
+
+                                        <div class="card hovercard">
+                                            <div class="cardheader">
+
+                                            </div>
+                                            <div class="avatar">
+                                                <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                                            </div>
+                                            <div class="info">
+                                                <div class="title">
+                                                    <a target="_blank" href="http://scripteden.com/">{{user}}</a>
+                                                </div>
+                                            </div>
+                                            <div class="bottom">
+                                                    <a href="" class="btn btn-danger">Unfollow</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div ng-show="following.length == 0" class="alert alert-info">
+                                <div ng-show="model.following.length == 0" class="alert alert-info">
                                     <strong>Info!</strong> You don't follow anyone yet
                                 </div>
                             </div>
@@ -184,8 +219,26 @@
                         <div class="well panel panel-default">
                             <div class="panel-body">
                                 <p> Followers </p>
-                                <div ng-show="followers.length >0" ng-repeat="user in followers">
-                                    <a href="#/profile/public/{{user}}">{{user}}</a>
+                                <div ng-show="model.followers.length >0" ng-repeat="user in model.followers">
+                                    <!--<a href="#/profile/public/{{user}}">{{user}}</a>-->
+                                    <div class="col-lg-3 col-sm-6">
+
+                                        <div class="card hovercard">
+                                            <div class="cardheader">
+
+                                            </div>
+                                            <div class="info">
+                                                <div class="title">
+                                                    <a href="#/profile/public/{{user}}">{{user}}</a>
+                                                </div>
+                                            </div>
+                                            <div class="bottom">
+                                                currentUser._id,model.public
+                                                <a href=""  ng-click="model.follow(model,{{user}})"ng-show="model.following.indexOf({{user}}) == -1" class="btn btn-success"><i class="fa fa-spotify">Follow</i></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 <div ng-show="followers.length == 0" class="alert alert-info">
                                     <strong>Info!</strong> No followers yet
@@ -203,7 +256,3 @@
 
     </div>
  </div>
-
-
-
-
