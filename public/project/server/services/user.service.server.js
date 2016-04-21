@@ -18,6 +18,8 @@ module.exports=function(app,userModel,postModel, shortModel){
     app.post("/api/project/user/:id/follow",followUser);
     app.post("/api/project/user/:id/unfollow",unfollowUser);
     app.get("/api/project/user/:id/shorts/likes",findShortLikes);
+    app.get("/api/project/user/:id/feed/shorts",getFollowingShorts);
+    app.get("/api/project/user/:id/feed/posts",getFollowingPosts);
 
     passport.use('project', new LocalStrategy(projectLocalStrategy));
     passport.serializeUser(serializeUser);
@@ -320,6 +322,35 @@ module.exports=function(app,userModel,postModel, shortModel){
             res.status(400).send(err);
         })
 
+    }
+
+
+    function getFollowingShorts(req,res){
+        var user = req.params.id;
+        userModel.findFollowingById(user).then(function(following){
+            return shortModel.findShortsByUsernames(following);
+        },function(err){
+            res.status(400).send(err);
+        }).then(function(shorts){
+            res.json(shorts);
+        },function(err){
+            res.status(400).send(err);
+        });
+
+    }
+
+    function getFollowingPosts(req,res){
+        var user = req.params.id;
+
+        userModel.findFollowingById(user).then(function(following){
+            return postModel.findPostsByUsernames(following);
+        },function(err){
+            res.status(400).send(err);
+        }).then(function(posts){
+            res.json(posts);
+        },function(err){
+            res.status(400).send(err);
+        });
     }
 
 };

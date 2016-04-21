@@ -25,7 +25,7 @@ module.exports=function(db, mongoose){
         removeFromFollowing:removeFromFollowing,
         removeFromFollowers:removeFromFollowers,
         findFollowersById:findFollowersById,
-        findFollowingById:findFollowingById
+        findFollowingById:findFollowingById,
     };
     return api;
 
@@ -393,19 +393,25 @@ module.exports=function(db, mongoose){
             else{
                 deferred.resolve(found_user.followers);
             }
-            return deferred.promise;
+
         });
+        return deferred.promise;
     }
     function findFollowingById(user){
         var deferred = q.defer();
+        console.log("in findFollowingById User id is :",user);
         UserModel.findById(user,function(err,found_user){
             if(err)
                 deferred.reject(err);
             else{
+                console.log("following found",JSON.stringify(found_user.following));
                 deferred.resolve(found_user.following);
             }
-            return deferred.promise;
+
         });
+        return deferred.promise;
 
     }
+
+
 };

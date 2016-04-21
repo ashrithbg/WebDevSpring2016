@@ -71,8 +71,9 @@
                         <input id="url" type="text" class="form-control" placeholder="Short URL" ng-model="short.url">
                     </div>
                     <div class="form-group">
-                        <a class="btn btn-success" ng-click="addShort(short)"><i class="fa fa-plus" aria-hidden="true">Add</i></a>
-                        <a class="btn btn-info" ng-click="updateShort(short)"><i class="fa fa-pencil" aria-hidden="true">Update</i></a>
+                        <a class="btn btn-success btn-lg" ng-show = "!updateFlag" ng-click="addShort(short)"><i class="fa fa-plus" aria-hidden="true"> Add</i></a>
+                        <a class="btn btn-warning btn-lg" ng-show ="updateFlag" ng-click="updateShort(short)"><i class="fa fa-pencil" aria-hidden="true"> Update</i></a>
+                        <a class="btn btn-default btn-lg" ng-show ="updateFlag" ng-click="cancel()"><i class="fa fa-times" aria-hidden="true"> Cancel</i></a>
                     </div>
                 </form>
 

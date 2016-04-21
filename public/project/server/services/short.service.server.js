@@ -38,8 +38,11 @@ module.exports=function(app, userModel, shortModel, reviewModel){
 
     function addShort(req, res){
         var short = req.body;
-        shortModel.addShortForUser(req.params.userId,short).then(function(shorts){
-            console.log("In add short for user",console.log(shorts));
+        userModel.findUserById(req.params.userId).then(function(user){
+            return shortModel.addShortForUser(req.params.userId,user.username,short);
+        },function(err){
+            res.status(400).send(err);
+        }).then(function(shorts){
             return shortModel.findShortsForUser(req.params.userId);
         },function(err){
             res.status(400).send(err);
@@ -48,6 +51,16 @@ module.exports=function(app, userModel, shortModel, reviewModel){
         },function(err){
             res.status(400).send(err);
         });
+        //shortModel.addShortForUser(req.params.userId,short).then(function(shorts){
+        //    console.log("In add short for user",console.log(shorts));
+        //    return shortModel.findShortsForUser(req.params.userId);
+        //},function(err){
+        //    res.status(400).send(err);
+        //}).then(function(shorts){
+        //    res.json(shorts);
+        //},function(err){
+        //    res.status(400).send(err);
+        //});
 
     }
 

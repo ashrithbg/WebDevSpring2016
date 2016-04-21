@@ -4,55 +4,24 @@
         .factory("FeedService", FeedService);
 
 
-    function FeedService(PostService,ShortService,UserService) {
+    function FeedService($http) {
 
         var service = {
-            getFollowerPosts: getFollowerPosts,
-            getFollowerShorts: getFollowerShorts,
-            getUserFeed:getUserFeed
+            getFollowingPosts: getFollowingPosts,
+            getFollowingShorts: getFollowingShorts
         };
 
         return service;
-        function getFollowerPosts(){
-            var user = UserService.getCurrentUser();
-            var followers = user.followers;
-            var followerPosts=[];
-            for(var f in followers) {
-                PostService.findAllPostsByUser(followers[f]._id, function(posts){
-                    for(var p in posts){
-                        followerPosts.push(posts[p]);
-                    }
-                });
-            }
-            return followerPosts;
-
+        function getFollowingPosts(userId){
+            return $http.get("/api/project/user/"+userId+"/feed/posts");
         }
 
-        function getFollowerShorts(){
+        function getFollowingShorts(userId){
 
-            var user = UserService.getCurrentUser();
-            var followers = user.followers;
-            var followerShorts=[];
-            for(var f in followers) {
-               ShortService.findShortsForUser(followers[f]._id, function(shorts){
-                   for(var s in shorts){
-                       followerShorts.push(shorts[s]);
-                   }
-               });
-            }
-            return followerShorts;
+            return $http.get("/api/project/user/"+userId+"/feed/shorts");
         }
 
-        function getUserFeed(){
-            console.log("In get feed by user");
-            var posts = getFollowerPosts();
-            var shorts = getFollowerShorts();
-            console.log("posts"+JSON.stringify(posts));
-            console.log("shorts"+JSON.stringify(shorts));
 
-            return {posts:posts,shorts:shorts};
-
-        }
 
     }
 

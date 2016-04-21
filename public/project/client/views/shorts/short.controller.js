@@ -9,6 +9,7 @@
         //UserService.loggedIn();
         var currentUser =null;
         $scope.error=null;
+        $scope.updateFlag= false;
         UserService.getCurrentUser().then(function(response){
                 currentUser= response.data;
                 ShortService.findShortsForUser(
@@ -31,6 +32,7 @@
         $scope.selectShort = selectShort;
         $scope.favorite = favorite;
         $scope.reviewShort = reviewShort;
+        $scope.cancel = cancel;
 
         function favorite(short) {
             if(currentUser) {
@@ -123,6 +125,7 @@
                     if (selectedIndex>=0){
                         $scope.shorts[selectedIndex]=response.config.data;
                         $scope.short={};
+                        $scope.updateFlag=false;
 
                     }
 
@@ -153,8 +156,7 @@
         }
         //var selectedIndex = null;
         function selectShort(index){
-            console.log("In select short");
-            console.log("In select short"+index);
+            $scope.updateFlag = true;
             var selectedShort= {
                 _id: $scope.shorts[index]._id,
                 title: $scope.shorts[index].title,
@@ -170,6 +172,11 @@
             $scope.selectedIndex = index;
             console.log($scope.selectedIndex);
 
+        }
+
+        function cancel(){
+            $scope.updateFlag = false;
+            $scope.short={};
         }
 
 

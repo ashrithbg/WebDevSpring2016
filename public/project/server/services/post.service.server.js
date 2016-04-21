@@ -31,12 +31,23 @@ module.exports=function(app, userModel, postModel){
     function addPost(req, res){
 
         var post = req.body;
-        postModel.createPostForUser(req.params.userId, post).then(
-            function(posts){
-                res.json(posts);
+        userModel.findUserById(req.params.userId).then(function(user){
+            return postModel.createPostForUser(req.params.userId, user.username, post);
             },function(err){
                 res.status(400).send(err);
+            }).then(
+                function(posts){
+                    res.json(posts);
+                },function(err){
+                    res.status(400).send(err);
             });
+
+        //postModel.createPostForUser(req.params.userId, post).then(
+        //    function(posts){
+        //        res.json(posts);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    });
 
     }
     function deletePost(req, res){

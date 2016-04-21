@@ -12,7 +12,8 @@ module.exports=function(db,mongoose){
         findAllPostsByUser:findAllPostsByUser,
         createPostForUser:createPostForUser,
         deletePostById:deletePostById,
-        updatePostById:updatePostById
+        updatePostById:updatePostById,
+        findPostsByUsernames:findPostsByUsernames
     };
 
     return api;
@@ -69,7 +70,7 @@ module.exports=function(db,mongoose){
 
     }
 
-    function createPostForUser(userId,post){
+    function createPostForUser(userId,username,post){
         //var newPost = {
         //    id: (new Date).getTime(),
         //    title: post.title,
@@ -81,7 +82,8 @@ module.exports=function(db,mongoose){
         var newPost = {
             title: post.title,
             userId:userId,
-            description:post.description
+            description:post.description,
+            createdByUser:username
         };
         var deferred = q.defer();
 
@@ -106,19 +108,6 @@ module.exports=function(db,mongoose){
 
     function updatePostById(postId,newPost){
 
-        //for(var p in posts){
-        //    if (posts[p].id == postId){
-        //        console.log("postId"+postId);
-        //        var updatedPost = {
-        //            id:newPost.id,
-        //            title:newPost.title,
-        //            userId:newPost.userId,
-        //            description:newPost.description
-        //        };
-        //        posts[p] = updatedPost;
-        //        return updatedPost;
-        //    }
-        //}
         console.log("formId :"+postId);
         var deferred = q.defer();
 
@@ -131,6 +120,7 @@ module.exports=function(db,mongoose){
                 found_post.userId = newPost.userId;
                 found_post.comments = newPost.comments;
                 found_post.likes = newPost.likes;
+                found_post.createdByUser = found_post.createdByUser;
                 found_post.save(function (err, updated_post) {
                     if (err) {
                         deferred.reject(err);
@@ -149,14 +139,6 @@ module.exports=function(db,mongoose){
 
 
     function findPostById(postId){
-        //console.log("post id"+postId);
-        //for(var p in posts){
-        //    if (posts[p].id == postId){
-        //        console.log(posts[p]);
-        //        return posts[p];
-        //    }
-        //}
-        //return null;
         var deferred = q.defer();
         PostModel.findById(postId,
             function(err,doc){
@@ -168,6 +150,23 @@ module.exports=function(db,mongoose){
                 }
 
             });
+        return deferred.promise;
+
+    }
+
+    function findPostsByUsernames(names){
+
+        var deferred = q.defer();
+
+
+        PostModel.find({"createdByUser": { $in: names}}, function (err, shorts) {
+            if (err) {
+                deferred.reject(err);
+            }
+            else {
+                deferred.resolve(shorts);
+            }
+        });
         return deferred.promise;
 
     }

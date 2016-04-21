@@ -8,7 +8,8 @@ module.exports=function(mongoose){
         "userId":String,
         "comments":[CommentSchema],
         "likes":[String],
-        "likedBy":[{username:String}]
+        "likedBy":[{username:String}],
+        "createdByUser":String
 
     },{collection: 'project.shortkut.post'});
 

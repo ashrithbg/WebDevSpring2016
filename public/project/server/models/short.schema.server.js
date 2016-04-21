@@ -9,6 +9,7 @@ module.exports=function(mongoose){
         "language":String,
         "userId":String,
         "likes":[String],
+        "createdByUser":String,
         "reviews":[String],
         "created":{type:Date, default:Date.now},
         "updated":{type:Date, default:Date.now}

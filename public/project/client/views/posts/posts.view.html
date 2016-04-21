@@ -53,22 +53,28 @@
         </div>
         <div class="container-fluid col-md-9">
             <div class="row">
+
                 <div class="col-md-12 col-xs-12">
                     <div class="well panel panel-default box-shadow--16dp">
+                        <div ng-show="error" class="alert alert-danger" role="alert">
+                            {{error}}
+                            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        </div>
                         <div class="panel-body">
                             <div class="container-fluid">
                             <form class="form-horizontal col-md-12">
                                 <div class="form-group">
                                     <label for="title">Title</label>
-                                    <input id="title" type="text" class="form-control" placeholder="Title" ng-model="post.title">
+                                    <input id="title" type="text" class="form-control" placeholder="Post title" ng-model="post.title">
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" ng-model="post.description"></textarea>
+                                    <textarea class="form-control" id="description" ng-model="post.description" placeholder="Post short gigs, share interesting facts!"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-success btn-lg" ng-click="createPost(post)"><i class="fa fa-plus" aria-hidden="true">Add Post</i></a>
-                                    <a class="btn btn-info btn-lg" ng-click="updatePost(post)"><i class="fa fa-pencil" aria-hidden="true">Update Post</i></a>
+                                    <a class="btn btn-success btn-lg" ng-show="!updateFlag" ng-click="createPost(post)"><i class="fa fa-plus" aria-hidden="true"> Add</i></a>
+                                    <a class="btn btn-warning btn-lg" ng-show="updateFlag" ng-click="updatePost(post)"><i class="fa fa-pencil" aria-hidden="true"> Update</i></a>
+                                    <a class="btn btn-default btn-lg" ng-show ="updateFlag" ng-click="cancel()"><i class="fa fa-times" aria-hidden="true"> Cancel</i></a>
                                 </div>
                             </form>
                                 </div>

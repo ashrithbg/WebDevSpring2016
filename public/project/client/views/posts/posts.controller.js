@@ -5,7 +5,7 @@
     app.controller("PostController",postController);
 
     function postController($scope,$location,UserService,PostService) {
-
+        $scope.updateFlag = false;
         UserService.loggedIn();
         var currentUser= UserService.getCurrentUser().then(function(response) {
             console.log("current user in form controller " + JSON.stringify(response.data));
@@ -24,11 +24,17 @@
         $scope.updatePost = updatePost;
         $scope.deletePost = deletePost;
         $scope.selectPost = selectPost;
+        $scope.cancel = cancel;
         var selectedIndex = -1;
 
         function createPost(post){
             if(!post || !post.title)
-                return;
+            {
+                $scope.error = "Please enter a title";
+            }
+            if(!post.description){
+                $scope.error = "Please enter a description";
+            }
             console.log("In posts"+JSON.stringify(post));
             PostService.createPostForUser(
                 currentUser._id,
@@ -52,8 +58,6 @@
         }
         function updatePost(post){
 
-            console.log("post object"+JSON.stringify(post));
-            console.log("post id"+post._id);
             PostService.updatePostById(post._id,
                 post).then(
                 function(response){
@@ -62,6 +66,7 @@
                         console.log("updated post"+JSON.stringify(response.data))
                         $scope.posts[$scope.selectedIndex]=response.data;
                         $scope.post={};
+                        $scope.updateFlag=false;
                         //$scope.selectedIndex=-1;
                     }
 
@@ -90,6 +95,7 @@
         }
         function selectPost(index){
             //selectedIndex = index;
+            $scope.updateFlag = true;
             console.log(index);
             var selectedPost= {
                 _id: $scope.posts[index]._id,
@@ -100,6 +106,11 @@
             $scope.post = selectedPost;
             $scope.selectedIndex = index;
 
+        }
+
+        function cancel(){
+            $scope.updateFlag = false;
+            $scope.post={};
         }
 
 

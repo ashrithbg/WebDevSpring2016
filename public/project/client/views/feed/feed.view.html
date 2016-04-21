@@ -6,28 +6,6 @@
     <div class="row">
         <div class="col-md-3">
             <div class="profile-sidebar">
-                <!-- SIDEBAR USERPIC -->
-                <!--<div class="profile-userpic">-->
-                <!--<img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">-->
-                <!--</div>-->
-                <!-- END SIDEBAR USERPIC -->
-                <!-- SIDEBAR USER TITLE -->
-                <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
-                        {{ currentUser.username }}
-                    </div>
-                    <div class="profile-usertitle-job">
-                        {{ currentUser.role }}
-                    </div>
-                </div>
-                <!-- END SIDEBAR USER TITLE -->
-                <!-- SIDEBAR BUTTONS -->
-                <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Follow</button>
-                    <button type="button" class="btn btn-danger btn-sm">Message</button>
-                </div>
-                <!-- END SIDEBAR BUTTONS -->
-                <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
                     <ul class="nav">
                         <li>
@@ -56,31 +34,48 @@
             </div>
         </div>
         <div class="container-fluid col-md-9">
-            <h3>Your feed</h3>
-            <div class="row col-sm-12">
-                <p> Posts</p>
-                <div ng-repeat="post in feed.posts">
-                    <p>{{post.title}}</p>
-                    <p>{{post.description}}</p>
+            <div class="well panel panel-default box-shadow--16dp">
+                <div ng-show="model.nofeed" class="alert alert-info" role="alert">
+                    <p>Your feed is empty :(! Start following people to get updates</p>
                 </div>
-            </div>
-            <div class="col-sm-12">
-                <p> Shorts</p>
-                <div ng-repeat="short in feed.shorts">
-                    <a href="#/details/search/{{short.id}}">
-                        {{short.title}}
-                    </a>
-                    <iframe ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+                <div ng-show ="model.feedPosts.length > 0 || model.feedShorts.length > 0" class="panel-body">
+                    <div class="container-fluid">
+                        <h3>Your feed</h3>
+                        <div class="row col-sm-12" ng-if="model.feedPosts.length >0">
+                            <div ng-repeat="post in model.feedPosts">
+                                <div class="well panel panel-success box-shadow--16dp">
+                                    <div class="panel-heading">{{post.title}}</div>
+                                    <div class="panel-body" >
+                                        <p class="visible-lg">{{post.description}}</p>
+                                        <a href="#/profile/public/{{short.createdByUser}}"><p class="visible-lg"><strong>{{short.createdByUser}}</strong> </p></a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <p>Shorts from people you follow</p>
+                            <div ng-repeat="short in model.feedShorts">
+                                <div class="well panel panel-success box-shadow--16dp">
+                                    <div class="panel-heading">{{short.title}}</div>
+                                            <div class="panel-body" >
+                                                <p class="visible-lg">{{short.description}}</p>
+                                                 <a href="#/profile/public/{{short.createdByUser}}"><p class="visible-lg"><strong>{{short.createdByUser}}</strong> </p></a>
+                                                <div class="embed-responsive embed-responsive-4by3">
+                                                    <iframe class="embed-responsive-item" src="{{short.url}}"></iframe>
+                                                </div>
+                                            </div>
+                                    </div>
+                            </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>
-
-<br>
-<br>
-
 
 
 

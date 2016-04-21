@@ -63,6 +63,7 @@
                 }).when("/feed",{
                     templateUrl:"views/feed/feed.view.html",
                     controller: "FeedController",
+                    controllerAs:"model",
                     resolve: {
                         loggedIn: checkLoggedin
                     }

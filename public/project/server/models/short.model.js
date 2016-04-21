@@ -21,6 +21,7 @@ module.exports=function(db, mongoose) {
         addShortReview:addShortReview,
         findShortByYtID:findShortByYtID,
         deleteShortReview:deleteShortReview,
+        findShortsByUsernames:findShortsByUsernames
         //updateShortReview:updateShortReview
 
         //updateReview:updateReview,
@@ -41,7 +42,7 @@ module.exports=function(db, mongoose) {
         }
     };
 
-    function addShortForUser(userId, newShort) {
+    function addShortForUser(userId, username,newShort) {
 
 
 
@@ -51,7 +52,8 @@ module.exports=function(db, mongoose) {
             language: newShort.language,
             url: "https://www.youtube.com/embed/"+youtubeID(newShort.url),
             description: newShort.description,
-            ytID:youtubeID(newShort.url)
+            ytID:youtubeID(newShort.url),
+            createdByUser:username
         };
         var deferred = q.defer();
         ShortModel.create(newShort, function (err, doc) {
@@ -99,6 +101,7 @@ module.exports=function(db, mongoose) {
                 found_short.language = found_short.language;
                 found_short.likes = newShort.likes;
                 found_short.ytID = newShort.ytID;
+                found_short.createdByUser = newShort.createdByUser;
                 found_short.save(function (err, updated_short) {
                     if (err) {
                         deferred.reject(err);
@@ -394,7 +397,22 @@ module.exports=function(db, mongoose) {
 
     }
 
+    function findShortsByUsernames(names){
 
+        var deferred = q.defer();
+        console.log("in findShortsByUsernames , list of followers",JSON.stringify(names));
+        ShortModel.find({createdByUser: { $in: names}}, function (err, shorts) {
+            if (err) {
+                deferred.reject(err);
+            }
+            else {
+                console.log("in findShortsByUsernames",JSON.stringify(shorts));
+                deferred.resolve(shorts);
+            }
+        });
+        return deferred.promise;
+
+    }
 
 };
 
