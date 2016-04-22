@@ -9,6 +9,7 @@
         var vm = this;
         var query = $routeParams.query;
         vm.query = null;
+
         console.log(query);
         if(query) {
             //UserService.getCurrentUser().then(function(response){
@@ -16,28 +17,34 @@
             //},function(err){
             //    console.log("Error retrieving likes after login",JSON.stringify(err));
             //});
-
+            if(query=="")
+                return;
             search(query);
 
         }
         vm.search = search;
+        vm.clear = clear;
 
 
         function search(query) {
-            var obj = YoutubeService.findShortsByQuery(query).then(renderShorts, renderError);
+
+            YoutubeService.findShortsByQuery(query).then(renderShorts, renderError);
         }
 
 
         function renderShorts(response) {
             var searchResults = [];
             vm.shorts=response.data;
-            vm.query= null;
+            vm.query= {};
+            $routeParams.query={};
         }
         function renderError(err){
             console.log("Error while retrieving search results"+JSON.stringify(err));
         }
 
-
+        function clear(){
+            vm.query={};
+        }
 
     }
 })();

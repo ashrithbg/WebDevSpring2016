@@ -14,6 +14,7 @@ module.exports=function(app, userModel, shortModel, reviewModel){
     app.get("/api/project/user/:userId/reviews",getReviewsByUser);
     app.get("/api/project/short/:shortId/reviews",getReviewsByShort);
     app.get("/api/project/review/:reviewId",findReview);
+    app.post("/api/project/shorts/reviews",getShortsByIds);
 
     function getShorts(req, res){
         var user = req.params.userId;
@@ -96,6 +97,8 @@ module.exports=function(app, userModel, shortModel, reviewModel){
         var userId = req.params.userId;
         var shortID = req.params.shortId;
         var short;
+
+        console.log("SHORT TO BE UNLIKED", shortID);
 
         shortModel
             .userUnlikesShort(userId, shortYoutube)
@@ -277,6 +280,19 @@ module.exports=function(app, userModel, shortModel, reviewModel){
             },function(err){
                 res.status(400).send(err);
             });
+
+    }
+
+    function getShortsByIds(req,res){
+        var ids = req.body;
+        shortModel.findShortByIds(ids).then(
+            function(shorts){
+                res.json(shorts);
+            },
+            function(err){
+                res.status(400).send(err);
+            }
+        )
 
     }
 

@@ -21,7 +21,8 @@ module.exports=function(db, mongoose) {
         addShortReview:addShortReview,
         findShortByYtID:findShortByYtID,
         deleteShortReview:deleteShortReview,
-        findShortsByUsernames:findShortsByUsernames
+        findShortsByUsernames:findShortsByUsernames,
+        findShortByIds:findShortByIds
         //updateShortReview:updateShortReview
 
         //updateReview:updateReview,
@@ -275,7 +276,7 @@ module.exports=function(db, mongoose) {
     function userUnlikesShort (userId, short) {
 
         var deferred = q.defer();
-        ShortModel.findOne({"ytID": short.id},
+        ShortModel.findOne({"ytID": short.ytID},
 
             function (err, doc) {
                 if (err) {
@@ -411,7 +412,21 @@ module.exports=function(db, mongoose) {
             }
         });
         return deferred.promise;
+    }
 
+
+    function findShortByIds(ids){
+        var deferred = q.defer();
+        ShortModel.find({"ytID": {$in:ids}}, function(err,shorts){
+            if(err){
+                deferred.reject(err);
+            }
+            else{
+                deferred.resolve(shorts);
+            }
+
+        });
+        return deferred.promise;
     }
 
 };

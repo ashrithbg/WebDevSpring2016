@@ -42,12 +42,6 @@ module.exports=function(app, userModel, postModel){
                     res.status(400).send(err);
             });
 
-        //postModel.createPostForUser(req.params.userId, post).then(
-        //    function(posts){
-        //        res.json(posts);
-        //    },function(err){
-        //        res.status(400).send(err);
-        //    });
 
     }
     function deletePost(req, res){

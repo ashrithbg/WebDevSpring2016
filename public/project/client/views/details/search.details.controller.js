@@ -5,7 +5,7 @@
         .module("ShortKutApp")
         .controller("SearchDetailsController", SearchDetailsController);
 
-    function SearchDetailsController( $rootScope, $routeParams, UserService, ShortService, YoutubeService) {
+    function SearchDetailsController( $rootScope, $location, $routeParams, UserService, ShortService, YoutubeService) {
         var vm = this;
         var id = $routeParams.id;
         console.log(id);
@@ -72,12 +72,16 @@
 
         function fetchShort(id) {
             ShortService.findShortById(id).then(function(response){
-                if(response.data!=null)
-                    vm.details = response.data;
-                else
-                    YoutubeService.findShortById(id).then(renderDetails,renderError);
+                return response.data;
             },function(err){
                 console.log("Error while retrieving search details from db"+err);
+            }).then(function(response){
+                if(!response)
+                    YoutubeService.findShortById(id).then(renderDetails,renderError);
+                else
+                    vm.details = response.data;
+            },function(err){
+                console.log("Error while retrieving search details from youtube"+err);
             });
 
 
@@ -92,22 +96,26 @@
         }
         function favorite(short) {
             if(currentUser) {
-                //vm.likes = [];
-                if(vm.likes.indexOf(currentUser._id) == -1) {
-                    //console.log("Short liked",currentUser._id);
-                    vm.likes.push(currentUser._id);
-                }
-                ShortService
-                    .userLikesShort(currentUser._id, short);
+                ShortService.userLikesShort(currentUser._id, short).then(
+                    function(response){
+                        if(vm.likes.indexOf(currentUser._id) == -1) {
+                            vm.likes.push(currentUser._id);
+                        }
+                    },function(err){
+                        console.log("Error while liking the short",JSON.stringify(err));
+                    });
             } else {
                 $location.url("/login");
             }
         }
         function unfavorite(short) {
             if(currentUser) {
-                vm.likes.splice(vm.likes.indexOf(currentUser._id),1);
                 ShortService
-                    .userUnlikesShort(currentUser._id, short);
+                    .userUnlikesShort(currentUser._id, short).then(function(response){
+                    vm.likes.splice(vm.likes.indexOf(currentUser._id),1);
+                },function(err){
+                    console.log("Error while unliking the short",JSON.stringify(err));
+                });
             } else {
                 $location.url("/login");
             }
@@ -182,7 +190,8 @@
                 _id: review._id,
                 content: review.content,
                 userId: review.userId,
-                shortId: review.shortId
+                shortId: review.shortId,
+                createdByUser: review.crea
             };
             vm.review = selectedReview;
 

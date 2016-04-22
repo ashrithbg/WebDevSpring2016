@@ -21,7 +21,8 @@
             findShortReviews:findShortReviews,
             addReview:addReview,
             updateReview:updateReview,
-            deleteReview:deleteReview
+            deleteReview:deleteReview,
+            findShortsByIds:findShortsByIds
         };
         return api;
 
@@ -56,7 +57,7 @@
             return $http.post("/api/project/user/"+userId+"/short/"+short.id, short);
         }
         function userUnlikesShort(userId, short) {
-            return $http.post("/api/project/user/"+userId+"/unlike/short/"+short.id, short);
+            return $http.post("/api/project/user/"+userId+"/unlike/short/"+short.ytID, short);
         }
 
         function findUserLikes(shortId){
@@ -80,6 +81,10 @@
         }
         function deleteReview(shortId, reviewId){
             return $http.delete("/api/project/short/"+shortId+"/review/"+reviewId);
+        }
+
+        function findShortsByIds(ids){
+            return $http.post("/api/project/shorts/reviews",ids);
         }
 
     }
