@@ -13,25 +13,17 @@ module.exports=function(db,mongoose){
         createPostForUser:createPostForUser,
         deletePostById:deletePostById,
         updatePostById:updatePostById,
-        findPostsByUsernames:findPostsByUsernames
+        findPostsByUsernames:findPostsByUsernames,
+        findCommentsByPost:findCommentsByPost,
+        createComment:createComment,
+        deleteCommentById:deleteCommentById,
+        findCommentsByUser:findCommentsByUser,
+        findCommentsByUsername:findCommentsByUsername
     };
 
     return api;
 
     function findAllPostsByUser(userId) {
-        //console.log("user id is "+userId);
-        //var userPosts=[];
-        //for(var p in posts) {
-        //    if(posts[p].userId == userId){
-        //        console.log("title "+posts[p].title+"id "+posts[p].userId);
-        //        userPosts.push(posts[p]);
-        //    }
-        //}
-        //console.log("all posts by user "+userPosts);
-        //return userPosts;
-        ////callback(users);
-
-
         var deferred = q.defer();
         console.log("user id ",userId);
         PostModel.find({"userId":userId},function(err,posts){
@@ -48,13 +40,6 @@ module.exports=function(db,mongoose){
     }
 
     function deletePostById(postId){
-        //var post = findPostById(postId);
-        //console.log("post title to be deleted "+post.title);
-        //if(post!=null){
-        //    posts.splice(posts.indexOf(post),1);
-        //}
-        //console.log(posts);
-        //return posts;
 
         var deferred = q.defer();
         PostModel.remove({"_id":postId}, function(err,posts){
@@ -71,14 +56,6 @@ module.exports=function(db,mongoose){
     }
 
     function createPostForUser(userId,username,post){
-        //var newPost = {
-        //    id: (new Date).getTime(),
-        //    title: post.title,
-        //    description:post.description,
-        //    userId:userId
-        //};
-        //posts.push(newPost);
-        //return newPost;
         var newPost = {
             title: post.title,
             userId:userId,
@@ -171,5 +148,104 @@ module.exports=function(db,mongoose){
 
     }
 
+    function findCommentsByPost(postId){
+        var deferred = q.defer();
+
+        PostModel.find({"postId":postId}, function (err, doc) {
+
+            if (err) {
+                deferred.reject(err);
+            } else {
+
+                deferred.resolve(doc.comments);
+            }
+
+        });
+        // return a promise
+        return deferred.promise;
+
+    }
+
+
+    function createComment(postId,comment){
+        console.log("In create comment post.model.js",postId,comment);
+        var newComment ={
+            content:comment.content,
+            userId:comment.userId,
+            username:comment.username
+        };
+
+        var deferred = q.defer();
+        PostModel.findById(postId).then(
+            function(post){
+                post.comments.push(newComment);
+                post.save(function(err,post){
+                    if(err){
+                        deferred.reject(err);
+                    }
+                    else{
+                        deferred.resolve(post.comments);
+                    }
+                });
+            });
+        return deferred.promise;
+
+
+
+    }
+
+
+    function deleteCommentById(postId,commentId){
+
+        var deferred = q.defer();
+        PostModel.findById(postId).then(
+            function(post){
+                post.comments.id(commentId).remove();
+                post.save(function(err,post){
+                    if(err){
+                        deferred.reject(err);
+                    }
+                    else{
+                        deferred.resolve(post.comments);
+                    }
+                });
+            });
+        return deferred.promise;
+
+
+
+    }
+
+    function findCommentsByUser(userId) {
+
+        var deferred = q.defer();
+
+        PostModel.find({"comments.userId": userId},
+            function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(doc);
+                }
+
+            });
+    }
+
+    function findCommentsByUsername(username) {
+
+        var deferred = q.defer();
+
+        PostModel.find({"comments.username": username},
+            function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(doc);
+                }
+
+            });
+    }
 
 };

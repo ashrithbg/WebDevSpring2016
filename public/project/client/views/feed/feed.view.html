@@ -1,5 +1,4 @@
-
-<div class="container-fluid col-xs-12" ng-controller="ProfileController">
+<div class="container-fluid col-xs-12">
     <video autoplay loop muted id="bgvid">
         <source src="css/videos/Blurry-People.mp4" type="video/mp4">
     </video>
@@ -47,10 +46,37 @@
                                     <div class="panel-heading">{{post.title}}</div>
                                     <div class="panel-body" >
                                         <p class="visible-lg">{{post.description}}</p>
-                                        <a href="#/profile/public/{{short.createdByUser}}"><p class="visible-lg"><strong>{{short.createdByUser}}</strong> </p></a>
+                                        <a href="#/profile/public/{{post.createdByUser}}"><p class="visible-lg"><strong>{{post.createdByUser}}</strong> </p></a>
                                     </div>
-                                </div>
 
+                                    <div class="actionBox" >
+                                        <ul class="commentList">
+                                            <li ng-repeat="comment in post.comments">
+                                                <div ng-if="currentUser._id == comment.userId" class="pull-right">
+                                                    <a href=""><i class="fa fa-times" aria-hidden="true" ng-click="model.deleteComment(post,comment)"></i></a>
+                                                </div>
+                                                <div class="commenterImage">
+                                                    <img src="http://lorempixel.com/50/50/people/6" />
+                                                </div>
+                                                <div class="commentText">
+                                                    <p><strong><a href="#/public/profile/{{comment.username}}"><span class="tags">{{comment.username}}</span></a></strong></p>
+                                                    <p class="">{{comment.content}}</p> <span class="date sub-text">on March 5th, 2014</span>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                        <form class="form-inline" role="form">
+                                            <div class="input-group col-xs-6 col-sm-4 col-lg-8">
+                                                <input class="form-control" type="text" placeholder="Add a comment..." ng-model="model.comment.content"/>
+                                            </div>
+                                            <div class="input-group">
+                                                <button class="btn btn-success visible-lg visible-md" ng-click="model.addComment(post,model.comment)">Comment</button>
+                                                <button class="btn btn-success visible-xs" ng-click="model.addComment(post,model.comment)"><i class="fa fa-comment" aria-hidden="true"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
 
                             </div>
                         </div>

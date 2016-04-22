@@ -4,9 +4,11 @@
 
     app.controller("FeedController",FeedController);
 
-    function FeedController(UserService,FeedService) {
+    function FeedController(UserService, FeedService, PostService) {
         var vm = this;
         vm.currentUser = null;
+        vm.addComment = addComment;
+        vm.deleteComment = deleteComment;
 
         function init(){
 
@@ -24,10 +26,9 @@
                     },function(err){
                         console.log("Error retrieving feed for user",JSON.stringify(err));
                     });
-
-                    if(vm.feedPosts.length == 0 && vm.feedShorts.length == 0){
-                        vm.nofeed = true;
-                    }
+                    //if(vm.feedPosts.length == 0 && vm.feedShorts.length == 0){
+                    //    vm.nofeed = true;
+                    //}
                 },
                 function(err){
                     console.log("Error retrieving feed", JSON.stringify(err));
@@ -37,6 +38,51 @@
         }
 
         init();
+
+        function addComment(post,comment){
+            console.log("in add comment");
+            var newComment = {
+                content: comment.content,
+                userId:vm.currentUser._id,
+                username:vm.currentUser.username
+            };
+            PostService.addComment(post._id,newComment).then(function(response){
+                vm.comment ={};
+               return response;
+            },function(err){
+                console.log("Error adding a comment",JSON.stringify(err));
+
+            }).then(function(response){
+                FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
+                    console.log("response of get following posts",JSON.stringify(response.data));
+                    vm.feedPosts = response.data;
+                },function(err){
+                    console.log("Error retrieving feed for user",JSON.stringify(err));
+                });
+            },function(err){
+                console.log("Could not get feed after adding a comment",JSON.stringify(err));
+            });
+        }
+
+        function deleteComment(post,comment){
+
+            PostService.deleteComment(post._id,comment._id).then(function(response){
+                return response;
+            },function(err){
+                console.log("Error adding a comment",JSON.stringify(err));
+
+            }).then(function(response){
+                FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
+                    console.log("response of get following posts",JSON.stringify(response.data));
+                    vm.feedPosts = response.data;
+                },function(err){
+                    console.log("Error retrieving feed for user",JSON.stringify(err));
+                });
+            },function(err){
+                console.log("Could not get feed after adding a comment",JSON.stringify(err));
+            });
+
+        }
 
     }
 

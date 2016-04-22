@@ -6,22 +6,16 @@
 
         function PostService($http){
 
-            //var posts=[
-            //    {"id":121,userId:123,"title":"Lorem ipsum123", "description":"Tote bag twee butcher"},
-            //    {"id":111,userId:234,"title":"Lorem ipsum234", "description":"Tote bag twee butcher"},
-            //    {"id":1121,userId:234,"title":"Lorem ipsum234", "description":"Tote bag twee butcher"},
-            //    {"id":13344,userId:345,"title":"Lorem ipsum345", "description":"Tote bag twee butcher"},
-            //    {"id":5656,userId:567,"title":"Lorem ipsum567", "description":"Tote bag twee butcher"},
-            //    {"id":55656,userId:456,"title":"Lorem ipsum456", "description":"Tote bag twee butcher"}
-            //];
-            //
-            //
             var service={
                 findPostById:findPostById,
                 findAllPostsByUser:findAllPostsByUser,
                 createPostForUser:createPostForUser,
                 deletePostById:deletePostById,
-                updatePostById:updatePostById
+                updatePostById:updatePostById,
+                addComment:addComment,
+                deleteComment:deleteComment,
+                findCommentsByUser:findCommentsByUser,
+                findCommentsByUsername:findCommentsByUsername
             };
 
             return service;
@@ -50,6 +44,21 @@
                return $http.get("/api/project/post/"+postId);
             }
 
+            function addComment(postId,comment){
+                console.log("In add comment post service client",postId,comment);
+                return $http.post("/api/project/post/"+postId+"/comment",comment);
+            }
+            function deleteComment(postId,commentId){
+                return $http.delete("/api/project/post/"+postId+"/comment/"+commentId);
+            }
+
+            function findCommentsByUser(userId){
+                return $http.get("/api/project/user/:userId/comments");
+            }
+
+            function findCommentsByUsername(username){
+                return $http.get("/api/project/user/:username/comments");
+            }
 
 
 

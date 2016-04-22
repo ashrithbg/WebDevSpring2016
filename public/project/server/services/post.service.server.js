@@ -5,6 +5,11 @@ module.exports=function(app, userModel, postModel){
     app.post("/api/project/user/:userId/post",addPost);
     app.delete("/api/project/post/:postId",deletePost);
     app.put("/api/project/post/:postId",updatePost);
+    app.post("/api/project/post/:postId/comment",createComment);
+    app.delete("/api/project/post/:postId/comment/:commentId",deleteComment);
+    app.get("/api/project/user/:username/comments",getCommentsByUsername);
+    app.get("/api/project/user/:userId/comments",getCommentsByUser);
+
 
     function getPosts(req, res){
         var user = req.params.userId;
@@ -67,5 +72,39 @@ module.exports=function(app, userModel, postModel){
 
     }
 
+
+
+
+    function deleteComment(req,res){
+        postModel.deleteCommentById(req.params.postId,req.params.commentId).then(function(comments){
+            res.json(comments);
+        },function(err){
+            res.status(400).send(err);
+        });
+    }
+
+    function createComment(req,res){
+        console.log("In create comment post.service.server.js");
+        postModel.createComment(req.params.postId,req.body).then(function(comments){
+            res.json(comments);
+        },function(err){
+            res.status(400).send(err);
+        });
+    }
+    function getCommentsByUsername(req,res){
+        postModel.findCommentsByUsername(req.params.username).then(function(comments){
+            res.json(comments);
+        }, function(err){
+            res.status(400).send(err);
+        });
+    }
+
+    function getCommentsByUser(req,res){
+        postModel.findCommentsByUser(req.params.userId).then(function(comments){
+            res.json(comments);
+        }, function(err){
+            res.status(400).send(err);
+        });
+    }
 
 };
