@@ -26,6 +26,8 @@ module.exports=function(db, mongoose){
         removeFromFollowers:removeFromFollowers,
         findFollowersById:findFollowersById,
         findFollowingById:findFollowingById,
+        userFavoritedPost:userFavoritedPost,
+        userUnFavoritedPost:userUnFavoritedPost
     };
     return api;
 
@@ -411,6 +413,54 @@ module.exports=function(db, mongoose){
         });
         return deferred.promise;
 
+    }
+
+    function userFavoritedPost(postId,username){
+        var deferred = q.defer();
+        UserModel.findOne({"username":username},function(err, doc){
+            if(err)
+                deferred.resolve(err);
+            else{
+                if(doc){
+                    doc.postLikes.push(postId);
+                    doc.save(function(err,docs){
+                        if(err){
+                            deferred.reject(err);
+                        }
+                        else{
+                            deferred.resolve(docs.postLikes);
+                        }
+
+                    });
+
+                }
+            }
+        });
+        return deferred.promise;
+    }
+
+    function userUnFavoritedPost(postId,username){
+        var deferred = q.defer();
+        UserModel.findOne({"username":username},function(err, doc){
+            if(err)
+                deferred.resolve(err);
+            else{
+                if(doc){
+                    doc.postLikes.splice(doc.postLikes.indexOf(postId),1);
+                    doc.save(function(err,docs){
+                        if(err){
+                            deferred.reject(err);
+                        }
+                        else{
+                            deferred.resolve(docs.postLikes);
+                        }
+
+                    });
+
+                }
+            }
+        });
+        return deferred.promise;
     }
 
 

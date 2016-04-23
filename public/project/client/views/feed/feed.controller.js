@@ -9,6 +9,8 @@
         vm.currentUser = null;
         vm.addComment = addComment;
         vm.deleteComment = deleteComment;
+        vm.favorite = favorite;
+        vm.unfavorite = unfavorite;
 
         function init(){
 
@@ -80,6 +82,37 @@
                 });
             },function(err){
                 console.log("Could not get feed after adding a comment",JSON.stringify(err));
+            });
+
+        }
+
+        function favorite(post){
+            PostService.userFavoritesPost(post._id,vm.currentUser.username).then(function(response){
+                return response.data;
+            },function(err){
+                console.log("Could not like the post",JSON.stringify(err));
+            }).then(function(response){
+                FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
+                    console.log("response of get following posts",JSON.stringify(response.data));
+                    vm.feedPosts = response.data;
+                },function(err){
+                    console.log("Error retrieving feed for user",JSON.stringify(err));
+                });
+            },function(err){
+                console.log("Could not get feed after favoriting a post",JSON.stringify(err));
+            });
+
+        }
+        function unfavorite(post){
+            PostService.userUnfavoritesPost(post._id,vm.currentUser.username).then(function(response){
+                FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
+                    console.log("response of get following posts",JSON.stringify(response.data));
+                    vm.feedPosts = response.data;
+                },function(err){
+                    console.log("Error retrieving feed for user",JSON.stringify(err));
+                });
+            },function(err){
+                console.log("Could not like the post",JSON.stringify(err));
             });
 
         }

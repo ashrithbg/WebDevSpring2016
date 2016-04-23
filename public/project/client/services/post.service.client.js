@@ -15,7 +15,9 @@
                 addComment:addComment,
                 deleteComment:deleteComment,
                 findCommentsByUser:findCommentsByUser,
-                findCommentsByUsername:findCommentsByUsername
+                findCommentsByUsername:findCommentsByUsername,
+                userFavoritesPost:userFavoritesPost,
+                userUnfavoritesPost:userUnfavoritesPost
             };
 
             return service;
@@ -60,7 +62,12 @@
                 return $http.get("/api/project/user/:username/comments");
             }
 
-
+            function userFavoritesPost(postId,username){
+                return $http.post("/api/project/user/"+username+"/post/"+postId+"/favorite");
+            }
+            function userUnfavoritesPost(postId,username){
+                return $http.post("/api/project/user/"+username+"/post/"+postId+"/unfavorite");
+            }
 
         }
 })();

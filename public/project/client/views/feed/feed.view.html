@@ -47,6 +47,10 @@
                                     <div class="panel-body" >
                                         <p class="visible-lg">{{post.description}}</p>
                                         <a href="#/profile/public/{{post.createdByUser}}"><p class="visible-lg"><strong>{{post.createdByUser}}</strong> </p></a>
+                                        <div class="pull-right">
+                                            <a href="" class="favorited" ng-show="post.likes.indexOf(currentUser.username) == -1"><i class="fa fa-2x fa-heart-o" style="color:red" ng-click="model.favorite(post)"></i></a>
+                                            <a href="" class="unfavorited" ng-show="post.likes.indexOf(currentUser.username) > -1"><i class="fa fa-2x fa-heart" style="color:red" ng-click="model.unfavorite(post)"></i></a>
+                                        </div>
                                     </div>
 
                                     <div class="actionBox" >
@@ -67,10 +71,10 @@
                                         </ul>
                                         <form class="form-inline" role="form">
                                             <div class="input-group col-xs-6 col-sm-4 col-lg-8">
-                                                <input class="form-control" type="text" placeholder="Add a comment..." ng-model="model.comment.content"/>
+                                                <input class="form-control" type="text" placeholder="Add a comment..." ng-model="model.comment[$index].content"/>
                                             </div>
                                             <div class="input-group">
-                                                <button class="btn btn-success visible-lg visible-md" ng-click="model.addComment(post,model.comment)">Comment</button>
+                                                <button class="btn btn-success visible-lg visible-md" ng-click="model.addComment(post,model.comment[$index])">Comment</button>
                                                 <button class="btn btn-success visible-xs" ng-click="model.addComment(post,model.comment)"><i class="fa fa-comment" aria-hidden="true"></i></button>
                                             </div>
                                         </form>

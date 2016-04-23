@@ -9,6 +9,8 @@ module.exports=function(app, userModel, postModel){
     app.delete("/api/project/post/:postId/comment/:commentId",deleteComment);
     app.get("/api/project/user/:username/comments",getCommentsByUsername);
     app.get("/api/project/user/:userId/comments",getCommentsByUser);
+    app.post("/api/project/user/:username/post/:postId/favorite",userFavoritedPost);
+    app.post("/api/project/user/:username/post/:postId/unfavorite",userUnFavoritedPost);
 
 
     function getPosts(req, res){
@@ -103,6 +105,33 @@ module.exports=function(app, userModel, postModel){
         postModel.findCommentsByUser(req.params.userId).then(function(comments){
             res.json(comments);
         }, function(err){
+            res.status(400).send(err);
+        });
+    }
+
+    function userFavoritedPost(req,res){
+        postModel.userFavoritedPostById(req.params.postId, req.params.username)
+            .then(function(response){
+                return userModel.userFavoritedPost(req.params.postId,req.params.username)
+            },function(err){
+                res.status(400).send(err);
+            }).then(function(likedPosts){
+                res.json(likedPosts);
+            },function(err){
+                res.status(400).send(err);
+        });
+    }
+
+    function userUnFavoritedPost(req,res){
+
+        postModel.userUnFavoritedPostById(req.params.postId,req.params.username)
+            .then(function(response){
+                return userModel.userUnFavoritedPost(req.params.postId,req.params.username)
+            },function(err){
+                res.status(400).send(err);
+            }).then(function(likedPosts){
+            res.json(likedPosts);
+        },function(err){
             res.status(400).send(err);
         });
     }

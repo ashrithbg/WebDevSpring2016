@@ -3,8 +3,6 @@ var q = require("q");
 module.exports=function(db,mongoose){
 
     var PostSchema = require("./post.schema.server.js")(mongoose);
-
-    // create user model from schema
     var PostModel = mongoose.model('Post', PostSchema);
 
     var api={
@@ -18,7 +16,9 @@ module.exports=function(db,mongoose){
         createComment:createComment,
         deleteCommentById:deleteCommentById,
         findCommentsByUser:findCommentsByUser,
-        findCommentsByUsername:findCommentsByUsername
+        findCommentsByUsername:findCommentsByUsername,
+        userFavoritedPostById:userFavoritedPostById,
+        userUnFavoritedPostById:userUnFavoritedPostById
     };
 
     return api;
@@ -230,6 +230,7 @@ module.exports=function(db,mongoose){
                 }
 
             });
+        return deferred.promise;
     }
 
     function findCommentsByUsername(username) {
@@ -246,6 +247,60 @@ module.exports=function(db,mongoose){
                 }
 
             });
+        return deferred.promise;
+    }
+
+    function userFavoritedPostById(postId,username){
+        var deferred = q.defer();
+
+        PostModel.findById(postId, function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    if(doc) {
+                        doc.likes.push(username);
+                        doc.save(function (err, doc) {
+                            if (err) {
+                                deferred.reject(err);
+                            } else {
+                                deferred.resolve(doc);
+                            }
+                        });
+                    }
+
+                }
+
+            });
+        return deferred.promise;
+    }
+
+    function userUnFavoritedPostById(postId, username){
+
+        var deferred = q.defer();
+
+        PostModel.findById(postId, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            }
+            else {
+                if(doc) {
+                    doc.likes.splice(doc.likes.indexOf(username),1);
+                    doc.save(function (err, doc) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc);
+                        }
+                    });
+                }
+
+            }
+
+        });
+        return deferred.promise;
+
+
     }
 
 };

@@ -65,28 +65,28 @@ p {
 label{
     text-align: left;
 }
-.glyphicon
-{
+/*.glyphicon*/
+/*{*/
 
-    font-size: 20px;
-    color:#229ee5;
-}
-.caret{
-    font-size:30px;
-    color:#229ee5;
-}
-.glyphicon-plus{
-    color:#229ee5;
-}
-.glyphicon-remove{
-    color:red;
-}
-.glyphicon-ok{
-    color:green;
-}
-.glyphicon-pencil{
-    color:#888888;
-}
+    /*font-size: 20px;*/
+    /*color:#229ee5;*/
+/*}*/
+/*.caret{*/
+    /*font-size:30px;*/
+    /*color:#229ee5;*/
+/*}*/
+/*.glyphicon-plus{*/
+    /*color:#229ee5;*/
+/*}*/
+/*.glyphicon-remove{*/
+    /*color:red;*/
+/*}*/
+/*.glyphicon-ok{*/
+    /*color:green;*/
+/*}*/
+/*.glyphicon-pencil{*/
+    /*color:#888888;*/
+/*}*/
 .push{
     top:30px;
 }
@@ -204,3 +204,5 @@ label{
     content: '\25bc';
 }
 
+.favorited>i { color:darkred; }
+.unfavorited>i {color:darkred; }
