@@ -4,6 +4,10 @@ var LocalStrategy = require('passport-local').Strategy;
 
 module.exports=function(app,userModel){
     var auth = authorized;
+    passport.use('local',new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
     app.post('/api/assignment/user/register',register);
     app.get('/api/assignment/user',getUserByUsername);
     app.get("/api/assignment/user/loggedin", loggedin);
@@ -15,9 +19,7 @@ module.exports=function(app,userModel){
     app.delete('/api/assignment/user/:id', auth, deleteUser);
     app.post  ('/api/assignment/user', auth, createUser);
 
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
+
 
 
     function createUser(req,res){
