@@ -14,7 +14,8 @@ module.exports=function(mongoose){
         shortLikes: [String],
         postLikes:[String],
         postComments:[String],
-        reviews: [String]
+        reviews: [String],
+        type:String
     },{collection: 'project.shortkut.user'});
 
     return UserSchema;

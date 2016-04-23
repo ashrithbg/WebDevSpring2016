@@ -10,7 +10,7 @@ var passport = require('passport');
 
 
 //var connectionString = 'mongodb://127.0.0.1:27017/formMakerDb';
-var connectionString = 'mongodb://127.0.0.1:27017/ShortKutDb';
+var connectionString = 'mongodb://127.0.0.1:27017/WebDev2016';
 
 // use remote connection string
 // if running in remote server
@@ -46,8 +46,8 @@ app.get('/hello', function(req, res){
 });
 
 
-require("./public/project/server/app.js")(app,db, mongoose) ;
-require("./public/assignment/server/app.js")(app, db, mongoose);
 //require("./public/project/server/app.js")(app,db, mongoose) ;
+//require("./public/assignment/server/app.js")(app, db, mongoose);
+require("./public/app.js")(app,db, mongoose) ;
 
 app.listen(port, ipaddress);

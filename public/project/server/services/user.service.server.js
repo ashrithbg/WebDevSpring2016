@@ -1,16 +1,25 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-module.exports=function(app,userModel,postModel, shortModel){
+module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel){
     var auth = authorized;
 
-    app.post('/api/project/user/register',register);
+    app.post('/api/project/user/register',projectRegister);
+    app.post("/api/project/user/login", passport.authenticate('project'),projectLogin);
+    app.get("/api/project/user/loggedin", projectLoggedin);
+    app.post("/api/project/user/logout", projectLogout);
+
+
+    app.post('/api/assignment/user/register',register);
+    app.get("/api/assignment/user/loggedin", loggedin);
+    app.post("/api/assignment/user/logout", logout);
+    app.post("/api/assignment/user/login", passport.authenticate('assignment'),assignmentLogin);
+
+
     app.get('/api/project/user',getUserByUsername);
-    app.get("/api/project/user/loggedin", loggedin);
-    app.post("/api/project/user/logout", logout);
     app.get('/api/project/users', auth, getAllUsers);
     app.get('/api/project/user/:id',getUserById);
-    app.post("/api/project/user/login", passport.authenticate('project'),login);
+
     app.put('/api/project/user/:id', auth, updateUser);
     app.delete('/api/project/user/:id', auth, deleteUser);
     app.get("/api/project/user/:id/followers",findFollowers);
@@ -22,6 +31,7 @@ module.exports=function(app,userModel,postModel, shortModel){
     app.get("/api/project/user/:id/feed/posts",getFollowingPosts);
 
     passport.use('project', new LocalStrategy(projectLocalStrategy));
+    passport.use('assignment',new LocalStrategy(assignmentLocalStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
@@ -150,51 +160,101 @@ module.exports=function(app,userModel,postModel, shortModel){
             );
     }
 
+    function assignmentLocalStrategy(username, password,done) {
+
+        //userModel.findUserByCredentials(credentials)
+        //    .then(
+        //        function (doc) {
+        //            console.log("document",doc);
+        //            req.session.currentUser = doc;
+        //            console.log("login"+JSON.stringify(req.session.currentUser));
+        //            console.log("In login function",req.session.currentUser);
+        //            res.json(doc);
+        //        },
+        //        // send error if promise rejected
+        //        function ( err ) {
+        //            res.status(400).send(err);
+        //        }
+        //    );
+
+        assignmentUserModel
+            .findUserByCredentials({'username':username,'password':password})
+            .then(
+                function(user) {
+                    if (!user) { return done(null, false); }
+                    return done(null, user);
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            );
+    }
+
+
     function serializeUser(user, done) {
         done(null, user);
     }
 
     function deserializeUser(user, done) {
-        userModel
-            .findUserById(user._id)
-            .then(
-                function(user){
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
+        if(user.type == "project") {
+            console.log("in project");
+            userModel
+                .findUserById(user._id)
+                .then(
+                    function (user) {
+                        done(null, user);
+                    },
+                    function (err) {
+                        done(err, null);
+                    }
+                );
+        }
+        else if(user.type == "assignment"){
+            console.log("assignment");
+            assignmentUserModel
+                .findUserById(user._id)
+                .then(
+                    function(user){
+                        done(null, user);
+                    },
+                    function(err){
+                        done(err, null);
+                    }
+                );
+        }
     }
 
-    function login(req, res){
+    function projectLogin(req, res){
         var user = req.user;
         res.json(user);
     }
 
-    function logout(req, res) {
+    function projectLogout(req, res) {
 
         req.logOut();
         res.send(200);
     }
-    function loggedin(req, res) {
+    function projectLoggedin(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
-    function register(req, res) {
+    function projectRegister(req, res) {
         var newUser = req.body;
 
         userModel
             .findUserByUsername(newUser.username)
             .then(
                 function(user){
+                    console.log("IN THEN ",JSON.stringify(user));
                     if(user) {
                         res.json(null);
                     } else {
+                        console.log("here");
                         return userModel.createUser(newUser);
                     }
                 },
                 function(err){
+                    console.log("Error",JSON.stringify(err));
                     res.status(400).send(err);
                 }
             )
@@ -216,6 +276,67 @@ module.exports=function(app,userModel,postModel, shortModel){
             );
     }
 
+    function assignmentLogin(req, res){
+        var user = req.user;
+        res.json(user);
+    }
+
+    function logout(req, res) {
+        //req.session.destroy();
+        req.logOut();
+        res.send(200);
+    }
+    function loggedin(req, res) {
+        //console.log("In logged in"+req.session.currentUser);
+        //
+        //res.json(req.session.currentUser);
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+
+
+
+    function register(req, res) {
+        var newUser = req.body;
+        newUser.roles = ['student'];
+
+        assignmentUserModel
+            .findUserByUsername(newUser.username)
+            .then(
+                function(user){
+                    console.log("User",JSON.stringify(user));
+                    if(user!=null) {
+                        console.log("User",JSON.stringify(user));
+                        res.json(null);
+                    } else {
+                        console.log("Error before",JSON.stringify(err));
+                        return assignmentUserModel.createUser(newUser);
+                    }
+                },
+                function(err){
+                    console.log("Error",JSON.stringify(err));
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(user){
+                    if(user){
+                        req.login(user, function(err) {
+                            if(err) {
+                                console.log("Error",JSON.stringify(err));
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                },
+                function(err){
+                    console.log("Errorgjhh",JSON.stringify(err));
+                    res.status(400).send(err);
+                }
+            );
+    }
 
     function authorized (req, res, next) {
         if (!req.isAuthenticated()) {
@@ -352,5 +473,8 @@ module.exports=function(app,userModel,postModel, shortModel){
             res.status(400).send(err);
         });
     }
+
+
+
 
 };

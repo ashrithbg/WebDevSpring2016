@@ -149,6 +149,9 @@ module.exports=function(db, mongoose){
 
         var deferred = q.defer();
         console.log(JSON.stringify(user));
+
+
+        user.type = 'project';
         // insert new user with mongoose user model's create()
         UserModel.create(user, function (err, doc) {
 

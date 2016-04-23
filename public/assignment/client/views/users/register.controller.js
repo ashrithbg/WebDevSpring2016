@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("RegisterController", registerController);
 
-    function registerController($location, $scope, UserService) {
+    function registerController($location, $scope, $rootScope,UserService) {
         $scope.error = null;
         $scope.emails = [];
         $scope.register = register;
@@ -30,25 +30,46 @@
             }
             $scope.emails.push(user.emails);
 
-            UserService.findUserByUsername(user.username).then(
-                function(found_user){
-                    if (found_user.data != null) {
-                        $scope.error = "User already exists";
-                        return;
-                    }
-                    else{
-                        console.log("emails"+user.emails);
-                        UserService.createUser(user).then(function(newUser){
-                            console.log("created user");
-                            UserService.setCurrentUser(newUser);
+            //UserService.findUserByUsername(user.username).then(
+            //    function(found_user){
+            //        if (found_user.data != null) {
+            //            $scope.error = "User already exists";
+            //            return;
+            //        }
+            //        else{
+            //            console.log("emails"+user.emails);
+            //            UserService.register(user).then(function(newUser){
+            //                console.log("created user");
+            //                UserService.setCurrentUser(newUser);
+            //                $location.url("/profile");
+            //            },function(err){
+            //                console.log("Error creating user",JSON.stringify(err));
+            //            });
+            //        }
+            //    }, function(err){
+            //        console.log("Error authenticatiing user");
+            //});
+
+
+
+            UserService.register(user)
+
+                .then(function(response) {
+
+                        var user = response;
+
+                        if(user != null) {
+                            $rootScope.currentuser = user;
                             $location.url("/profile");
-                        },function(err){
-                            console.log("Error creating user");
-                        });
+
+                        }else{
+                            $scope.message = "Username already exists!";
+                        }
+                    },
+                    function(err) {
+                        $scope.message = err;
                     }
-                }, function(err){
-                    console.log("Error authenticatiing user");
-            });
+                );
 
             //UserService.register(user).then()function(newUser)
 

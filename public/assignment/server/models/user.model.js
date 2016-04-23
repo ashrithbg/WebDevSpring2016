@@ -30,7 +30,7 @@ module.exports=function(db,mongoose){
     }
     function findUserByCredentials(credentials) {
 
-        console.log("credentials"+JSON.stringify(credentials));
+        console.log("credentials assignment"+JSON.stringify(credentials));
         var deferred = q.defer();
         UserModel.findOne({'username':credentials.username,'password':credentials.password},function(err,user){
             if(err){
@@ -59,12 +59,13 @@ module.exports=function(db,mongoose){
         return deferred.promise;
     }
     function createUser (user) {
-
+        console.log("In create user user.model.js");
         var deferred = q.defer();
         console.log("In user model createUser "+JSON.stringify(user));
         if(user.emails)
             user.emails=user.emails.split(",");
         // insert new user with mongoose user model's create()
+        user.type = 'assignment';
         UserModel.create(user, function (err, doc) {
 
             if (err) {
@@ -138,10 +139,13 @@ module.exports=function(db,mongoose){
                 deferred.reject(err);
             }
             else{
+                console.log("in find user by username",JSON.stringify(found_user));
                 deferred.resolve(found_user);
             }
 
         });
+
+
         return deferred.promise;
     }
 
