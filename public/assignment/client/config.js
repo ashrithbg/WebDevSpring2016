@@ -9,7 +9,7 @@
                 templateUrl:"views/home/home.view.html",
                 controller: "HomeController",
                 resolve: {
-                    loggedin: checkCurrentUser
+                    checkLoggedIn: checkCurrentUser
                 }
             })
             .when("/admin",{
@@ -17,14 +17,14 @@
                 controller: "AdminController",
                 controllerAs:"model",
                 resolve: {
-                    loggedin: checkAdmin
+                    checkLoggedIn: checkAdmin
                 }
             })
             .when("/forms",{
                 templateUrl:"views/forms/forms.view.html",
                 controller: "FormController",
                 resolve: {
-                    loggedIn: checkLoggedin
+                    checkLoggedIn: checkLoggedin
                 }
 
             })
@@ -80,7 +80,6 @@
     var checkAdmin = function($q, $timeout, $http, $location, $rootScope)
     {
         var deferred = $q.defer();
-
         $http.get('/api/assignment/user/loggedin').success(function(user)
         {
             $rootScope.errorMessage = null;

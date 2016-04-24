@@ -22,6 +22,7 @@
                     .then(
                         function(response)
                         {
+                            console.log("in login",response.data)
                             $rootScope.currentUser = response.data;
                             $location.url("/profile");
                         },

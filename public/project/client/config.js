@@ -22,7 +22,7 @@
                     controller: "ShortDetailsController as model"
                 }).when("/details/posts/:id", {
                     templateUrl: "views/details/post.details.html",
-                    controller: "PostDetailsController as model",
+                    controller: "PostDetailsController as model"
 
                 }).when("/details/search/:id", {
                     templateUrl: "views/details/search.details.html",

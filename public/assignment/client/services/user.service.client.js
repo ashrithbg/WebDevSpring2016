@@ -17,25 +17,25 @@
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             login:login,
-            loggedIn:loggedIn,
             logout:logout,
-            register:register
+            register:register,
+            adminupdateUser:adminupdateUser
 
         };
         return service;
 
-        function loggedIn(){
-            if($rootScope.currentUser == null){
-                $location.url("/");
-            }
-        }
+        //function loggedIn(){
+        //    if($rootScope.currentUser == null){
+        //        $location.url("/");
+        //    }
+        //}
         function login(user) {
             console.log("user"+JSON.stringify(user));
             return $http.post("/api/assignment/user/login",user);
         }
 
         function findAllUsers(){
-            return $http.get('/api/assignment/users');
+            return $http.get('/api/assignment/admin/user');
         }
         //function findUserByCredentials(username, password) {
         //
@@ -44,7 +44,7 @@
         //}
 
         function deleteUserById(userId){
-            return $http.delete('/api/assignment/user/'+userId);
+            return $http.delete('/api/assignment/admin/user/'+userId);
 
         }
         function register (user) {
@@ -52,18 +52,21 @@
 
         }
         function createUser (user) {
-            return $http.post('/api/assignment/user',user);
+            return $http.post('/api/assignment/admin/user',user);
 
         }
 
         function updateUser (userId, user) {
             return $http.put('/api/assignment/user/'+userId,user);
         }
+        function adminupdateUser (userId, user) {
+            return $http.put('/api/assignment/admin/user/'+userId,user);
+        }
 
 
 
         function findUserById(id) {
-            return $http.get('/api/assignment/user/'+id);
+            return $http.get('/api/assignment/admin/user/'+id);
         }
         function findUserByUsername (username) {
             console.log("username = "+username);

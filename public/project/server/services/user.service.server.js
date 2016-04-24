@@ -4,16 +4,20 @@ var LocalStrategy = require('passport-local').Strategy;
 module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel){
     var auth = authorized;
 
+    //app.post('/api/assignment/user/register',register);
+    //app.post("/api/assignment/user/login", passport.authenticate('assignment'),assignmentLogin);
+    //app.get("/api/assignment/user/loggedin", assignmentloggedin);
+    //app.post("/api/assignment/user/logout", logout);
+
     app.post('/api/project/user/register',projectRegister);
     app.post("/api/project/user/login", passport.authenticate('project'),projectLogin);
     app.get("/api/project/user/loggedin", projectLoggedin);
     app.post("/api/project/user/logout", projectLogout);
 
-
-    app.post('/api/assignment/user/register',register);
-    app.get("/api/assignment/user/loggedin", loggedin);
-    app.post("/api/assignment/user/logout", logout);
-    app.post("/api/assignment/user/login", passport.authenticate('assignment'),assignmentLogin);
+    //passport.use('project', new LocalStrategy(projectLocalStrategy));
+    passport.use('assignment',new LocalStrategy(assignmentLocalStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
 
 
     app.get('/api/project/user',getUserByUsername);
@@ -30,10 +34,6 @@ module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel)
     app.get("/api/project/user/:id/feed/shorts",getFollowingShorts);
     app.get("/api/project/user/:id/feed/posts",getFollowingPosts);
 
-    passport.use('project', new LocalStrategy(projectLocalStrategy));
-    passport.use('assignment',new LocalStrategy(assignmentLocalStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
 
 
     function createUser(req,res){
@@ -218,6 +218,7 @@ module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel)
                         done(null, user);
                     },
                     function(err){
+
                         done(err, null);
                     }
                 );
@@ -286,8 +287,10 @@ module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel)
         req.logOut();
         res.send(200);
     }
-    function loggedin(req, res) {
-        //console.log("In logged in"+req.session.currentUser);
+    function assignmentloggedin(req, res) {
+
+        console.log("In logged in");
+        console.log("In logged in"+req.session.currentUser);
         //
         //res.json(req.session.currentUser);
         res.send(req.isAuthenticated() ? req.user : '0');
@@ -305,12 +308,13 @@ module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel)
             .then(
                 function(user){
                     console.log("User",JSON.stringify(user));
-                    if(user!=null) {
+                    if(user == null) {
                         console.log("User",JSON.stringify(user));
-                        res.json(null);
+                        return assignmentUserModel.createUser(newUser);
+
                     } else {
                         console.log("Error before",JSON.stringify(err));
-                        return assignmentUserModel.createUser(newUser);
+                        res.json(null);
                     }
                 },
                 function(err){
@@ -326,6 +330,7 @@ module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel)
                                 console.log("Error",JSON.stringify(err));
                                 res.status(400).send(err);
                             } else {
+                                console.log("user",JSON.stringify(user));
                                 res.json(user);
                             }
                         });

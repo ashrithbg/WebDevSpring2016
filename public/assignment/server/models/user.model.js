@@ -119,11 +119,13 @@ module.exports=function(db,mongoose){
     function findUserById(id) {
 
         var deferred = q.defer();
+
         UserModel.findById({"_id":id},function(err,found_user){
             if(err){
                 deferred.reject(err);
             }
             else{
+                console.log("Found user",JSON.stringify(found_user));
                 deferred.resolve(found_user);
             }
 

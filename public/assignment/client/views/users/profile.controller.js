@@ -14,7 +14,6 @@
                 console.log("Error getting current user"+JSON.stringify(err));
 
         });
-        //console.log("profile"+JSON.stringify(UserService.getCurrentUser()));
         $scope.update = update;
 
         function update(){

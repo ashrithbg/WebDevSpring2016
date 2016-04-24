@@ -10,21 +10,27 @@
         $scope.update = update;
         $scope.add    = add;
         $scope.select = select;
+        $scope.sortField = 'username';
+        $scope.order = "false";
 
 
-        var orderBy = $filter('orderBy');
-        $scope.order = function(predicate) {
-            $scope.predicate = predicate;
-            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
-            $scope.users = orderBy($scope.users, predicate, $scope.reverse);
-        };
-        $scope.order('username', true);
+        //var orderBy = $filter('orderBy');
+        //$scope.order = function(predicate) {
+        //    $scope.predicate = predicate;
+        //    $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        //    $scope.users = orderBy($scope.users, predicate, $scope.reverse);
+        //};
+       // $scope.order('username', true);
 
 
         function init() {
             UserService
                 .findAllUsers()
-                .then(handleSuccess, handleError);
+                .then(function(response){
+                    $scope.users = response.data;
+                }, function(err){
+                    console.log("Error fetching all users",console.log(err));
+                });
         }
         init();
 
@@ -38,7 +44,7 @@
         function update(user)
         {
             UserService
-                .updateUser(user._id, user)
+                .adminupdateUser(user._id, user)
                 .then(handleSuccess, handleError);
         }
 

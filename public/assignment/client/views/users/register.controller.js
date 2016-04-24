@@ -60,7 +60,8 @@
 
                         if(user != null) {
                             $rootScope.currentuser = user;
-                            $location.url("/profile");
+                            console.log("User in register controller",JSON.stringify(user))
+;                            $location.url("/profile");
 
                         }else{
                             $scope.message = "Username already exists!";

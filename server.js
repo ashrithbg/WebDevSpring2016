@@ -32,8 +32,14 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.session({ secret: "This is ashrith's secret",resave:true, saveUninitialized: true}));
+//app.use(express.cookieSession({ secret: process.env.SESSION_SECRET,resave:true, saveUninitialized: true}));
+//app.use(express.cookieParser());
+
+
+app.use(express.session({ secret:process.env.PASSPORT_SECRET,resave:true, saveUninitialized: true}));
 app.use(express.cookieParser());
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -47,7 +53,7 @@ app.get('/hello', function(req, res){
 
 
 //require("./public/project/server/app.js")(app,db, mongoose) ;
-//require("./public/assignment/server/app.js")(app, db, mongoose);
-require("./public/app.js")(app,db, mongoose) ;
+require("./public/assignment/server/app.js")(app, db, mongoose);
+//require("./public/app.js")(app,db, mongoose) ;
 
 app.listen(port, ipaddress);
