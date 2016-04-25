@@ -1,5 +1,4 @@
 module.exports=function(mongoose){
-    var CommentSchema = require("./comment.schema.server.js")(mongoose);
     var ReviewSchema = require("./review.schema.server.js")(mongoose);
     var ShortSchema = mongoose.Schema({
         "title":String,
@@ -10,7 +9,7 @@ module.exports=function(mongoose){
         "userId":String,
         "likes":[String],
         "createdByUser":String,
-        "reviews":[String],
+        "reviews":[ReviewSchema],
         "created":{type:Date, default:Date.now},
         "updated":{type:Date, default:Date.now}
     },{collection: 'project.shortkut.short'});

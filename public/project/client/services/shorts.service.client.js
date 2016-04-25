@@ -69,11 +69,11 @@
         function findShortReviews(shortId){
             return $http.get("/api/project/short/"+shortId+"/reviews");
         }
-        function addReview(userId,username,short,review){
+        function addReview(userId,short,review){
             console.log("In add review client service user Id is "+userId);
             console.log("In add review client service review "+ JSON.stringify(review));
             console.log("In add review client service short "+ JSON.stringify(short));
-            return $http.post("/api/project/user/"+userId+"/short/review",{"review":review,"short":short,"username":username});
+            return $http.post("/api/project/user/"+userId+"/short/review",{"review":review,"short":short});
         }
         function updateReview(shortId, reviewId, review){
             console.log("short id is ",shortId);

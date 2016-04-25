@@ -14,8 +14,8 @@ module.exports=function(app,userModel,postModel, shortModel,assignmentUserModel)
     app.get("/api/project/user/loggedin", projectLoggedin);
     app.post("/api/project/user/logout", projectLogout);
 
-    //passport.use('project', new LocalStrategy(projectLocalStrategy));
-    passport.use('assignment',new LocalStrategy(assignmentLocalStrategy));
+    passport.use('project', new LocalStrategy(projectLocalStrategy));
+   // passport.use('assignment',new LocalStrategy(assignmentLocalStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 

@@ -12,6 +12,7 @@ module.exports=function(app, userModel, shortModel, reviewModel){
     app.delete("/api/project/short/:shortId/review/:reviewId",userDeletesReview);
     app.put("/api/project/short/:shortId/review/:reviewId",userUpdatesReview);
     app.get("/api/project/user/:userId/reviews",getReviewsByUser);
+    app.get("/api/project/user/:username/reviews",getReviewsByUsername);
     app.get("/api/project/short/:shortId/reviews",getReviewsByShort);
     app.get("/api/project/review/:reviewId",findReview);
     app.post("/api/project/shorts/reviews",getShortsByIds);
@@ -172,30 +173,32 @@ module.exports=function(app, userModel, shortModel, reviewModel){
     }
     function userReviewsShort(req,res){
 
-        var userId = req.params.userId;
         var short_review = req.body;
         var review = short_review.review;
         var short = short_review.short;
-        var username = short_review.username;
 
+        //reviewModel.createReviewForUser(userId, username, short,review)
+        //    .then(function(review){
+        //        return shortModel.addShortReview(short,review);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    })
+        //    .then(function(reviews){
+        //         return reviewModel.findReviewsByIds(reviews)
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    })
+        //    .then(function(reviews){
+        //        res.json(reviews);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    });
 
-        reviewModel.createReviewForUser(userId, username, short,review)
-            .then(function(review){
-                return shortModel.addShortReview(short,review);
-            },function(err){
-                res.status(400).send(err);
-            })
-            .then(function(reviews){
-                 return reviewModel.findReviewsByIds(reviews)
-            },function(err){
-                res.status(400).send(err);
-            })
-            .then(function(reviews){
-                res.json(reviews);
-            },function(err){
-                res.status(400).send(err);
-            });
-
+        shortModel.createReview(short,review).then(function(reviews){
+            res.json(reviews);
+        },function(err){
+            res.status(400).send(err);
+        });
 
 
     }
@@ -204,21 +207,25 @@ module.exports=function(app, userModel, shortModel, reviewModel){
 
         var reviewId = req.params.reviewId;
         var shortId = req.params.shortId;
-        reviewModel.deleteReviewById(reviewId).then(
-            function(reviews){
-                return shortModel.deleteShortReview(shortId,reviewId);
-            },function(err){
-                res.status(400).send(err);
-            }).then(function(reviews){
-                return reviewModel.findReviewsByIds(reviews)
-            },function(err){
-                res.status(400).send(err);
-            }).then(function(reviews){
-                res.json(reviews);
-            },function(err){
-                res.status(400).send(err);
+        //reviewModel.deleteReviewById(reviewId).then(
+        //    function(reviews){
+        //        return shortModel.deleteShortReview(shortId,reviewId);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    }).then(function(reviews){
+        //        return reviewModel.findReviewsByIds(reviews)
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    }).then(function(reviews){
+        //        res.json(reviews);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //});
+        shortModel.deleteReviewById(shortId,reviewId).then(function(reviews){
+            res.json(reviews);
+        },function(err){
+            res.status(400).send(err);
         });
-
 
     }
 
@@ -228,16 +235,22 @@ module.exports=function(app, userModel, shortModel, reviewModel){
         var reviewId = req.params.reviewId;
         var shortId = req.params.shortId;
 
-        reviewModel.updateReviewById(reviewId, review).then(function(reviews){
-                return shortModel.findReviewsForShort(shortId);
-            },function(err){
-                res.status(400).send(err);
-            }
-        ).then(function(reviews){
-            return reviewModel.findReviewsByIds(reviews)
-        },function(err){
-            res.status(400).send(err);
-        }).then(function(reviews){
+        //reviewModel.updateReviewById(reviewId, review).then(function(reviews){
+        //        return shortModel.findReviewsForShort(shortId);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    }
+        //).then(function(reviews){
+        //    return reviewModel.findReviewsByIds(reviews)
+        //},function(err){
+        //    res.status(400).send(err);
+        //}).then(function(reviews){
+        //    res.json(reviews);
+        //},function(err){
+        //    res.status(400).send(err);
+        //});
+
+        shortModel.updateReviewById(shortId,reviewId,review).then(function(reviews){
             res.json(reviews);
         },function(err){
             res.status(400).send(err);
@@ -245,41 +258,60 @@ module.exports=function(app, userModel, shortModel, reviewModel){
 
 
 
+
     }
 
     function getReviewsByUser(req,res){
-        var user = req.params.userId;
-        reviewModel.findAllReviewsByUser(user).then(
-            function(reviews){
-                return reviewModel.findReviewsByIds(reviews);
-            },function(err){
-                res.status(400).send(err);
-            }).then(function(reviews){
-                res.json(reviews);
-            },function(err){
-                res.status(400).send(err);
+        //var user = req.params.userId;
+        //reviewModel.findAllReviewsByUser(user).then(
+        //    function(reviews){
+        //        return reviewModel.findReviewsByIds(reviews);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    }).then(function(reviews){
+        //        res.json(reviews);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //});
+        var userId = req.params.userId;
+        shortModel.findReviewsByUser(userId).then(function(reviews){
+            res.json(reviews);
+        },function(err){
+            res.status(400).send(err);
         });
+
+
+
 
     }
     function getReviewsByShort(req,res){
-        var short = req.params.shortId;
-        reviewModel.findAllReviewsForShort(short).then(
-            function(reviews){
-                res.json(reviews);
-            },function(err){
-                res.status(400).send(err);
-            });
+        //var short = req.params.shortId;
+        //reviewModel.findAllReviewsForShort(short).then(
+        //    function(reviews){
+        //        res.json(reviews);
+        //    },function(err){
+        //        res.status(400).send(err);
+        //    });
+
+        var shortId = req.params.shortId;
+        shortModel.findReviewsForShort(shortId).then(function(reviews){
+            res.json(reviews);
+        },function(err){
+            res.status(400).send(err);
+        });
 
     }
 
     function findReview(req,res){
         var review = req.params.reviewId;
-        reviewModel.findReviewById(review).then(
-            function(review){
-                res.json(review);
-            },function(err){
-                res.status(400).send(err);
-            });
+
+        shortModel.findReviewById(reviewId).then(function(review){
+            res.json(review);
+        },
+        function(err){
+            res.status(400).send(err);
+        });
+
 
     }
 
@@ -293,6 +325,16 @@ module.exports=function(app, userModel, shortModel, reviewModel){
                 res.status(400).send(err);
             }
         )
+
+    }
+
+    function getReviewsByUsername(req, res){
+
+        shortModel.findReviewsByUsername(req.params.username).then(function(reviews){
+            res.json(reviews);
+        },function(err){
+            res.status(400).send(err);
+        });
 
     }
 

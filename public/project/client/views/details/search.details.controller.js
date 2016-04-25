@@ -19,7 +19,10 @@
         vm.updateReview = updateReview;
         vm.cancel = cancel;
 
+
         function init() {
+
+
             UserService.getCurrentUser().then(function(response){
                     var currentUser = response.data;
                      vm.likes =[];
@@ -49,7 +52,6 @@
                         function(response){
                             console.log("In find short reviews, short id",id);
                             vm.userReviews = response.data;
-                            console.log("User reviews : ",JSON.stringify(response.data));
                             //for(var r in vm.userReviews){
                             //    if(currentUser._id == vm.userReviews[r].userId){
                             //        vm.review = vm.userReviews[r].userId;
@@ -63,8 +65,8 @@
                     console.log("Error getting the current user",JSON.stringify(err));
                 });
 
-
             fetchShort(id);
+
 
         }
         init();
@@ -76,10 +78,11 @@
             },function(err){
                 console.log("Error while retrieving search details from db"+err);
             }).then(function(response){
+                console.log("in function response",JSON.stringify(response));
                 if(!response)
                     YoutubeService.findShortById(id).then(renderDetails,renderError);
                 else
-                    vm.details = response.data;
+                    vm.details = response;
             },function(err){
                 console.log("Error while retrieving search details from youtube"+err);
             });
@@ -125,7 +128,9 @@
             if(currentUser) {
                 console.log("In search controller",JSON.stringify(short));
                 console.log("In search controller",JSON.stringify(review));
-                ShortService.addReview(currentUser._id,currentUser.username,short,review).then(
+                review.username = currentUser.username;
+                review.userId = currentUser._id;
+                ShortService.addReview(currentUser._id,short,review).then(
                     function(response){
                         console.log("reviews",JSON.stringify(response.data));
                         vm.userReviews=response.data;
@@ -150,7 +155,7 @@
                 console.log("In search controller",JSON.stringify(short));
                 console.log("In search controller",JSON.stringify(review));
 
-                ShortService.updateReview(review.shortId,review._id,review).then(
+                ShortService.updateReview(id,review._id,review).then(
                     function(response){
                         console.log("reviews",JSON.stringify(response.data));
                         vm.userReviews=response.data;
@@ -169,7 +174,8 @@
         function deleteReview(review,short){
             if(currentUser) {
                 console.log("To be deleted review",JSON.stringify(review));
-                ShortService.deleteReview(review.shortId,review._id).then(
+
+                ShortService.deleteReview(id,review._id).then(
                     function(response){
                         console.log("reviews",JSON.stringify(response.data));
                         vm.userReviews=response.data;
@@ -190,8 +196,8 @@
                 _id: review._id,
                 content: review.content,
                 userId: review.userId,
-                shortId: review.shortId,
-                createdByUser: review.crea
+                username: review.username,
+                rating:review.rating
             };
             vm.review = selectedReview;
 

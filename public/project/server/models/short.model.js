@@ -15,15 +15,17 @@ module.exports=function(db, mongoose) {
         findShortById:findShortById,
         findUserLikes:findUserLikes,
         findReviewsForShort: findReviewsForShort,
-        findCommentsForShort: findCommentsForShort,
         userLikesShort:userLikesShort,
         userUnlikesShort:userUnlikesShort,
-        addShortReview:addShortReview,
+        createReview:createReview,
         findShortByYtID:findShortByYtID,
-        deleteShortReview:deleteShortReview,
+        deleteReviewById:deleteReviewById,
         findShortsByUsernames:findShortsByUsernames,
-        findShortByIds:findShortByIds
-        //updateShortReview:updateShortReview
+        findShortByIds:findShortByIds,
+        updateReviewById:updateReviewById,
+        findReviewsByUser:findReviewsByUser,
+        findReviewsByUsername:findReviewsByUsername,
+        findReviewById: findReviewById
 
         //updateReview:updateReview,
         //updateComment:updateComment
@@ -134,6 +136,7 @@ module.exports=function(db, mongoose) {
         return deferred.promise;
     }
     function findShortByYtID(shortId){
+
         var deferred = q.defer();
         ShortModel.findOne({ytID:shortId},
             function(err,doc){
@@ -141,6 +144,7 @@ module.exports=function(db, mongoose) {
                     deferred.reject(err);
                 }
                 else{
+                    console.log("in find short by ytID",JSON.stringify(doc));
                     deferred.resolve(doc);
                 }
 
@@ -166,23 +170,6 @@ module.exports=function(db, mongoose) {
 
     }
 
-    function findUserLikes(shortId){
-        var deferred = q.defer();
-        ShortModel.findById(shortId,function(err, doc){
-            if(err){
-                deferred.reject(err);
-            }
-            else{
-                if(doc)
-                    deferred.resolve(doc.likes);
-
-            }
-
-        });
-        return deferred.promise;
-
-
-    }
 
     function findReviewsForShort(shortId){
 
@@ -202,22 +189,7 @@ module.exports=function(db, mongoose) {
         return deferred.promise;
 
     }
-    function findCommentsForShort(shortId){
-        var deferred = q.defer();
-        ShortModel.findById(shortId,function(err, doc){
-            if(err){
-                deferred.reject(err);
-            }
-            else{
-                if(doc)
-                    deferred.resolve(doc.comments);
 
-            }
-
-        });
-        return deferred.promise;
-
-    }
 
     function userLikesShort (userId, short) {
 
@@ -313,90 +285,90 @@ module.exports=function(db, mongoose) {
         return deferred.promise;
 
     }
-        function addShortReview(short, review){
+        //function addShortReview(short, review){
+        //
+        //    var deferred = q.defer();
+        //
+        //    var shortId = short._id == null? short.id: short.ytID;
+        //    ShortModel.findOne({"ytID": shortId},
+        //
+        //        function (err, doc) {
+        //
+        //            // reject promise if error
+        //            if (err) {
+        //                deferred.reject(err);
+        //            }
+        //
+        //            // if there's a movie
+        //            if (doc) {
+        //                // add user to likes
+        //                doc.reviews.push (review._id);
+        //                // save changes
+        //                doc.save(function(err, doc){
+        //                    if (err) {
+        //                        deferred.reject(err);
+        //                    } else {
+        //                        deferred.resolve(doc.reviews);
+        //                    }
+        //                });
+        //            } else {
+        //                console.log("Short id:", shortId);
+        //                var new_short = new ShortModel({
+        //                    ytID: shortId,
+        //                    title: short.title,
+        //                    description: short.description,
+        //                    url:short.url,
+        //                    language:short.language,
+        //                    reviews: []
+        //                });
+        //
+        //                new_short.reviews.push (review._id.toString());
+        //                // save new instance
+        //                new_short.save(function(err, doc) {
+        //                    if (err) {
+        //                        deferred.reject(err);
+        //                    } else {
+        //                        deferred.resolve(doc.reviews);
+        //                    }
+        //                });
+        //            }
+        //        });
+        //
+        //    return deferred.promise;
+        //
+        //}
 
-            var deferred = q.defer();
-
-            var shortId = short._id == null? short.id: short.ytID;
-            ShortModel.findOne({"ytID": shortId},
-
-                function (err, doc) {
-
-                    // reject promise if error
-                    if (err) {
-                        deferred.reject(err);
-                    }
-
-                    // if there's a movie
-                    if (doc) {
-                        // add user to likes
-                        doc.reviews.push (review._id);
-                        // save changes
-                        doc.save(function(err, doc){
-                            if (err) {
-                                deferred.reject(err);
-                            } else {
-                                deferred.resolve(doc.reviews);
-                            }
-                        });
-                    } else {
-                        console.log("Short id:", shortId);
-                        var new_short = new ShortModel({
-                            ytID: shortId,
-                            title: short.title,
-                            description: short.description,
-                            url:short.url,
-                            language:short.language,
-                            reviews: []
-                        });
-
-                        new_short.reviews.push (review._id.toString());
-                        // save new instance
-                        new_short.save(function(err, doc) {
-                            if (err) {
-                                deferred.reject(err);
-                            } else {
-                                deferred.resolve(doc.reviews);
-                            }
-                        });
-                    }
-                });
-
-            return deferred.promise;
-
-        }
-
-
-    function deleteShortReview(shortId, reviewId){
-
-        var deferred = q.defer();
-        ShortModel.findOne({"ytID": shortId},
-
-            function (err, doc) {
-
-
-                if (err) {
-                    deferred.reject(err);
-                }
-
-                if (doc) {
-
-
-                    doc.reviews.splice(doc.reviews.indexOf(reviewId),1);
-                    doc.save(function(err, doc){
-                        if (err) {
-                            deferred.reject(err);
-                        } else {
-                            deferred.resolve(doc.reviews);
-                        }
-                    });
-                }
-            });
-
-        return deferred.promise;
-
-
-    }
+    //
+    //function deleteShortReview(shortId, reviewId){
+    //
+    //    var deferred = q.defer();
+    //    ShortModel.findOne({"ytID": shortId},
+    //
+    //        function (err, doc) {
+    //
+    //
+    //            if (err) {
+    //                deferred.reject(err);
+    //            }
+    //
+    //            if (doc) {
+    //
+    //
+    //                doc.reviews.splice(doc.reviews.indexOf(reviewId),1);
+    //                doc.save(function(err, doc){
+    //                    if (err) {
+    //                        deferred.reject(err);
+    //                    } else {
+    //                        deferred.resolve(doc.reviews);
+    //                    }
+    //                });
+    //            }
+    //        });
+    //
+    //    return deferred.promise;
+    //
+    //
+    //}
 
     function findShortsByUsernames(names){
 
@@ -426,6 +398,189 @@ module.exports=function(db, mongoose) {
             }
 
         });
+        return deferred.promise;
+    }
+
+
+
+
+    function createReview(short,review){
+        //console.log("In create comment post.model.js",shortId,review);
+        //var newReview ={
+        //    content:review.content,
+        //    userId:review.userId,
+        //    username:review.username,
+        //    rating:review.rating
+        //};
+        //
+        //var deferred = q.defer();
+        //ShortModel.findOne({"ytID":shortId}).then(
+        //    function(short){
+        //        short.reviews.push(newReview);
+        //        post.save(function(err,post){
+        //            if(err){
+        //                deferred.reject(err);
+        //            }
+        //            else{
+        //                deferred.resolve(short.reviews);
+        //            }
+        //        });
+        //    });
+        //return deferred.promise;
+
+        var deferred = q.defer();
+
+        var shortId = short._id == null? short.id: short.ytID;
+        var newReview ={
+            content:review.content,
+            userId:review.userId,
+            username:review.username,
+            rating:review.rating
+        };
+        ShortModel.findOne({"ytID": shortId},
+
+            function (err, doc) {
+
+                // reject promise if error
+                if (err) {
+                    deferred.reject(err);
+                }
+
+                // if there's a movie
+                if (doc) {
+                    // add user to likes
+
+                    doc.reviews.push (newReview);
+                    // save changes
+                    doc.save(function(err, doc){
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc.reviews);
+                        }
+                    });
+                } else {
+                    console.log("Short id:", shortId);
+                    var new_short = new ShortModel({
+                        ytID: shortId,
+                        title: short.title,
+                        description: short.description,
+                        url:short.url,
+                        language:short.language,
+                        reviews: []
+                    });
+
+                    new_short.reviews.push (newReview);
+                    // save new instance
+                    new_short.save(function(err, doc) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc.reviews);
+                        }
+                    });
+                }
+            });
+
+        return deferred.promise;
+
+    }
+
+
+    function updateReviewById(shortId,reviewId,review){
+
+
+
+        var deferred = q.defer();
+        ShortModel.findOne({"ytID":shortId}).then(
+            function(short){
+                var reviewToUpdate = short.reviews.id(reviewId);
+                reviewToUpdate.content = review.content;
+                reviewToUpdate.userId = review.userId;
+                reviewToUpdate.username = review.username;
+                reviewToUpdate.rating = review.rating;
+                short.save(function(err,short){
+                    if(err){
+                        deferred.reject(err);
+                    }
+                    else{
+                        deferred.resolve(short.reviews);
+                    }
+                });
+            });
+        return deferred.promise;
+
+    }
+
+
+    function deleteReviewById(shortId,reviewId){
+
+        var deferred = q.defer();
+        ShortModel.findOne({"ytID":shortId}).then(
+            function(short){
+                short.reviews.id(reviewId).remove();
+                short.save(function(err,short){
+                    if(err){
+                        deferred.reject(err);
+                    }
+                    else{
+                        deferred.resolve(short.reviews);
+                    }
+                });
+            });
+        return deferred.promise;
+
+
+
+    }
+
+    function findReviewsByUser(userId) {
+
+        var deferred = q.defer();
+
+        ShortModel.find({"reviews.userId": userId},
+            function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(doc);
+                }
+
+            });
+        return deferred.promise;
+    }
+
+    function findReviewsByUsername(username) {
+
+        var deferred = q.defer();
+
+        ShortModel.find({"reviews.username": username},
+            function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(doc);
+                }
+
+            });
+        return deferred.promise;
+    }
+
+    function findReviewById(id){
+        var deferred = q.defer();
+
+        ShortModel.findOne({"reviews._id": id},
+            function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(doc);
+                }
+
+            });
         return deferred.promise;
     }
 

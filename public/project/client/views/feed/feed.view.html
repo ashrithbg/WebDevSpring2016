@@ -3,43 +3,13 @@
         <source src="css/videos/Blurry-People.mp4" type="video/mp4">
     </video>
     <div class="row">
-        <div class="col-md-3">
-            <div class="profile-sidebar">
-                <div class="profile-usermenu">
-                    <ul class="nav">
-                        <li>
-                            <a href="#/feed">
-                                <i class="fa fa-home"></i>
-                                Feed </a>
-                        </li>
-                        <li ng-class="{'active': $location.path() == '/profile'}">
-                            <a href="#/profile">
-                                <i class="fa fa-user"></i>
-                                Profile</a>
-                        </li>
-                        <li>
-                            <a href="#/shorts" >
-                                <i class="fa fa-video-camera"></i>
-                                Shorts </a>
-                        </li>
-                        <li>
-                            <a href="#/posts">
-                                <i class="glyphicon glyphicon-flag"></i>
-                                Posts </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- END MENU -->
-            </div>
+        <div ng-include="'views/sidebar/sidebar.view.html'">
         </div>
-        <div class="container-fluid col-md-9">
+        <div class="container-fluid col-md-9" style='overflow-y:auto;'>
             <div class="well panel panel-default box-shadow--16dp">
-                <div ng-show="model.nofeed" class="alert alert-info" role="alert">
-                    <p>Your feed is empty :(! Start following people to get updates</p>
-                </div>
                 <div ng-show ="model.feedPosts.length > 0 || model.feedShorts.length > 0" class="panel-body">
                     <div class="container-fluid">
-                        <h3>Your feed</h3>
+                        <h3>See what your followers are upto ...</h3>
                         <div class="row col-sm-12" ng-if="model.feedPosts.length >0">
                             <div ng-repeat="post in model.feedPosts">
                                 <div class="well panel panel-info box-shadow--16dp">
@@ -75,7 +45,7 @@
                                             </div>
                                             <div class="input-group">
                                                 <button class="btn btn-success visible-lg visible-md" ng-click="model.addComment(post,model.comment[$index])">Comment</button>
-                                                <button class="btn btn-success visible-xs" ng-click="model.addComment(post,model.comment)"><i class="fa fa-comment" aria-hidden="true"></i></button>
+                                                <button class="btn btn-success visible-xs" ng-click="model.addComment(post,model.comment[$index])"><i class="fa fa-comment" aria-hidden="true"></i></button>
                                             </div>
                                         </form>
                                     </div>
@@ -85,19 +55,65 @@
                             </div>
                         </div>
                         <p>Shorts from people you follow</p>
-                            <div ng-repeat="short in model.feedShorts">
-                                <div class="well panel panel-success box-shadow--16dp">
-                                    <div class="panel-heading">{{short.title}}</div>
-                                            <div class="panel-body" >
-                                                <p class="visible-lg">{{short.description}}</p>
-                                                 <a href="#/profile/public/{{short.createdByUser}}"><p class="visible-lg"><strong>{{short.createdByUser}}</strong> </p></a>
-                                                <div class="embed-responsive embed-responsive-4by3">
-                                                    <iframe class="embed-responsive-item" src="{{short.url}}"></iframe>
-                                                </div>
+                                    <div ng-repeat="short in model.feedShorts">
+                                        <div class="well panel panel-success box-shadow--16dp">
+                                            <div class="panel-heading">{{short.title}}</div>
+                                                    <div class="panel-body" >
+                                                        <p class="visible-lg">{{short.description}}</p>
+                                                         <a href="#/profile/public/{{short.createdByUser}}"><p class="visible-lg"><strong>{{short.createdByUser}}</strong> </p></a>
+                                                        <div class="embed-responsive embed-responsive-4by3">
+                                                            <iframe class="embed-responsive-item" src="{{short.url}}"></iframe>
+                                                        </div>
+                                                    </div>
+                                            <div class="panel-footer">
+                                                <textarea class="form-control" ng-model="model.reviews[$index].content" placeholder="Enter your review"></textarea>
+                                                <a href="" ng-if="!model.updateFlags[$index]" class="btn btn-lg btn-success" ng-click="model.reviewShort(model.reviews[$index],short,$index)">Add Review</a>
+                                                <a href="" ng-if="model.updateFlags[$index]" class="btn btn-lg btn-success" ng-click="model.updateReview(model.reviews[$index], short,$index)">Update Review</a>
+                                                <a href="" ng-if="model.updateFlags[$index]" class="btn btn-lg btn-danger" ng-click="model.cancel($index)">Cancel</a>
                                             </div>
+                                            <div ng-if="short.reviews.length >0">
+                                                <h4>Reviews</h4>
+                                                <ul>
+                                                    <div ng-repeat="review in short.reviews">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="panel panel-default">
+                                                                    <div ng-if="currentUser._id != review.userId" class="panel-heading">
+                                                                        <a href="#/profile/public/{{review.username}}"><strong>{{review.username}}</strong></a>
+                                                                    </div>
+                                                                    <div ng-if="currentUser._id == review.userId" class="panel-heading">
+                                                                        <a class="btn btn-danger pull-right" ng-click="model.deleteReview(review,short)"><i class="fa fa-trash"></i></a>
+                                                                        <a class="btn btn-warning pull-right" ng-click="model.selectedReview(review,$index)"><i class="fa fa-pencil"></i></a>
+                                                                    </div>
+                                                                    <div class="panel-body">
+                                                                        {{review.content}}
+                                                                    </div><!-- /panel-body -->
+                                                                </div><!-- /panel panel-default -->
+                                                            </div><!-- /col-sm-5 -->
+                                                            <!--<div class="well clearfix">-->
+                                                            <!--{{review.content}}-->
+                                                            <!--<div ng-if="currentUser._id == review.userId">-->
+                                                            <!--<button class="btn btn-danger pull-right" ng-click="model.deleteReview(review,model.details)"><i class="fa fa-trash"></i></button>-->
+                                                            <!--<button class="btn btn-warning pull-right" ng-click="model.selectedReview(review,model.details)"><i class="fa fa-pencil"></i></button>-->
+                                                            <!--</div>-->
+                                                            <!--<div ng-if="currentUser._id != review.userId" class="row pull-right">-->
+                                                            <!--<a href="#/profile/public/{{review.username}}">{{review.username}}</a>-->
+                                                            <!--</div>-->
+
+                                                            <!--</div>-->
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+
+                                            </div>
+
                                     </div>
-                            </div>
                     </div>
+
+                </div>
+                <div ng-show="model.feedPosts.length == 0 || model.feedShorts.length == 0" class="alert alert-info" role="alert">
+                    <p>Your feed is empty :( ! Start following people to get updates</p>
                 </div>
                 </div>
             </div>

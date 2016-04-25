@@ -36,7 +36,6 @@
             var searchResults = [];
             vm.shorts=response.data;
             vm.query= {};
-            $routeParams.query={};
         }
         function renderError(err){
             console.log("Error while retrieving search results"+JSON.stringify(err));
