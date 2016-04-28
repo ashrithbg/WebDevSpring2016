@@ -5,11 +5,13 @@
         .controller("HeaderController",headerController);
 
     function headerController($location, $scope,$rootScope,UserService) {
-        $scope.$location = $location;
-        $scope.logout = logout;
+
+        var vm = this;
+        //$scope.$location = $location;
+        vm.logout = logout;
         //$scope.renderShorts = renderShorts;
 
-        $scope.logout = logout;
+
 
         function logout() {
             UserService
@@ -20,7 +22,7 @@
                         $location.url("/login");
                     },
                     function(err) {
-                        $scope.error = err;
+                        vm.error = err;
                     }
                 );
         }

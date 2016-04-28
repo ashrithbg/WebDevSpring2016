@@ -18,7 +18,8 @@ module.exports=function(db,mongoose){
         findCommentsByUser:findCommentsByUser,
         findCommentsByUsername:findCommentsByUsername,
         userFavoritedPostById:userFavoritedPostById,
-        userUnFavoritedPostById:userUnFavoritedPostById
+        userUnFavoritedPostById:userUnFavoritedPostById,
+        findPostsByIds:findPostsByIds
     };
 
     return api;
@@ -301,6 +302,23 @@ module.exports=function(db,mongoose){
         return deferred.promise;
 
 
+    }
+
+    function findPostsByIds(postIds){
+        var deferred = q.defer();
+
+        // find all users in array of user IDs
+        PostModel.find({
+            _id: {$in: postIds}
+        }, function (err, posts) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(posts);
+            }
+        });
+
+        return deferred.promise;
     }
 
 };

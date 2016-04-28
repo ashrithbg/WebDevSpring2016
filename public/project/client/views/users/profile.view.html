@@ -35,13 +35,13 @@
                                 <!--/col-->
                                 <div class="col-xs-12 col-sm-4">
                                     <button class="btn btn-block prf-following-btn" ng-click="showFollowingDetails = ! showFollowingDetails"><span class="fa fa-spotify"></span>({{model.followingCount}}) Following</button>
-                                    <button class="btn btn-block prf-shorts-btn" ng-click="showShortDetails = ! showShortDetails"><span class="fa fa-thumbs-up"></span> Shorts You Liked</button>
+                                    <button class="btn btn-block prf-shorts-btn" ng-click="showShortDetails = ! showShortDetails"><span class="fa fa-heart"></span> Shorts</button>
                                 </div>
                                 <!--/col-->
                                 <div class="col-xs-12 col-sm-4">
 
                                     <button class="btn btn-block prf-reviews-btn" ng-click="showReviewDetails = ! showReviewDetails"><span class="fa fa-check-circle"></span> Reviews</button>
-                                    <button type="button" class="btn btn-primary btn-block" ng-click="showPostDetails = ! showPostDetails"><span class="fa fa-flag"></span>Posts </button>
+                                    <button type="button" class="btn btn-primary btn-block" ng-click="showPostDetails = ! showPostDetails"><span class="fa fa-heart"></span> Posts </button>
                                 </div>
                                 <!--/col-->
                             </div>
@@ -54,12 +54,25 @@
             </div>
                 <div ng-class="{ 'hidden': ! showPostDetails }">
                 <div class="col-md-offset-3 col-md-8 col-xs-12">
-                    <div class="well panel panel-default">
+                    <div class="well panel panel-info box-shadow--16dp">
+                        <div class="panel-heading ">
+                            <p>Posts you liked</p>
+                        </div>
                         <div class="panel-body">
-                            <p>Posts by {{model.public.username}}</p>
-                            <div ng-repeat="post in model.posts">
-                                <a href="#/posts/{{post._id}}">{{post.title}}</a>
-                            </div>
+
+                                    <div ng-repeat="post in model.posts">
+                                        <div class="well panel panel-info box-shadow--16dp">
+                                            <div class="panel-heading">
+                                                <h4>
+                                                    <a href="#/details/posts/{{post._id}}">{{post.title}}</a>
+                                                </h4>
+                                            </div>
+                                            <div class="visible-lg panel-body">
+                                                {{post.description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -84,7 +97,7 @@
                                 </div>
                                 <div class="panel-footer">
                                     <a class="btn btn-info" href="#/details/search/{{short.ytID}}">Details</a>
-                                    <a href="" ng-click="model.unlike(short)"><i class="fa fa-thumbs-down fa-3x pull-right" aria-hidden="true"></i></a>
+                                    <a href="" ng-click="model.unlike(short)"><i class="fa fa-heart fa-2x pull-right" style="color:red" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                             </div>
@@ -189,7 +202,7 @@
 
                                     <div class="short-panel panel panel-success col-xs-12 col-lg-6 box-shadow--16dp">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title">{{short.title}}</h3>{{short.title}}
+                                            <h3 class="panel-title">{{short.title}}</h3>
                                         </div>
                                         <div class="panel-body">
                                             <div class="embed-responsive embed-responsive-4by3">

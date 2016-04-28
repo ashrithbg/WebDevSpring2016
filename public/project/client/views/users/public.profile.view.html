@@ -13,8 +13,12 @@
                         <!--/col-->
                         <div class="col-xs-12 col-sm-8">
                             <h2>{{model.public.username}}</h2>
+                            <div ng-if="model.public.description">
                             <p><strong>About: </strong> {{model.public.description}}</p>
-                            <p><strong>Role: </strong></p>
+                                </div>
+                            <div ng-if="model.public.role.length>0">
+                            <p><strong>Role: </strong>{{model.public.role}}</p>
+                                </div>
 
                         </div>
                         <!--/col-->
@@ -36,7 +40,10 @@
                         <!--/col-->
                         <div class="col-xs-12 col-sm-4">
                             <button type="button" class="btn btn-primary btn-block" ng-click="showPostDetails = ! showPostDetails"><span class="fa fa-flag"></span>Posts </button>
+                            <button type="button" class="btn btn-primary btn-block" ng-click="showReviewDetails = ! showReviewDetails"><span class="fa fa-check"></span>Reviews </button>
+                            <button type="button" class="btn btn-primary btn-block" ng-click="showLikeDetails = ! showLikeDetails"><span class="fa fa-flag"></span>Likes </button>
                         </div>
+
                         <!--/col-->
                     </div>
                     <!--/row-->
@@ -48,29 +55,103 @@
         <!--/col-->
     </div>
     <div class="row" ng-class="{ 'hidden': ! showPostDetails }">
-        <div class="col-md-8 col-xs-10">
-            <div class="well panel panel-default">
-                <div class="panel-body">
-                    <p>Posts by {{model.public.username}}</p>
+        <!--<div class="col-md-8 col-xs-10">-->
+            <!--<div class="well panel panel-default">-->
+                <!--<div class="panel-body">-->
+                    <!--<p>Posts by {{model.public.username}}</p>-->
+                    <!--<div ng-repeat="post in model.posts">-->
+                        <!--<a href="#/posts/{{post._id}}">{{post.title}}</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="container-fluid col-md-8">
+            <div class="well panel panel-default box-shadow--16dp">
+                <div>
+                    <div class="panel-heading">
+                        <h3>Posts by {{model.public.username}}</h3>
+                    </div>
+
                     <div ng-repeat="post in model.posts">
-                        <a href="#/posts/{{post._id}}">{{post.title}}</a>
+                        <div class="well panel panel-info box-shadow--16dp">
+                            <div class="panel-heading">
+                                <h4>
+                                    {{post.title}}
+                                </h4>
+
+                            </div>
+                            <div class="visible-lg panel-body">
+                                {{post.description}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" ng-class="{ 'hidden': ! showShortDetails }">
-        <div class="col-md-8 col-xs-10">
-            <div class="well panel panel-default">
+    <div class="row" ng-class="{ 'hidden': ! showReviewDetails }">
+        <div class="container-fluid col-md-8">
+            <div class="well panel panel-info box-shadow--16dp">
                 <div class="panel-body">
-                    <p>Shorts by {{model.public.username}}</p>
-                    <div ng-repeat="short in model.shorts">
-                        <a href="#/shorts/{{short._id}}">{{short.title}}</a>
-                    </div>
+                    <h3>Shorts by {{model.public.username}}</h3>
+
+                        <!--<a href="#/search/{{short.ytID}}">{{short.title}}</a>-->
+                        <div ng-repeat="short in model.shorts">
+
+                            <div class="short-panel panel panel-success col-xs-12 col-lg-6 box-shadow--16dp">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{short.title}}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="embed-responsive embed-responsive-4by3">
+                                        <iframe class="embed-responsive-item" ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container-fluid col-md-8">
+        <div class="well panel panel-default box-shadow--16dp">
+            <div class="panel-heading">
+                <h3>Reviews by {{model.public.username}}</h3>
+            </div>
+            <div class="panel-body">
+                <div ng-show="model.reviews.length > 0" ng-repeat="short in model.reviews">
+
+                    <div class="short-panel panel panel-success col-xs-12 col-lg-6 box-shadow--16dp">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{short.title}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <iframe class="embed-responsive-item" ng-src="{{short.url}}" width='400' height='225' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen> </iframe>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                {{short.reviews[0].content}}
+                                <div class="pull-right">
+                                    <a class="btn btn-info"href="#/details/search/{{short.ytID}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="model.userReviews.length == 0" class="alert alert-info">
+                    <strong>Info!</strong> No reviews yet!
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
     <!--/row-->
 </div>
 

@@ -24,13 +24,12 @@
             UserService.getCurrentUser().then(function(response){
                     vm.currentUser = response.data;
                     FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
-                        console.log("response of get following posts",JSON.stringify(response.data));
+
                         vm.feedPosts = response.data;
                     },function(err){
                         console.log("Error retrieving feed for user",JSON.stringify(err));
                     });
                     FeedService.getFollowingShorts(vm.currentUser._id).then(function(response){
-                        console.log("response of get following shorts",JSON.stringify(response.data));
                         vm.feedShorts = response.data;
                         vm.updateFlags = [];
                         vm.reviews = [];
@@ -54,7 +53,6 @@
         init();
 
         function addComment(post,comment){
-            console.log("in add comment");
             var newComment = {
                 content: comment.content,
                 userId:vm.currentUser._id,
@@ -68,7 +66,6 @@
 
             }).then(function(response){
                 FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
-                    console.log("response of get following posts",JSON.stringify(response.data));
                     vm.feedPosts = response.data;
                 },function(err){
                     console.log("Error retrieving feed for user",JSON.stringify(err));
@@ -105,7 +102,6 @@
                 console.log("Could not like the post",JSON.stringify(err));
             }).then(function(response){
                 FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
-                    console.log("response of get following posts",JSON.stringify(response.data));
                     vm.feedPosts = response.data;
                 },function(err){
                     console.log("Error retrieving feed for user",JSON.stringify(err));
@@ -118,7 +114,6 @@
         function unfavorite(post){
             PostService.userUnfavoritesPost(post._id,vm.currentUser.username).then(function(response){
                 FeedService.getFollowingPosts(vm.currentUser._id).then(function(response){
-                    console.log("response of get following posts",JSON.stringify(response.data));
                     vm.feedPosts = response.data;
                 },function(err){
                     console.log("Error retrieving feed for user",JSON.stringify(err));

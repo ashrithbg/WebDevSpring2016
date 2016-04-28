@@ -1,4 +1,4 @@
-<div ng-controller="HeaderController">
+<div ng-controller="HeaderController as model">
     <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -38,7 +38,7 @@
                         <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/login'}" ><a href="#/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
                         <li ng-hide="currentUser" ng-class="{'active': $location.path() == '/register'}" ><a href="#/register" ><i class="fa fa-user-plus"></i> Register</a></li>
                         <li ng-show="currentUser" ng-class="{'active': $location.path() == '/profile'}"><a href="#/profile" >{{ currentUser.username }}</a></li>
-                        <li ng-show="currentUser" ng-click="logout()"><a href="#/logout" > <i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a></li>
+                        <li ng-show="currentUser" ng-click="model.logout()"><a href="#/logout" > <i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a></li>
 
                     </ul>
                 </div>

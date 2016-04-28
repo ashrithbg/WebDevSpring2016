@@ -11,6 +11,7 @@ module.exports=function(app, userModel, postModel){
     app.get("/api/project/user/:userId/comments",getCommentsByUser);
     app.post("/api/project/user/:username/post/:postId/favorite",userFavoritedPost);
     app.post("/api/project/user/:username/post/:postId/unfavorite",userUnFavoritedPost);
+    app.get("/api/project/user/:username/posts/likes",findPostLikes);
 
 
     function getPosts(req, res){
@@ -134,6 +135,24 @@ module.exports=function(app, userModel, postModel){
         },function(err){
             res.status(400).send(err);
         });
+    }
+
+
+    function findPostLikes(req,res){
+
+        var username = req.params.username;
+
+        userModel.findPostsLikedByUser(username).then(function(postLikes){
+            return postModel.findPostsByIds(postLikes);
+            //res.json(postLikes);
+        },function(err){
+            res.status(400).send(err);
+        }).then(function(response){
+            res.json(response);
+        },function(err){
+            res.status(400).send(err);
+        })
+
     }
 
 };

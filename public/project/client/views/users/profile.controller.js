@@ -4,7 +4,7 @@
         .module("ShortKutApp")
         .controller("ProfileController", profileController);
 
-    function profileController($rootScope, $location, UserService, ShortService)
+    function profileController($rootScope, $location, UserService, ShortService, PostService)
     {
         var vm = this;
         var currentUser = null;
@@ -62,42 +62,15 @@
                     console.log("Reviews found", JSON.stringify(response.data));
                     vm.userReviews = response.data;
 
-                    //var shortIds = [];
-                    //vm.userReviews.forEach(function(entry){
-                    //    shortIds.push(entry.shortId);
-                    //});
-
-                    //for(var i=0 ;i<vm.userReviews.length;i++){
-                    //    ShortService.findShortById(vm.userReviews[i].shortId).then(function(response){
-                    //
-                    //            vm.userReviews[i].shortTitle = response.data.title;
-                    //            vm.userReviews[i].shortUrl = response.data.url;
-                    //            console.log("response after modifying userReviews",JSON.stringify(vm.userReviews[i]));
-                    //    },function(err){
-                    //        console.log("Error retrieving short for this review", JSON.stringify(err));
-                    //    });
-                    //}
-                    //var shortsByReviews = null;
-                    //ShortService.findShortsByIds(shortIds).then(function(response){
-                    //    shortsByReviews = response.data;
-                    //    for(var ur in vm.userReviews){
-                    //        for(var short in shortsByReviews){
-                    //            if(shortsByReviews[short].ytID == vm.userReviews[ur].shortId){
-                    //                console.log("matching short id",shortsByReviews[short].ytID);
-                    //                vm.userReviews[ur].shortTitle = shortsByReviews[short].title;
-                    //                vm.userReviews[ur].shortUrl = shortsByReviews[short].url;
-                    //            }
-                    //        }
-                    //    }
-                    //},function(err){
-                    //    console.log("Error retrieiving shorts by reviews",JSON.stringify(err));
-                    //});
-
-
-
-
                 }, function (err) {
-                    console.log("Error retrieving profile", JSON.stringify(err));
+                    console.log("Error retrieving user reviews", JSON.stringify(err));
+                });
+
+                PostService.findPostsLiked(currentUser.username).then(function(response){
+                    vm.posts = response.data;
+                },
+                function(err){
+                    console.log("Error retrieving posts user liked", JSON.stringify(err));
                 });
 
             }, function (err) {

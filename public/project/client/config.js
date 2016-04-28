@@ -81,7 +81,7 @@
                     controller:"PublicProfileController",
                     controllerAs:"model",
                     resolve:{
-                        loggedIn:checkCurrentUser
+                        loggedIn:checkLoggedin
                     }
 
                 })

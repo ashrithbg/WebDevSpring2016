@@ -12,8 +12,8 @@
             </div>
             <br>
             <div class="row">
-                <a href="" ng-show="model.likes.indexOf(currentUser._id) > -1 || currentUser.shortLikes.indexOf(model.details.id) > -1"  ng-click="model.unfavorite(model.details)" ><i class="fa fa-2x fa-heart" style="color:red" ></i></a>
-                <a href="" ng-show="model.likes.indexOf(currentUser._id) == -1" ng-click="model.favorite(model.details)"><i class="fa fa-2x fa-heart-o" style="color:red" ></i></a>
+                <a href="" ng-show="model.likes.indexOf(currentUser._id) > -1 || currentUser.shortLikes.indexOf(model.details.id) > -1"  ng-click="model.unfavorite(model.details)" ><i class="fa fa-2x fa-heart pull-right" style="color:red" ></i></a>
+                <a href="" ng-show="model.likes.indexOf(currentUser._id) == -1" ng-click="model.favorite(model.details)"><i class="fa fa-2x fa-heart-o pull-right" style="color:red" ></i></a>
                 <div class="well">
                     <textarea class="form-control" ng-model="model.review.content" placeholder="Enter your review"></textarea>
                 </div>

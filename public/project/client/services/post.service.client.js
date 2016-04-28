@@ -17,7 +17,8 @@
                 findCommentsByUser:findCommentsByUser,
                 findCommentsByUsername:findCommentsByUsername,
                 userFavoritesPost:userFavoritesPost,
-                userUnfavoritesPost:userUnfavoritesPost
+                userUnfavoritesPost:userUnfavoritesPost,
+                findPostsLiked:findPostsLiked
             };
 
             return service;
@@ -67,6 +68,10 @@
             }
             function userUnfavoritesPost(postId,username){
                 return $http.post("/api/project/user/"+username+"/post/"+postId+"/unfavorite");
+            }
+            function findPostsLiked(username){
+                return $http.get("/api/project/user/"+username+"/posts/likes");
+
             }
 
         }

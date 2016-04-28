@@ -28,7 +28,8 @@ module.exports=function(db, mongoose){
         findFollowingById:findFollowingById,
         userFavoritedPost:userFavoritedPost,
         userUnFavoritedPost:userUnFavoritedPost
-    };
+
+};
     return api;
 
     function userLikesShort(userId,short){
@@ -252,9 +253,9 @@ module.exports=function(db, mongoose){
 
     }
 
-    function findPostsLikedByUser(userId){
+    function findPostsLikedByUser(username){
         var deferred = q.defer();
-        UserModel.findById(userId,function(err, found_user){
+        UserModel.findOne({"username":username},function(err, found_user){
             if(err){
                 deferred.reject(err);
             }
@@ -465,6 +466,9 @@ module.exports=function(db, mongoose){
         });
         return deferred.promise;
     }
+
+
+
 
 
 };

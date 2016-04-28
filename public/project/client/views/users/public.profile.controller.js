@@ -13,40 +13,39 @@
             console.log("Username is ",username);
             function init() {
                 UserService.findUserByUsername(username).then(function(response){
-                        console.log("public profile ... ",response.data);
                         vm.public = response.data;
-                        publicUserId = response.data._id;
+                        publicUserId = vm.public._id;
+                        console.log("public user id",publicUserId);
                         vm.followers=response.data.followers;
                         vm.following=response.data.following;
+                        return ShortService.findShortsForUser(publicUserId)
 
                     },
                     function(err){
                         console.log("Error retrieving public profile of user!");
                     }
-                );
+                ).then(function(response) {
 
-                ShortService.findShortsForUser(publicUserId).then(function(response){
-                        vm.shorts = response.data
+                    vm.shorts = response.data;
+                    return PostService.findAllPostsByUser(publicUserId);
                     },
                     function(err){
-                        console.log("Error retrieving public profile of user!");
+                        console.log("Error retrieving shorts of user!",JSON.stringify(err));
                     }
-                );
-
-                PostService.findAllPostsByUser(publicUserId).then(function(response){
-                        vm.posts = response.data
+                ).then(function(response){
+                        vm.posts = response.data;
+                        return ShortService.findUserReviews(publicUserId);
                     },
                     function(err){
-                        console.log("Error retrieving public profile of user!");
+                        console.log("Error retrieving posts of user!",JSON.stringify(err));
                     }
-                );
+                ).then(function(response) {
 
-                //ShortService.findAllReviewsByUser(publicUserId).then(function(response){
-                //        vm.reviews = response.data;
-                //    },
-                //    function(err){
-                //
-                //});
+                    vm.reviews = response.data;
+                    },
+                    function(err) {
+                        console.log("Error retrieving reviews of user!", JSON.stringify(err));
+                    });
 
             }
             init();
